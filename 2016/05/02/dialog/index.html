@@ -193,17 +193,17 @@
 
                 <p>#Dialog中值得学习之-sendXXMessage</p>
 <p>在Dialog源码中，dialog的显示与隐藏是通过mWindowManager.addView/removeViewImmediate来实现的，并且当dialog设置了</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dialog<span class="selector-class">.setOnShowListener</span>();</div><div class="line">dialog<span class="selector-class">.setOnDismissListener</span>();</div><div class="line">dialog<span class="selector-class">.setOnCancelListener</span>();</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dialog.setOnShowListener();</div><div class="line">dialog.setOnDismissListener();</div><div class="line">dialog.setOnCancelListener();</div></pre></td></tr></table></figure>
 <p>的时候，当dialog显示隐藏的时候都会回调给相应的listener的，是如何回调过去的呢？<br>本质上还是调用各自的方法：</p>
-<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ListenersHandler</span> <span class="keyword">extends</span> <span class="title">Handler</span> </span>&#123;</div><div class="line"> <span class="keyword">private</span> WeakReference&lt;DialogInterface&gt; mDialog;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="title">ListenersHandler</span><span class="params">(Dialog dialog)</span> </span>&#123;</div><div class="line">     mDialog = <span class="keyword">new</span> WeakReference&lt;DialogInterface&gt;(dialog);</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="meta">@Override</span></div><div class="line"> <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">handleMessage</span><span class="params">(Message msg)</span> </span>&#123;</div><div class="line">     <span class="keyword">switch</span> (msg.what) &#123;</div><div class="line">         <span class="keyword">case</span> DISMISS:</div><div class="line">             ((OnDismissListener) msg.obj).onDismiss(mDialog.<span class="keyword">get</span>());</div><div class="line">             <span class="keyword">break</span>;</div><div class="line">         <span class="keyword">case</span> CANCEL:</div><div class="line">             ((OnCancelListener) msg.obj).onCancel(mDialog.<span class="keyword">get</span>());</div><div class="line">             <span class="keyword">break</span>;</div><div class="line">         <span class="keyword">case</span> SHOW:</div><div class="line">             ((OnShowListener) msg.obj).onShow(mDialog.<span class="keyword">get</span>());</div><div class="line">             <span class="keyword">break</span>;</div><div class="line">     &#125;</div><div class="line"> &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">private static final class ListenersHandler extends Handler &#123;</div><div class="line"> private WeakReference&lt;DialogInterface&gt; mDialog;</div><div class="line"></div><div class="line"> public ListenersHandler(Dialog dialog) &#123;</div><div class="line">     mDialog = new WeakReference&lt;DialogInterface&gt;(dialog);</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> @Override</div><div class="line"> public void handleMessage(Message msg) &#123;</div><div class="line">     switch (msg.what) &#123;</div><div class="line">         case DISMISS:</div><div class="line">             ((OnDismissListener) msg.obj).onDismiss(mDialog.get());</div><div class="line">             break;</div><div class="line">         case CANCEL:</div><div class="line">             ((OnCancelListener) msg.obj).onCancel(mDialog.get());</div><div class="line">             break;</div><div class="line">         case SHOW:</div><div class="line">             ((OnShowListener) msg.obj).onShow(mDialog.get());</div><div class="line">             break;</div><div class="line">     &#125;</div><div class="line"> &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这里中间用Handler和Message去处理listener的回调，这种思路挺赞的。<br>整体流程就是：<br>1、setOnShowListener的时候会把OnShowListener对象赋值给Message，并且通过mListenersHandler返回给mShowMessage，这个时候mShowMessage的obj就是该listener了。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOnShowListener</span><span class="params">(OnShowListener listener)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (listener != <span class="keyword">null</span>) &#123;</div><div class="line">            mShowMessage = mListenersHandler.obtainMessage(SHOW, listener);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            mShowMessage = <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public void setOnShowListener(OnShowListener listener) &#123;</div><div class="line">        if (listener != null) &#123;</div><div class="line">            mShowMessage = mListenersHandler.obtainMessage(SHOW, listener);</div><div class="line">        &#125; else &#123;</div><div class="line">            mShowMessage = null;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 <p>2、当dialog调用show的时候，会执行sendShowMessage()，然后再让mDismissMessage.sendToTarget()传递给mListenersHandler的handleMessage去执行。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//.......省略代码</span></div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            mWindowManager.addView(mDecor, l);</div><div class="line">            mShowing = <span class="keyword">true</span>;</div><div class="line">    </div><div class="line">            sendShowMessage();</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">sendDismissMessage</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mDismissMessage != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="comment">// Obtain a new message so this dialog can be re-used</span></div><div class="line">            Message.obtain(mDismissMessage).sendToTarget();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">sendShowMessage</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (mShowMessage != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="comment">// Obtain a new message so this dialog can be re-used</span></div><div class="line">        Message.obtain(mShowMessage).sendToTarget();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public void show() &#123;</div><div class="line">        //.......省略代码</div><div class="line">        try &#123;</div><div class="line">            mWindowManager.addView(mDecor, l);</div><div class="line">            mShowing = true;</div><div class="line">    </div><div class="line">            sendShowMessage();</div><div class="line">        &#125; finally &#123;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">private void sendDismissMessage() &#123;</div><div class="line">        if (mDismissMessage != null) &#123;</div><div class="line">            // Obtain a new message so this dialog can be re-used</div><div class="line">            Message.obtain(mDismissMessage).sendToTarget();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">private void sendShowMessage() &#123;</div><div class="line">    if (mShowMessage != null) &#123;</div><div class="line">        // Obtain a new message so this dialog can be re-used</div><div class="line">        Message.obtain(mShowMessage).sendToTarget();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这里再插一句：为什么一定要用Message.obtain(mShowMessage)呢？不直接mShowMessage.sendToTarget()呢？<br>原因在内部调用了obtain，这个obtain里面实现了避免重复创建新的Message对象的机制。减少内存的消耗！这个是sdk的开发者思考过的问题，message在应用中使用的频率特别高，所以为了减少内存消耗出此策略，点赞！</p>
-<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">public static Message obtain(Message <span class="keyword">orig) </span>&#123;</div><div class="line">        Message m = obtain()<span class="comment">;</span></div><div class="line">        m.what = <span class="keyword">orig.what;</span></div><div class="line">        m.arg1 = <span class="keyword">orig.arg1;</span></div><div class="line">        m.arg2 = <span class="keyword">orig.arg2;</span></div><div class="line">        m.obj = <span class="keyword">orig.obj;</span></div><div class="line">        m.replyTo = <span class="keyword">orig.replyTo;</span></div><div class="line">        m.sendingUid = <span class="keyword">orig.sendingUid;</span></div><div class="line">        if (<span class="keyword">orig.data </span>!= null) &#123;</div><div class="line">            m<span class="meta">.data</span> = new <span class="keyword">Bundle(orig.data);</span></div><div class="line">        &#125;</div><div class="line">        m.target = <span class="keyword">orig.target;</span></div><div class="line">        m.callback = <span class="keyword">orig.callback;</span></div><div class="line"></div><div class="line">        return m<span class="comment">;</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">	<span class="comment">/**</span></div><div class="line">     * Return a new Message instance from the global pool. Allows us to</div><div class="line">     * avoid allocating new objects in many cases.</div><div class="line">     */</div><div class="line">    public static Message obtain() &#123;</div><div class="line">        <span class="keyword">synchronized </span>(sPoolSync) &#123;</div><div class="line">            if (sPool != null) &#123;</div><div class="line">                Message m = sPool<span class="comment">;</span></div><div class="line">                sPool = m.next<span class="comment">;</span></div><div class="line">                m.next = null<span class="comment">;</span></div><div class="line">                m.flags = <span class="number">0</span><span class="comment">; // clear in-use flag</span></div><div class="line">                sPoolSize--<span class="comment">;</span></div><div class="line">                return m<span class="comment">;</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return new Message()<span class="comment">;</span></div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">public static Message obtain(Message orig) &#123;</div><div class="line">        Message m = obtain();</div><div class="line">        m.what = orig.what;</div><div class="line">        m.arg1 = orig.arg1;</div><div class="line">        m.arg2 = orig.arg2;</div><div class="line">        m.obj = orig.obj;</div><div class="line">        m.replyTo = orig.replyTo;</div><div class="line">        m.sendingUid = orig.sendingUid;</div><div class="line">        if (orig.data != null) &#123;</div><div class="line">            m.data = new Bundle(orig.data);</div><div class="line">        &#125;</div><div class="line">        m.target = orig.target;</div><div class="line">        m.callback = orig.callback;</div><div class="line"></div><div class="line">        return m;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">	/**</div><div class="line">     * Return a new Message instance from the global pool. Allows us to</div><div class="line">     * avoid allocating new objects in many cases.</div><div class="line">     */</div><div class="line">    public static Message obtain() &#123;</div><div class="line">        synchronized (sPoolSync) &#123;</div><div class="line">            if (sPool != null) &#123;</div><div class="line">                Message m = sPool;</div><div class="line">                sPool = m.next;</div><div class="line">                m.next = null;</div><div class="line">                m.flags = 0; // clear in-use flag</div><div class="line">                sPoolSize--;</div><div class="line">                return m;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return new Message();</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 <p>总结一下：如果要我去实现一个listener的回调，大部分情况下是直接声明一个listener的变量，什么地方需要执行该listener的回调，什么地方就手动调用一下。<br>这里用</p>
-<figure class="highlight delphi"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">Message</span> mCancelMessage;</div><div class="line">   <span class="keyword">private</span> <span class="keyword">Message</span> mDismissMessage;</div><div class="line">   <span class="keyword">private</span> <span class="keyword">Message</span> mShowMessage;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">private Message mCancelMessage;</div><div class="line">   private Message mDismissMessage;</div><div class="line">   private Message mShowMessage;</div></pre></td></tr></table></figure>
 <p>替代了，感觉来说会使代码更合理些。可能具体有什么好处，暂时参悟不出来，如果有感兴趣的人看到了这篇笔记，可以给我回复一起探讨下！</p>
 
 
@@ -226,12 +226,6 @@
 
                 
 
-                
-                <!-- disqus 评论框 start -->
-                <div class="comment">
-                    <div id="disqus_thread" class="disqus-thread"></div>
-                </div>
-                <!-- disqus 评论框 end -->
                 
 
             </div>
@@ -260,25 +254,6 @@
 
                 <!-- Friends Blog -->
                 
-                <hr>
-                <h5>FRIENDS</h5>
-                <ul class="list-inline">
-
-                    
-                        <li><a href="http://blog.kaijun.rocks" target="_blank">Kaijun&#39;s Blog</a></li>
-                    
-                        <li><a href="http://huangxuan.me" target="_blank">Hux Blog</a></li>
-                    
-                        <li><a href="#" target="_blank">Foo</a></li>
-                    
-                        <li><a href="#" target="_blank">Bar</a></li>
-                    
-                        <li><a href="#" target="_blank">Example Friends</a></li>
-                    
-                        <li><a href="#" target="_blank">It helps SEO</a></li>
-                    
-                </ul>
-                
             </div>
 
         </div>
@@ -288,57 +263,8 @@
 
 
 
-<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = "hexo-theme-huxblog";
-    var disqus_identifier = "http://fancychendong.github.io/hexo-theme-huxblog/2016/05/02/dialog/";
-    var disqus_url = "http://fancychendong.github.io/hexo-theme-huxblog/2016/05/02/dialog/";
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<!-- disqus 公共JS代码 end -->
 
 
-
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-<script>
-    async("http://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
-        anchors.options = {
-          visible: 'always',
-          placement: 'right',
-          icon: '#'
-        };
-        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-    })
-</script>
-<style>
-    /* place left on bigger screen */
-    @media all and (min-width: 800px) {
-        .anchorjs-link{
-            position: absolute;
-            left: -0.75em;
-            font-size: 1.1em;
-            margin-top : -0.1em;
-        }
-    }
-</style>
 
 
 
@@ -351,68 +277,14 @@
                 <ul class="list-inline text-center">
                 
                 
-                    <li>
-                        <a target="_blank" href="https://twitter.com/Demonbane_x">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                
-                
-                    <li>
-                        <a target="_blank" href="https://www.zhihu.com/people/Demonbane">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa  fa-stack-1x fa-inverse">知</i>
-                            </span>
-                        </a>
-                    </li>
                 
 
                 
-                    <li>
-                        <a target="_blank" href="http://weibo.com/Demonbane">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
+
                 
 
                 
-                    <li>
-                        <a target="_blank" href="https://www.facebook.com/demonbane.cn">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                
 
-                
-                    <li>
-                        <a target="_blank"  href="https://github.com/fancychendong">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                
-
-                
-                    <li>
-                        <a target="_blank"  href="https://www.linkedin.com/in/kaijun-chen-42089354">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
                 
 
                 </ul>
@@ -502,39 +374,9 @@
 <!-- Google Analytics -->
 
 
-<script>
-    // dynamic User by Hux
-    var _gaId = 'UA-49627206-1';
-    var _gaDomain = 'huangxuan.me';
-
-    // Originial
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', _gaId, _gaDomain);
-    ga('send', 'pageview');
-</script>
-
-
 
 
 <!-- Baidu Tongji -->
-
-<script>
-    // dynamic User by Hux
-    var _baId = '4cc1f2d8f3067386cc5cdb626a202900';
-
-    // Originial
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?" + _baId;
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-</script>
 
 
 <!-- Side Catalog -->
