@@ -13,11 +13,11 @@
 
     <title>
         
-          test - fancy的博客 | fancy&#39;s Blog
+          使用Hexo+Github Page搭建博客 - fancy的博客 | fancy&#39;s Blog
         
     </title>
 
-    <link rel="canonical" href="http://fancychendong.github.io/2016/09/03/test/">
+    <link rel="canonical" href="http://fancychendong.github.io/2016/09/04/使用Hexo+GithubPage搭建博客/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -165,12 +165,14 @@
                 <div class="post-heading">
                     <div class="tags">
                         
+                          <a class="tag" href="/tags/#hexo" title="hexo">hexo</a>
+                        
                     </div>
-                    <h1>test</h1>
+                    <h1>使用Hexo+Github Page搭建博客</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by xiaodong Chen on
-                        2016-09-03
+                        2016-09-04
                     </span>
                 </div>
             </div>
@@ -189,7 +191,21 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                
+                <p>#使用Hexo+Github Page搭建博客</p>
+<p>[hexo 中文网站： <a href="https://hexo.io/zh-cn/" target="_blank" rel="external">https://hexo.io/zh-cn/</a>]<br>该网站上有丰富的文档说明，写的非常详细了。</p>
+<p>[TOC]</p>
+<p>##错误记录</p>
+<p>###一、记录一次引用第三方主题的错误经历<br>第三方主题地址：<a href="https://github.com/Kaijun/hexo-theme-huxblog" target="_blank" rel="external">https://github.com/Kaijun/hexo-theme-huxblog</a></p>
+<p>里面的readme有很详细的使用流程，帮你把执行的命令行全部列出来了。<br>错误经历：也按照命令行一个一个执行下去，然后在本地目录中生成了一些文件夹，目录下有一个_config.yml文件，里面是全局的一些配置参数；<br>配置参数里面有个root配置项，默认生成的竟然是<br><code>\hexo-theme-huxblog\</code>刚开始我并没有留意什么，也没发现这里的问题，不得不说自己对web开发的这一块知识缺乏厉害。<br><code>这个root配置项是配置的根路径。何为根路径，就是html代码里比如要引入样式，这个样式有个路径吧，这个路径是相对路径，相对谁来说的，就是相对这个根路径来说的。</code><br>还是回到还原上面的错误经历，我并没有多想这个配置项的问题，我只修改了_config.yml文件里其他的配置，比如自己部署到github page上的地址，分支等信息，还有自己的名字啦巴拉巴拉的。<br>然后hexo serve，在本地运行下，发现一切正常，控制台告诉我输入<a href="http://localhost:4000/hexo-theme-huxblog" target="_blank" rel="external">http://localhost:4000/hexo-theme-huxblog</a>  好吧，复制粘贴，也没想过为什么要加hexo-theme-huxblog，因为hexo原生主题并没有这个。<br>本地正常了，部署到github page服务器上去了，好吧，然后输入自己的page路径，发现乱了，刚开始还怀疑是因为page的延迟导致的(因为之前遇到过这个问题，push上去需要等待一会生效)</p>
+<p>作为一个高效率的程序员，最无法忍受的就是没有期限的等待，这TM是个bug！</p>
+<p>等了很久也没好，以为自己哪哪错了，尝试了各种方法，折腾了几个小时(还好是放假，要不然才没时间精力折腾这个东西)，有点想放弃了！</p>
+<p>最后翻一下push到page里的index.html源码，无意(是无意中发现，要是没发现估计这个问题也不了了之了)发现里面引入css的路径含有<code>hexo-theme-huxblog\</code>这个玩意，但是我的github page项目源码中并没有这个路径，瞬间恍然大悟，立马想起了_config.yml里的root配置，立马改掉执行hexo serve</p>
+<p>然后控制台也提示要我输入<a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000/</a><br>并没有<code>hexo-theme-huxblog\</code>，但是当我输入<a href="http://localhost:4000/的时候浏览器竟然自动跳转到了http://localhost:4000/hexo-theme-huxblog" target="_blank" rel="external">http://localhost:4000/的时候浏览器竟然自动跳转到了http://localhost:4000/hexo-theme-huxblog</a><br>我再一次陷入了怀疑中，这是为什么呢？</p>
+<p>然后我直觉告诉我这个路径定位到了hexo-theme-huxblog这个目录了，<br>我还特意去度娘了下(没心情翻墙)，原来浏览器访问域名等，会直接跳到首页文件，有一个默认规则打开一个目录下默认文件，如index.html等。</p>
+<p>我又一次以为这个是被浏览器默认定位导致的，但是依然想错了，默认定位不是定位一个文件吗？什么时候可以默认定位到目录了？</p>
+<p>真像是chrome浏览器有缓存，我在测试hexo serve的时候把这个目录给缓存住了，我清除缓存的时候发现正常了，直接输入<a href="http://localhost:4000/不会重新定位到``hexo-theme-huxblog\``目录了。" target="_blank" rel="external">http://localhost:4000/不会重新定位到``hexo-theme-huxblog\``目录了。</a></p>
+<p>###总结<br>看似这么小的一个问题，其实考验了你很多内在的知识，你不了解其中的机制，对某些错误的直觉会出现偏差，导致你解释不了出错原因，找不到正确的解决办法，容易走歪。</p>
+
 
                 <hr>
 
@@ -226,6 +242,8 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
+                          <a class="tag" href="/tags/#hexo" title="hexo">hexo</a>
+                        
                     </div>
                 </section>
                 
