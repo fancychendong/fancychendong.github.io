@@ -13,11 +13,11 @@
 
     <title>
         
-          关于获取当前Activity的一些思考(转载) - fancy的博客 | fancy&#39;s Blog
+          WebApp开发 - fancy的博客 | fancy&#39;s Blog
         
     </title>
 
-    <link rel="canonical" href="http://fancychendong.github.io/2016/03/02/android-current-activity/">
+    <link rel="canonical" href="http://fancychendong.github.io/2016/09/04/WebApp开发/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -165,14 +165,14 @@
                 <div class="post-heading">
                     <div class="tags">
                         
-                          <a class="tag" href="/tags/#android" title="android">android</a>
+                          <a class="tag" href="/tags/#WebApp" title="WebApp">WebApp</a>
                         
                     </div>
-                    <h1>关于获取当前Activity的一些思考(转载)</h1>
+                    <h1>WebApp开发</h1>
                     <h2 class="subheading"></h2>
                     <span class="meta">
                         Posted by xiaodong Chen on
-                        2016-03-02
+                        2016-09-04
                     </span>
                 </div>
             </div>
@@ -191,100 +191,23 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>在Android开发过程中，我们有时候需要获取当前的Activity实例，比如弹出Dialog操作，必须要用到这个。关于如何实现由很多种思路，这其中有的简单，有的复杂，这里简单总结一下个人的一些经验吧。</p>
-<p>##反射<br>反射是我们经常会想到的方法，思路大概为</p>
-<p>1 获取ActivityThread中所有的ActivityRecord</p>
-<p>2 从ActivityRecord中获取状态不是pause的Activity并返回</p>
-<p>一个使用反射来实现的代码大致如下:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Activity <span class="title">getActivity</span><span class="params">()</span> </span>&#123;</div><div class="line">   	Class activityThreadClass = <span class="keyword">null</span>;</div><div class="line">   	<span class="keyword">try</span> &#123;</div><div class="line">       activityThreadClass = 	Class.forName(<span class="string">"android.app.ActivityThread"</span>);</div><div class="line">       Object activityThread = activityThreadClass.getMethod(<span class="string">"currentActivityThread"</span>).invoke(<span class="keyword">null</span>);</div><div class="line">       Field activitiesField = activityThreadClass.getDeclaredField(<span class="string">"mActivities"</span>);</div><div class="line">       activitiesField.setAccessible(<span class="keyword">true</span>);</div><div class="line">       Map activities = (Map) activitiesField.get(activityThread);</div><div class="line">       <span class="keyword">for</span> (Object activityRecord : activities.values()) &#123;</div><div class="line">           Class activityRecordClass = activityRecord.getClass();</div><div class="line">           Field pausedField = activityRecordClass.getDeclaredField(<span class="string">"paused"</span>);</div><div class="line">           pausedField.setAccessible(<span class="keyword">true</span>);</div><div class="line">           <span class="keyword">if</span> (!pausedField.getBoolean(activityRecord)) &#123;</div><div class="line">               Field activityField = activityRecordClass.getDeclaredField(<span class="string">"activity"</span>);</div><div class="line">               activityField.setAccessible(<span class="keyword">true</span>);</div><div class="line">               Activity activity = (Activity) activityField.get(activityRecord);</div><div class="line">               <span class="keyword">return</span> activity;</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">   &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</div><div class="line">       e.printStackTrace();</div><div class="line">   &#125; <span class="keyword">catch</span> (NoSuchMethodException e) &#123;</div><div class="line">       e.printStackTrace();</div><div class="line">   &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</div><div class="line">       e.printStackTrace();</div><div class="line">   &#125; <span class="keyword">catch</span> (InvocationTargetException e) &#123;</div><div class="line">       e.printStackTrace();</div><div class="line">   &#125; <span class="keyword">catch</span> (NoSuchFieldException e) &#123;</div><div class="line">       e.printStackTrace();</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>然而这种方法并不是很推荐，主要是有以下的不足：</p>
-<p>1)反射通常会比较慢<br><br>2)不稳定性，这个才是不推荐的原因，Android框架代码存在修改的可能性，谁要无法100%保证mActivities，paused固定不变。所以可靠性不是完全可靠。</p>
-<p>##Activity基类<br>既然反射不是很可靠，那么有一种比较可靠的方式，就是使用Activity基类。<br><br>在Activity的onResume方法中，将当前的Activity实例保存到一个变量中。</p>
-<pre><code>public class BaseActivity extends Activity{
-
-@Override
-protected void onResume() {
-    super.onResume();
-    MyActivityManager.getInstance().setCurrentActivity(this);
-}
-}
-</code></pre><p>然而，这一种方法也不仅完美，因为这种方法是基于约定的，所以必须每个Activity都继承BaseActivity，如果一旦出现没有继承BaseActivity的就可能有问题。</p>
-<p>##回调方法<br>介绍了上面两种不是尽善尽美的方法，这里实际上还是有一种更便捷的方法，那就是通过Framework提供的回调来实现。<br><br>Android自 API 14开始引入了一个方法，即Application的registerActivityLifecycleCallbacks方法，用来监听所有Activity的生命周期回调，比如onActivityCreated,onActivityResumed等。<br><br>So，一个简单的实现如下</p>
-<pre><code>public class MyApplication extends Application {
-
-
-@Override
-public void onCreate() {
-    super.onCreate();
-    registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
-        @Override
-        public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-
-        }
-
-        @Override
-        public void onActivityStarted(Activity activity) {
-
-        }
-
-        @Override
-        public void onActivityResumed(Activity activity) {
-            MyActivityManager.getInstance().setCurrentActivity(activity);
-        }
-
-        @Override
-        public void onActivityPaused(Activity activity) {
-
-        }
-
-        @Override
-        public void onActivityStopped(Activity activity) {
-
-        }
-
-        @Override
-        public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-
-        }
-
-        @Override
-        public void onActivityDestroyed(Activity activity) {
-
-        }
-    });
-}
-}
-</code></pre><p>然而，金无足赤人无完人，这种方法唯一的遗憾就是只支持API 14即其以上。不过还在现在大多数设备都满足了这个要求。</p>
-<p>为什么是弱引用<br><br>可能有人会带着疑问看到这里，MyActivityManager是个什么鬼，好，我们现在看一下这个类的实现</p>
-<pre><code>public class MyActivityManager {
-private static MyActivityManager sInstance = new MyActivityManager();
-private WeakReference&lt;Activity&gt; sCurrentActivityWeakRef;
-
-
-private MyActivityManager() {
-
-}
-
-public static MyActivityManager getInstance() {
-    return sInstance;
-}
-
-public Activity getCurrentActivity() {
-    Activity currentActivity = null;
-    if (sCurrentActivityWeakRef != null) {
-        currentActivity = sCurrentActivityWeakRef.get();
-    }
-    return currentActivity;
-}
-
-public void setCurrentActivity(Activity activity) {
-    sCurrentActivityWeakRef = new WeakReference&lt;Activity&gt;(activity);
-}
-
-
-}
-</code></pre><p>这个类，实现了当前Activity的设置和获取。<br><br>那么为什么要使用弱引用持有Activity实例呢？<br><br>其实最主要的目的就是避免内存泄露，因为使用默认的强引用会导致Activity实例无法释放，导致内存泄露的出现。详细了解弱引用，请参考本文译文：<a href="http://droidyue.com/blog/2014/10/12/understanding-weakreference-in-java/" target="_blank" rel="external">理解Java中的弱引用</a><br></p>
-<p>Demo源码<br>    •    <a href="https://github.com/androidyue/GetCurrentActivityDemo" target="_blank" rel="external">GetCurrentActivityDemo</a></p>
+                <p>#Web app开发</p>
+<p>##认识cordova<br>[百度百科]Cordova提供了一组设备相关的API，通过这组API，移动应用能够以JavaScript访问原生的设备功能，如摄像头、麦克风等。<br>Cordova还提供了一组统一的JavaScript类库，以及为这些类库所用的设备相关的原生后台代码。<br>Cordova支持如下移动操作系统：iOS, Android,ubuntu phone os, Blackberry, Windows Phone, Palm WebOS, Bada 和 Symbian。</p>
+<p><strong>cordova与phonegap有什么关系？</strong><br>摘自<a href="http://www.cnblogs.com/zhoujg/p/4534932.html" target="_blank" rel="external">http://www.cnblogs.com/zhoujg/p/4534932.html</a><br>phonegap继续成长，在2011年10月，整个Nitobi团队被adobe收购，PhoneGap的项目主管Brian LeRoux指出开源PhoneGap的决定在Adobe收购Nitobi之前就做出了，由于Adobe现在拥有PhoneGap商标，他们不得不换个名字，第一个选中的名字是Callback，毫无创意，因此再改一次，产品现在叫Apache Cordova。随后adobe把 phonegap送给了apache软件基金会，接着apache把phonegap改名为cordova，cordova是Nitobi团队当时坐落的街道名称，用此名来纪念Nitobi团队的贡献。<br>所以Apache Cordova是从PhoneGap中抽出的核心代码，是驱动PhoneGap的核心引擎，你看着两个官网风格多差不多。</p>
+<p>##认识SASS<br>官网地址<a href="http://www.sass.hk/" target="_blank" rel="external">http://www.sass.hk/</a><br>专业级CSS预处理器：成熟稳定，功能强大。</p>
+<p>一、概要：<br>sass是采用的Ruby语言编写的一款css预处理语言。<br>sass从第三代开始，放弃了缩进式风格，并且完全向下兼容普通的css代码，这一代的sass也被称为scss。<br>sass基于Ruby语言编写，所以编译sass文件需要Ruby环境。我们使用sass并不需要过多了解Ruby语言，只需要安装Ruby环境即可。</p>
+<p>Bootstrap 的源码是基于最流行的 CSS 预处理脚本 -<br>Less 和 Sass 开发的</p>
+<p>##使用ionic lab开发web app<br>下载地址：<a href="http://lab.ionic.io/" target="_blank" rel="external">http://lab.ionic.io/</a><br><img src="ionic_lab_webapp.png" alt="Alt text"><br>操作并不复杂，使用ide的好处相对命令来说可以预览视图。<br>但是不近如人意的是，发现该ide并不好用，有很多bug，比如我直接想Run on Android的时候，一直提示我ANDROID_HOME环境变量没配置，可是我确实有配置，在网上搜了半天，各种问题的版本各种答案，反正最后也没解决！<br>不过ionic生成的项目会创建android工程，然后build成功之后再build目录下可以找到apk，直接用命令装apk到手机上体验一下，还是挺不错的。</p>
+<p>工具也就说这么多，其实开发ionic最重要的地方是代码了，用sublime足够了感觉，配合一些命令build下就好了。</p>
+<p>ionic不好的地方是，生成的android工程里的build.gradle太旧了，应该好久没更新了，导致build时候有时候会出问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">#apply plugin: &apos;com.android.application&apos;</div><div class="line">apply plugin: &apos;android&apos;</div><div class="line"></div><div class="line">buildscript &#123;</div><div class="line">    repositories &#123;</div><div class="line">        mavenCentral()//jcenter()</div><div class="line">    &#125;</div><div class="line">    if (gradle.gradleVersion &gt;= &quot;2.2&quot;) &#123;</div><div class="line">        dependencies &#123;</div><div class="line">            classpath &apos;com.android.tools.build:gradle:1.0.0+&apos;</div><div class="line">        &#125;</div><div class="line">    &#125; else if (gradle.gradleVersion &gt;= &quot;2.1&quot;) &#123;</div><div class="line">        dependencies &#123;</div><div class="line">            classpath &apos;com.android.tools.build:gradle:0.14.0+&apos;</div><div class="line">        &#125;</div><div class="line">    &#125; else &#123;</div><div class="line">        dependencies &#123;</div><div class="line">            classpath &apos;com.android.tools.build:gradle:0.12.0+&apos;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">//----------------------------</div><div class="line">应该改成</div><div class="line">dependencies &#123;</div><div class="line">        classpath &apos;com.android.tools.build:gradle:2.1.0&apos;</div><div class="line"></div><div class="line">        // NOTE: Do not place your application dependencies here; they belong</div><div class="line">        // in the individual module build.gradle files</div><div class="line">    &#125;</div><div class="line">//----------------------------</div><div class="line">repositories &#123;</div><div class="line">    mavenCentral()//jcenter()</div><div class="line">&#125;</div><div class="line"></div><div class="line">task wrapper(type: Wrapper) &#123;</div><div class="line">    gradleVersion = &apos;2.2.1&apos;//2.10</div><div class="line">&#125;</div><div class="line">.......总之ionic生成的build.gradle配置有很多问题</div></pre></td></tr></table></figure>
+<p>决定自己重写一遍，不用自动生成的build.gradle配置，并且将ionic生成的android工程手动导入到as中去<br><strong>步骤一、导入CordovaLib</strong><br>习惯先导入库工程，修改库工程里的build.gradle配置，然后import moudle到工作目录中去。<br>中间可能会遇到些问题，如果你配置的build.gradle的compileSdkVersion是23的话，由于sdk 23把apache的包给移除了编译的时候会出现找不到相关class。可以选择使用<code>useLibrary &#39;org.apache.http.legacy&#39;</code>，但是我试着把compileSdkVersion改成19(因为ionic支持4.0以上)，但是发现又出现一个新问题，找不到ClientCertRequest类，在grepcode里(国内的developerandroid够慢)查了下这个类是在android5.0才引入的，好吧，那就改成22，然后编译通过了。<br>成功导入CordovaLib库工程！</p>
+<p><strong>步骤二、导入主工程</strong><br>导入主工程，同样要修改build.gradle文件，该删的删，该改的改，大刀阔斧的改成自己可识别的配置。<br>因为导入库工程的成功经验，中间过程省略。。。<br>最后成功导入主工程，然后迫不及待在as中点击run运行下试试，发现可以直接安装了。perfect！</p>
+<p>虽然整个过程看似很麻烦，用ionic lab无法自动运行在手机上调试，但是可以提供了一个预览功能，遗憾的是这个ide还很多bug，比如有两个web app，如果启动了第一个server可以预览修改，关闭掉后启动第二个app的server预览还是第一个的视图，但是点击右上角的箭头打开浏览器预览却可以，可见这款ide做的真心粗糙。<br>还要吐槽这款ide的是每次操作底部都会出现提示条，必须得手动点击关闭，很不方便。</p>
+<p>而且build android的时候出现莫名其妙的问题<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[Error: ANDROID_HOME is not set and &quot;android&quot; command not in your PATH. You must fulfill at least one of these conditions.]</div><div class="line">You may not have the required environment or OS to build this project</div></pre></td></tr></table></figure></p>
+<p>我明显配置了，不想说什么了~~~~</p>
+<p>算了，开发ionic还是用lab的预览功能，用sublime编辑，然后控制台进入到项目目录使用gradle 和 gradle assembleDebug生成apk文件，用命令安装到手机或模拟器上调试。最后导入到as中去安装签名发布什么的吧！</p>
+<p>web app运行在ios和android上的效果明显有差，在ios上切换界面的时候自带动画，切换更平缓流畅，但是在android中切换的时候比较生硬，感觉直接刷的一下切过去，体验没ios好是真的，不知道这个有没有办法解决一下！</p>
 
 
                 <hr>
@@ -293,13 +216,9 @@ public void setCurrentActivity(Activity activity) {
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2016/05/02/dialog/" data-toggle="tooltip" data-placement="top" title="Dialog中值得学习之-sendXXMessage">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2015/07/09/js-module-7day/" data-toggle="tooltip" data-placement="top" title="Example Post using Keynote Layout">Next Post &rarr;</a>
+                            <a href="/2016/09/04/使用Hexo+GithubPage搭建博客/" data-toggle="tooltip" data-placement="top" title="使用Hexo+Github Page搭建博客">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -326,7 +245,7 @@ public void setCurrentActivity(Activity activity) {
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#android" title="android">android</a>
+                          <a class="tag" href="/tags/#WebApp" title="WebApp">WebApp</a>
                         
                     </div>
                 </section>
