@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          AngularJs学习 - fancy的博客 | fancy&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://fancychendong.github.io/2016/09/05/AngularJs学习/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">fancychendong&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#webapp" title="webapp">webapp</a>
+                        
+                    </div>
+                    <h1>AngularJs学习</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by xiaodong Chen on
+                        2016-09-05
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>#AngularJs学习</p>
+<p>##简介<br>AngularJS 是一个 JavaScript 框架。它可通过 <code>&lt;script&gt;</code> 标签添加到 HTML 页面。<br>AngularJS 通过 指令 扩展了 HTML，且通过 表达式 绑定数据到 HTML。</p>
+<p><strong>AngularJS 是一个 JavaScript 框架</strong><br>可通过 script 标签添加到网页中<code>&lt;script src=&quot;http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js&quot;&gt;&lt;/script&gt;</code>我们建议把脚本放在 <code>&lt;body&gt;</code> 元素的底部。<br>这会提高网页加载速度，因为 HTML 加载不受制于脚本加载。</p>
+<p><strong>AngularJS 扩展了 HTML</strong><br>AngularJS 通过 ng-directives 扩展了 HTML。<br>ng-app 指令定义一个 AngularJS 应用程序。<br>ng-model 指令把元素值（比如输入域的值）绑定到应用程序。<br>ng-bind 指令把应用程序数据绑定到 HTML 视图。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">&lt;meta charset=&quot;utf-8&quot;&gt;</div><div class="line">&lt;script src=&quot;http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js&quot;&gt;&lt;/script&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line"></div><div class="line">&lt;div ng-app=&quot;&quot;&gt;</div><div class="line"> 	&lt;p&gt;名字 : &lt;input type=&quot;text&quot; ng-model=&quot;name&quot;&gt;&lt;/p&gt;</div><div class="line"> 	&lt;h1&gt;Hello &#123;&#123;name&#125;&#125;&lt;/h1&gt;</div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+<p>实例讲解：<br>当网页加载完毕，AngularJS 自动开启。<br>ng-app 指令告诉 AngularJS，<code>&lt;div&gt;</code> 元素是 <code>AngularJS 应用程序 的&quot;所有者&quot;</code>。<br>ng-model 指令把输入域的值绑定到应用程序变量 name。<br>ng-bind 指令把应用程序变量 name 绑定到某个段落的 innerHTML。</p>
+<p><strong>AngularJS 指令</strong><br>ng-init 指令初始化 AngularJS 应用程序变量。<br>HTML5 允许扩展的（自制的）属性，以 data- 开头。<br>AngularJS 属性以 ng- 开头，但是您可以使用 data-ng- 来让网页对 HTML5 有效。</p>
+<p><strong>AngularJS 表达式</strong><br>AngularJS 表达式写在双大括号内：。<br>AngularJS 表达式把数据绑定到 HTML，这与 ng-bind 指令有异曲同工之妙。<br>AngularJS 将在表达式书写的位置”输出”数据。<br>AngularJS 表达式 很像 JavaScript 表达式：它们可以包含文字、运算符和变量。<br>实例 10 或 undefined undefined</p>
+<p><strong>AngularJS 应用</strong><br>AngularJS 模块（Module） 定义了 AngularJS 应用。<br>AngularJS 控制器（Controller） 用于控制 AngularJS 应用。<br>ng-app指令定义了应用, ng-controller 定义了控制器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;div ng-app=&quot;myApp&quot; ng-controller=&quot;myCtrl&quot;&gt;</div><div class="line"></div><div class="line">名: &lt;input type=&quot;text&quot; ng-model=&quot;firstName&quot;&gt;&lt;br&gt;</div><div class="line">姓: &lt;input type=&quot;text&quot; ng-model=&quot;lastName&quot;&gt;&lt;br&gt;</div><div class="line">&lt;br&gt;</div><div class="line">姓名: &#123;&#123;firstName + &quot; &quot; + lastName&#125;&#125;</div><div class="line"></div><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">&lt;script&gt;</div><div class="line">var app = angular.module(&apos;myApp&apos;, []);</div><div class="line">app.controller(&apos;myCtrl&apos;, function($scope) &#123;</div><div class="line">    $scope.firstName= &quot;John&quot;;</div><div class="line">    $scope.lastName= &quot;Doe&quot;;</div><div class="line">&#125;);</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure></p>
+<p>AngularJS 模块定义应用:<br><code>var app = angular.module(&#39;myApp&#39;, []);</code><br>AngularJS 控制器控制应用:<br><code>app.controller(&#39;myCtrl&#39;, function($scope) {
+    $scope.firstName= &quot;John&quot;;
+    $scope.lastName= &quot;Doe&quot;;
+});</code></p>
+<p><strong>AngularJS 数字</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;div ng-app=&quot;&quot; ng-init=&quot;quantity=1;cost=5&quot;&gt;</div><div class="line">&lt;p&gt;总价： &#123;&#123; quantity * cost &#125;&#125;&lt;/p&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure></p>
+<p>使用 ng-bind 的相同实例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;div ng-app=&quot;&quot; ng-init=&quot;quantity=1;cost=5&quot;&gt;</div><div class="line">&lt;p&gt;总价： &lt;span ng-bind=&quot;quantity * cost&quot;&gt;&lt;/span&gt;&lt;/p&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure></p>
+<p><strong>AngularJS 字符串</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;div ng-app=&quot;&quot; ng-init=&quot;firstName=&apos;John&apos;;lastName=&apos;Doe&apos;&quot;&gt;</div><div class="line">&lt;p&gt;姓名： &#123;&#123; firstName + &quot; &quot; + lastName &#125;&#125;&lt;/p&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure></p>
+<p><strong>AngularJS 对象</strong><br>AngularJS 对象就像 JavaScript 对象：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;div ng-app=&quot;&quot; ng-init=&quot;person=&#123;firstName:&apos;John&apos;,lastName:&apos;Doe&apos;&#125;&quot;&gt;</div><div class="line">&lt;p&gt;姓为 &#123;&#123; person.lastName &#125;&#125;&lt;/p&gt;</div><div class="line">&lt;p&gt;姓为 &lt;span ng-bind=&quot;person.lastName&quot;&gt;&lt;/span&gt;&lt;/p&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure></p>
+<p><strong>AngularJS 数组</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;div ng-app=&quot;&quot; ng-init=&quot;points=[1,15,19,2,40]&quot;&gt;</div><div class="line">&lt;p&gt;第三个值为 &#123;&#123; points[2] &#125;&#125;&lt;/p&gt;</div><div class="line">&lt;p&gt;第三个值为 &lt;span ng-bind=&quot;points[2]&quot;&gt;&lt;/span&gt;&lt;/p&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure></p>
+<p><strong>AngularJS 表达式 与 JavaScript 表达式</strong><br>类似于 JavaScript 表达式，AngularJS 表达式可以包含字母，操作符，变量。<br>与 JavaScript 表达式不同，AngularJS 表达式可以写在 HTML 中。<br>与 JavaScript 表达式不同，AngularJS 表达式不支持条件判断，循环及异常。<br>与 JavaScript 表达式不同，AngularJS 表达式支持过滤器。</p>
+<p><strong>数据绑定</strong><br>上面实例中的  表达式是一个 AngularJS 数据绑定表达式。<br>AngularJS 中的数据绑定，同步了 AngularJS 表达式与 AngularJS 数据。<br> 是通过 ng-model=”firstName” 进行同步。</p>
+<p><strong>重复 HTML 元素</strong><br>ng-repeat 指令会重复一个 HTML 元素：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;div ng-app=&quot;&quot; ng-init=&quot;names=[&apos;Jani&apos;,&apos;Hege&apos;,&apos;Kai&apos;]&quot;&gt;</div><div class="line">  &lt;p&gt;使用 ng-repeat 来循环数组&lt;/p&gt;</div><div class="line">  &lt;ul&gt;</div><div class="line">    &lt;li ng-repeat=&quot;x in names&quot;&gt;</div><div class="line">      &#123;&#123; x &#125;&#125;</div><div class="line">    &lt;/li&gt;</div><div class="line">  &lt;/ul&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure></p>
+<p>ng-repeat 指令用在一个对象数组上：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;div ng-app=&quot;&quot; ng-init=&quot;names=[</div><div class="line">&#123;name:&apos;Jani&apos;,country:&apos;Norway&apos;&#125;,</div><div class="line">&#123;name:&apos;Hege&apos;,country:&apos;Sweden&apos;&#125;,</div><div class="line">&#123;name:&apos;Kai&apos;,country:&apos;Denmark&apos;&#125;]&quot;&gt;</div><div class="line">&lt;p&gt;循环对象：&lt;/p&gt;</div><div class="line">&lt;ul&gt;</div><div class="line">  &lt;li ng-repeat=&quot;x	in names&quot;&gt;</div><div class="line">    &#123;&#123; x.name + &apos;, &apos; + x.country &#125;&#125;</div><div class="line">  &lt;/li&gt;</div><div class="line">&lt;/ul&gt;</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure></p>
+<p>AngularJS 完美支持数据库的 CRUD（增加Create、读取Read、更新Update、删除Delete）应用程序。<br>把实例中的对象想象成数据库中的记录。</p>
+<p><strong>创建自定义的指令</strong><br>除了 AngularJS 内置的指令外，我们还可以创建自定义指令。<br>你可以使用 .directive 函数来添加自定义的指令。<br>要调用自定义指令，HTML 元素上需要添加自定义指令名。<br>使用驼峰法来命名一个指令， runoobDirective, 但在使用它时需要以 - 分割, runoob-directive:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;body ng-app=&quot;myApp&quot;&gt;</div><div class="line">&lt;runoob-directive&gt;&lt;/runoob-directive&gt;</div><div class="line">&lt;script&gt;</div><div class="line">var app = angular.module(&quot;myApp&quot;, []);</div><div class="line">app.directive(&quot;runoobDirective&quot;, function() &#123;</div><div class="line">    return &#123;</div><div class="line">        template : &quot;&lt;h1&gt;自定义指令!&lt;/h1&gt;&quot;</div><div class="line">    &#125;;</div><div class="line">&#125;);</div><div class="line">&lt;/script&gt;</div><div class="line">&lt;/body&gt;</div></pre></td></tr></table></figure></p>
+<p>你可以通过以下方式来调用指令：<br>元素名<br>属性<br>类名<br>注释<br>以下实例方式也能输出同样结果:<br><code>元素名&lt;runoob-directive&gt;&lt;/runoob-directive&gt;</code><br><code>属性:&lt;div runoob-directive&gt;&lt;/div&gt;</code><br><code>类名&lt;div class=&quot;runoob-directive&quot;&gt;&lt;/div&gt;</code><br><code>注释&lt;!-- directive: runoob-directive --&gt;</code></p>
+<p><strong>限制使用</strong><br>可以限制你的指令只能通过特定的方式来调用。<br>通过添加 restrict 属性,并设置只值为 “A”, 来设置指令只能通过属性的方式来调用:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var app = angular.module(&quot;myApp&quot;, []);</div><div class="line">app.directive(&quot;runoobDirective&quot;, function() &#123;</div><div class="line">    return &#123;</div><div class="line">        restrict : &quot;A&quot;,</div><div class="line">        template : &quot;&lt;h1&gt;自定义指令!&lt;/h1&gt;&quot;</div><div class="line">    &#125;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>restrict 值可以是以下几种:<br>E 作为元素名使用<br>A 作为属性使用<br>C 作为类名使用<br>M 作为注释使用<br>restrict 默认值为 EA, 即可以通过元素名和属性名来调用指令。</p>
+<p>【更多相关文档介绍移步：<a href="http://www.runoob.com/angularjs/angularjs-filters.html网站】" target="_blank" rel="external">http://www.runoob.com/angularjs/angularjs-filters.html网站】</a></p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2016/09/04/WebApp开发/" data-toggle="tooltip" data-placement="top" title="WebApp开发">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#webapp" title="webapp">webapp</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; fancychendong&#39;s Blog 2016 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://fancychendong.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
