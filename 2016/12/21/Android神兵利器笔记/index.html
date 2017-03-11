@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Android神兵利器笔记 - fancy的博客 | fancy&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://fancychendong.github.io/2016/12/21/Android神兵利器笔记/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">fancychendong&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#android" title="android">android</a>
+                        
+                    </div>
+                    <h1>Android神兵利器笔记</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by xiaodong Chen on
+                        2016-12-21
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="Android神兵利器笔记"><a href="#Android神兵利器笔记" class="headerlink" title="Android神兵利器笔记"></a>Android神兵利器笔记</h1><p>[TOC]</p>
+<h2 id="与Gradle的爱恨情仇"><a href="#与Gradle的爱恨情仇" class="headerlink" title="与Gradle的爱恨情仇"></a>与Gradle的爱恨情仇</h2><h3 id="使用gradle-dependencies显示项目树结构"><a href="#使用gradle-dependencies显示项目树结构" class="headerlink" title="使用gradle dependencies显示项目树结构"></a>使用gradle dependencies显示项目树结构</h3><p>通过终端cd到需要显示依赖结构的moduel中，然后执行 gradle dependencies命令。</p>
+<p><a href="https://www.zhihu.com/question/49995908/answer/119052495" target="_blank" rel="external">如何看懂gradle dependencies 输出的依赖树，里面的出现的各种符号都是什么意思？</a><br>在stackoverflow上提出了同样的问题，那边已经有人回答了:<br><a href="https://link.zhihu.com/?target=http://stackoverflow.com/a/39139049/4941679" target="_blank" rel="external">tree - How to understand the output of command ‘gradle dependencies’?</a></p>
+<p>为方便同样有这个疑问，但访问不到上面连接的朋友，这里转下答案：<br>+, -, | and \ are just used to draw the tree - it’s a kind of ASCII art.<br>When it comes to (<em>) and -&gt; please refer to <a href="https://link.zhihu.com/?target=http://stackoverflow.com/questions/27952388/what-does-arrow-mean-in-gradles-dependency-graph" target="_blank" rel="external">this</a> question and answer.<br>tl;dr<br>(</em>) - is used to indicate that particular dependency is described somewhere else in the tree<br>-&gt; - is used to point the dependency that wins in version conflict.</p>
+<h3 id="更改项目结构"><a href="#更改项目结构" class="headerlink" title="更改项目结构"></a>更改项目结构</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">sourceSets &#123;</div><div class="line">        main &#123;</div><div class="line">            manifest.srcFile &apos;AndroidManifest.xml&apos;</div><div class="line">            java.srcDirs = [&apos;src-gen-gd&apos;,&apos;src-test&apos;,&apos;src-framework&apos;,&apos;src&apos;]</div><div class="line">            resources.srcDirs = [&apos;src-gen-gd&apos;,&apos;src-test&apos;,&apos;src-framework&apos;,&apos;src&apos;]</div><div class="line">            aidl.srcDirs = [&apos;src-gen-gd&apos;,&apos;src-test&apos;,&apos;src-framework&apos;,&apos;src&apos;]</div><div class="line">            renderscript.srcDirs = [&apos;src-gen-gd&apos;,&apos;src-test&apos;,&apos;src-framework&apos;,&apos;src&apos;]</div><div class="line">            res.srcDirs = [&apos;res&apos;]</div><div class="line">            assets.srcDirs = [&apos;assets&apos;]</div><div class="line">            //.so 等 JNI依赖</div><div class="line">            jniLibs.srcDirs = [&apos;libs&apos;]</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+<p>比如说上面这种方式可以指定src目录，res目录，assets目录，jniLibs目录等。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">sourceSets &#123;</div><div class="line">        main.res.srcDirs += &apos;src/main/res-widget&apos;</div><div class="line">        main.res.srcDirs += &apos;src/main/res/layout/widget&apos;</div><div class="line">    &#125;</div><div class="line">    或者</div><div class="line">    main.res.srcDirs = [&apos;src/main/res&apos;, &apos;src/main/res-widget&apos;, &apos;src/main/res/layout/widget&apos;]</div></pre></td></tr></table></figure></p>
+<p>还有上面这种方式指定res下的layout目录，可以给layout布局根据包名分类管理。<br><img src="./1481378473531.png" alt="Alt text"><br><code>当然这跟android gradle版本可能也有关系，并不是所有都支持，在开发中要根据实际使用的gradle版本和as版本来定</code></p>
+<h3 id="合理利用gradle-properties文件"><a href="#合理利用gradle-properties文件" class="headerlink" title="合理利用gradle.properties文件"></a>合理利用gradle.properties文件</h3><ul>
+<li><p>System.properties方式<br>systemProp.XXX=123456<br>systemProp.XXX=abcdef<br>然后就可以直接在build.gradle文件中引用 <code>System.properties[&#39;XXX&#39;]</code></p>
+</li>
+<li><p>Key-Value方式<br>demo.XXX=123456<br>demo.XXX=abcdef<br>然后就可以直接在build.gradle文件中引用 <code>project.property(&#39;demo.XXX&#39;)</code></p>
+</li>
+<li><p>属性方式<br>XXX=123456<br>XXX=abcdef<br>然后就可以直接在build.gradle文件中引用 <code>XXX</code></p>
+</li>
+</ul>
+<p><code>有时候我们要引用的配置需要时一个int类型，但是默认会是一个String类型，某些IDE会报错，这个时候可以试下  XXX as int</code></p>
+<h3 id="一个字符解决Gradle-aar编译参数传递问题是怎样一种体验"><a href="#一个字符解决Gradle-aar编译参数传递问题是怎样一种体验" class="headerlink" title="一个字符解决Gradle aar编译参数传递问题是怎样一种体验"></a>一个字符解决Gradle aar编译参数传递问题是怎样一种体验</h3><p>aar是Android Studio提供的一个依赖库系统，可以很方便的让主项目来使用库项目的代码、资源。</p>
+<p>但如何来给一个aar库传递编译参数呢（传递代码配置是很方便的，通过接口即可，但编译参数是不行的）？这个场景还是非常常见的，例如下面的这样一个项目：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">├── app</div><div class="line">│   ├── build.gradle</div><div class="line">│   ├── libs</div><div class="line">│   └── src</div><div class="line">├── build.gradle</div><div class="line">├── gradle.properties</div><div class="line">└── testlibrary</div><div class="line">    ├── build.gradle</div><div class="line">    ├── libs</div><div class="line">    └── src</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>这个示例来自公司对推送SDK的封装，我们都知道，第三方的推送SDK需要配置很多AppKey，这些都是在编译时就需要指定的，鄙司对第三方的推送SDK又做了一层封装，抽出了一个aar库，因此，需要在编译时将AppKey传递给aar。</p>
+<p>爆栈上实际上已经有这个提问了，但很遗憾没有人回答，<a href="http://stackoverflow.com/questions/32955764/how-to-keep-placeholders-in-an-aars-manifest/32955888" target="_blank" rel="external">http://stackoverflow.com/questions/32955764/how-to-keep-placeholders-in-an-aars-manifest/32955888</a></p>
+</blockquote>
+<p>app是我们的主项目，依赖testlibrary这样一个aar库项目（上面的目录中是以源码依赖的，但实际上我们是以aar的方式依赖）。这时候主项目依赖testlibrary的时候，需要给testlibrary传一个key，那么考虑将key写在gradle.properties中，通过manifestPlaceholders来进行引用，也就是这样：</p>
+<p>testlibrary AndroidMainifest.xml:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;meta-data</div><div class="line">    android:name=&quot;APP_KEY&quot;</div><div class="line">    android:value=&quot;$&#123;APP_KEY&#125;&quot;/&gt;</div></pre></td></tr></table></figure></p>
+<p>testlibrary build.gradle:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">manifestPlaceholders = [</div><div class="line">        &quot;APP_KEY&quot; : app_key</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<p>其中app_key就是写在gradle.properties中的参数。</p>
+<p>貌似这种方式就可以解决这种问题，但实际上，编译成aar后，你就会发现，在编译aar的时候，你在AndroidMainifest.xml中申明的manifestPlaceholders就已经被替换调了！而且，不管你怎么做，不替换调manifestPlaceholders的值，是肯定编译不过的。那么是不是意味着manifestPlaceholders这条路是行不通的呢？</p>
+<p>我们先来仔细分析下问题的原因，我们在编写aar代码的时候，希望aar能够接收外界传来的编译参数，但是，在编译aar的时候，需要提供具体的值来替换这些manifestPlaceholders，否则，则编译不过，貌似整个过程就陷入了一个死循环。。。</p>
+<p>解决办法自然是有的，比如，使用一个特殊的标志符，例如xxxxx_abc这样的标志，在主项目中，通过Task来进行Mainifest的替换，但是，这肯定不是我们想要的，因为，Gradle没有这么Low啊！！！解决的方法就是对Gradle文档进行阅读理解！！！地址如下：</p>
+<p><a href="http://tools.android.com/tech-docs/new-build-system/user-guide/manifest-merger#TOC-Placeholder-support" target="_blank" rel="external">http://tools.android.com/tech-docs/new-build-system/user-guide/manifest-merger#TOC-Placeholder-support</a></p>
+<p>我们定位到Android Manifest file merging，好好理解其中的每一句话，只到我们读到这句话：</p>
+<blockquote>
+<p>The syntax for placeholder values is ${name} since @ is reserved for links. After the last file merging occurred, and before the resulting merged android manifest file is written out, all values with a placeholder will be swapped with injected values. A build breakage will be generated if a variable name is unknown.</p>
+</blockquote>
+<p>有点意思吧，除了我们常用的${}的manifestPlaceholders写法，实际上，还有一种以@开头的写法！！！</p>
+<p>OK，这种写法的含义就是，通过@开头来指定manifestPlaceholders的Key的时候，表示当前编译不执行manifestPlaceholders的替换！！！那么通过这种方式，我们就可以生成带manifestPlaceholders的aar库，从而解决我们前面提到的这个问题。</p>
+<p>具体的解决方式如下：</p>
+<p>testlibrary AndroidMainifest.xml:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;meta-data</div><div class="line">    android:name=&quot;APP_KEY&quot;</div><div class="line">    android:value=&quot;$&#123;APP_KEY&#125;&quot;/&gt;</div></pre></td></tr></table></figure></p>
+<p>testlibrary build.gradle:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">manifestPlaceholders = [</div><div class="line">        &quot;@APP_KEY&quot; : &quot;&quot;</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<p>是的，你没有看错，前面加一个@就可以了，这样你在编译aar的时候，就会保留本库中的manifestPlaceholders而不做任何替换！！！通过这样的设置，你就可以在主项目引用的时候再进行manifestPlaceholders的替换，从而实现编译参数传递。</p>
+<p>在主项目中，配置manifestPlaceholders即可。</p>
+<p>app build.gradle:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">manifestPlaceholders = [</div><div class="line">        &quot;APP_KEY&quot; : app_key</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<p>这里的app_key就是写在gradle.properties中的参数。</p>
+<p>So easy，一个字符解决了所有问题。<br><code>补充一下：这里的manifestPlaceholders需要放置在最终打包的渠道配置域里</code></p>
+<h3 id="使用Gradle自定义task打包安装启动apk一气呵成"><a href="#使用Gradle自定义task打包安装启动apk一气呵成" class="headerlink" title="使用Gradle自定义task打包安装启动apk一气呵成"></a>使用Gradle自定义task打包安装启动apk一气呵成</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">task  installApkFiles(type: Exec,dependsOn:assembleDebug)&#123;</div><div class="line">    def  purposeDir = &quot;$buildDir/outputs/apk/&quot;</div><div class="line">    workingDir  =  &quot;$purposeDir&quot;</div><div class="line">    def myCommond = [&apos;adb&apos;, &quot;install&quot;, &quot;-r&quot;, &apos;databinding-debug.apk&apos;]</div><div class="line">    commandLine  myCommond</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">task startDemo(type:Exec,dependsOn:installApkFiles)&#123;</div><div class="line">    def packageName =&apos;com.xiao.dong.databinding&apos;</div><div class="line">    commandLine  &quot;adb&quot;,&quot;shell&quot;,&quot;am&quot;,&quot;start&quot;,&quot;-n&quot;,</div><div class="line">            &quot;$packageName/.test.ActivityMain&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>直接控制台运行 ../gradlew startDemo就可以了</p>
+<h2 id="Gradle-性能检测"><a href="#Gradle-性能检测" class="headerlink" title="Gradle 性能检测"></a>Gradle 性能检测</h2><p>控制台使用gradle build -profile可以检测gradle执行build的性能。<br>会在根目录的build文件下生成reports/profile/*.html文件，该html文件列举出了gradle执行build在各个task的耗时。</p>
+<p>gradle执行build最耗时的莫过于lint，有必要在debug的阶段禁用掉lint检查。使用方法有二：</p>
+<ul>
+<li>gradle build -x lint<br>-x表示exclude task ;Specify a task to be exclude from execution;</li>
+<li>在build.gradle配置中增加<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">project.gradle.startParameter.excludedTaskNames.add(&apos;lint&apos;)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这样就可以达到禁用lint，提高gradle的编译速度。</p>
+<p>除了Lint外，AAPT检查也是一个耗时大户。在debug阶段可以通过<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">aaptOptions &#123;</div><div class="line">        cruncherEnabled = false</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>禁用掉。<br>当然，禁用掉上面这些检查可能会带来风险，会导致运行出错的问题，切记release的时候一定不要使用。</p>
+<h2 id="使用gradle精简资源"><a href="#使用gradle精简资源" class="headerlink" title="使用gradle精简资源"></a>使用gradle精简资源</h2><ul>
+<li><p>结合minifyEnabled true使用shrinkResources true去除工程中无效的资源。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">release &#123;</div><div class="line">            minifyEnabled true</div><div class="line">            shrinkResources true</div><div class="line">            proguardFiles getDefaultProguardFile(&apos;proguard-android.txt&apos;), &apos;proguard-rules.pro&apos;</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>AS提供了快捷指令，使用快捷键’Command+Shift+A’调出快捷指令输入框，输入’remove unused resources’即可执行该指令。效果和上面类似。</p>
+</li>
+</ul>
+<h2 id="Gradle自定义插件"><a href="#Gradle自定义插件" class="headerlink" title="Gradle自定义插件"></a>Gradle自定义插件</h2><p>自定义Gradle插件，可以用Android Studio，也可以用IDEA；<br>但是发现Android Studio貌似创建出来的gradle库工程里面的源码无法识别出来，可能是哪要设置或者as的原因，暂时不懂；<br>用IDEA创建gradle工程，如果发现创建工程的时候没有gradle选项，可以通过在setting&gt;plugin里选择开启gradle重启就好了。<br>网上有很多教程：<a href="http://blog.csdn.net/lw_power/article/details/51241384" target="_blank" rel="external">http://blog.csdn.net/lw_power/article/details/51241384</a><br><a href="http://www.open-open.com/lib/view/1427034613470" target="_blank" rel="external">http://www.open-open.com/lib/view/1427034613470</a></p>
+<p>暂且就用AS写写Gradle的插件吧，识别不了源文件就凑合吧。</p>
+<ul>
+<li>目录结构<br><img src="./1480257829563.png" alt="Alt text"></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">package com.cxd;</div><div class="line"></div><div class="line">class MyExtension &#123;</div><div class="line">    String message;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>所谓Groovy脚步的Extension，实际就类似Gradle的配置信息。在主项目使用自定义的Gradle插件时，可以在主项目的build.gradle脚步中通过Extension传递一些配置参数。<br>上面定义了一个要配置的参数变量message</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">package com.cxd;</div><div class="line"></div><div class="line">import org.gradle.api.Plugin;</div><div class="line">import org.gradle.api.Project;</div><div class="line">import com.cxd.MyExtension;</div><div class="line"></div><div class="line">public class MainPluginForBuildSrc implements Plugin&lt;Project&gt; &#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    void apply(Project project) &#123;</div><div class="line"></div><div class="line">        project.extensions.create(&apos;pluginsrc&apos;, MyExtension)</div><div class="line"></div><div class="line">        project.task(&apos;testPlugin&apos;)&lt;&lt;&#123;</div><div class="line">            println project.pluginsrc.message</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>project.task(&#39;testPlugin&#39;)</code>创建一个名为testPlugin的task。</p>
+<p><code>project.extensions.create(&#39;pluginsrc&#39;, MyExtension)</code>将一个Extension配置给名为pluginsrc的Gradle插件。注意这里的pluginsrc就是将要在主工程里<code>apply plugin: &#39;pluginsrc&#39;</code>引用插件的名字，如果不一致，会报错<br>Error:(25, 0) Gradle DSL method not found: ‘pluginsrc()’</p>
+<p>并且还需要注意的是pluginsrc.properties这个配置文件，这里的名字也必须保持和上面代码中project.extensions.create创建出来的名字一致。<br>否则也会出现找不到的情况。</p>
+<p>pluginsrc.properties:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">implementation-class=com.cxd.MainPluginForBuildSrc</div></pre></td></tr></table></figure></p>
+<p>通过上面代码指定最开始创建的Groovy类。</p>
+<p>build.gradle :<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">apply plugin: &apos;groovy&apos;</div><div class="line">apply plugin: &apos;maven&apos;</div><div class="line"></div><div class="line">dependencies &#123;</div><div class="line">    compile gradleApi()</div><div class="line">    compile localGroovy()</div><div class="line">&#125;</div><div class="line"></div><div class="line">repositories &#123;</div><div class="line">    mavenCentral()</div><div class="line">&#125;</div><div class="line"></div><div class="line">group=&apos;com.cxd&apos;</div><div class="line">version=&apos;1.0.0&apos;</div><div class="line"></div><div class="line">uploadArchives &#123;</div><div class="line">    repositories &#123;</div><div class="line">        mavenDeployer &#123;</div><div class="line">            repository(url: uri(&apos;../repo&apos;))</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>使用groovy插件编译groovy源码，声明gradleAPI作为即时编译依赖，apply plugin: ‘maven’ 是用来创建一个插件jar文件并且存储在本地maven库里，本地maven库即我们在脚本里创建的”../repo”目录</p>
+<p>执行命令:   <code>gradle uploadArchives</code>编译插件并上传到了本地库中</p>
+<p>主工程的build.gradle<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">buildscript &#123;</div><div class="line">    repositories &#123;</div><div class="line">        maven &#123;</div><div class="line">            url uri(&apos;../repo&apos;)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    dependencies &#123;</div><div class="line">        classpath group: &apos;com.cxd&apos;,</div><div class="line">                name: &apos;plugin&apos;,</div><div class="line">                version: &apos;1.0.0&apos;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">apply plugin: &apos;pluginsrc&apos;</div></pre></td></tr></table></figure></p>
+<p>引用本地maven仓库自定义的插件pluginsrc–&gt;即之前通过maven存储到本地的插件。</p>
+<p>最后在终端执行之前创建的<code>project.task(&#39;testPlugin&#39;)</code>task。<br><img src="./1480259647917.png" alt="Alt text"></p>
+<p>打印出了我们设置进去的信息！暂告一段落……</p>
+<h2 id="性能检测与分析工具"><a href="#性能检测与分析工具" class="headerlink" title="性能检测与分析工具"></a>性能检测与分析工具</h2><h3 id="统计应用的启动时间"><a href="#统计应用的启动时间" class="headerlink" title="统计应用的启动时间"></a>统计应用的启动时间</h3><p>adb shell am start -W com.netease.edu.study/.activity.ActivityWelcome</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/01/20/Android高级进阶笔记/" data-toggle="tooltip" data-placement="top" title="Android高级进阶笔记">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2016/12/15/Android Data Binding/" data-toggle="tooltip" data-placement="top" title="Android Data Binding">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#android" title="android">android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; fancychendong&#39;s Blog 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://fancychendong.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

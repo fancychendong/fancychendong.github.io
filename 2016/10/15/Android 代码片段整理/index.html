@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Android 代码片段整理 - fancy的博客 | fancy&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://fancychendong.github.io/2016/10/15/Android 代码片段整理/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">fancychendong&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#android" title="android">android</a>
+                        
+                    </div>
+                    <h1>Android 代码片段整理</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by xiaodong Chen on
+                        2016-10-15
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>#Android 代码片段整理</p>
+<p>[TOC]</p>
+<p>##Bitmap图片的合成</p>
+<p>###合成白色背景的bitmap<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">// 生成一个白色背景的bitmap</div><div class="line">				public Bitmap getWhiteBackgroundBitmap(Bitmap srcBmp, int width, int height) &#123;</div><div class="line">					Paint imgPaint = new Paint();</div><div class="line">					imgPaint.setAntiAlias(true);</div><div class="line">					try &#123;</div><div class="line">						Bitmap output = Bitmap.createBitmap(width, height,</div><div class="line">								Bitmap.Config.ARGB_8888);</div><div class="line">						Canvas canvas = new Canvas(output);</div><div class="line">						imgPaint.setColor(Color.WHITE);</div><div class="line">						canvas.drawColor(Color.WHITE);</div><div class="line">						imgPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));</div><div class="line">						Rect srcRect = new Rect(0, 0, width, height);</div><div class="line">						canvas.drawBitmap(srcBmp, srcRect, srcRect, imgPaint);</div><div class="line">						return output;</div><div class="line">					&#125; catch (Exception e) &#123;</div><div class="line">						if (e != null &amp;&amp; !TextUtils.isEmpty(e.getMessage())) &#123;</div><div class="line">							NTLog.e(&quot;ActivityGallery&quot;, e.getMessage());</div><div class="line">						&#125;</div><div class="line">					&#125;</div><div class="line">					return srcBmp;</div><div class="line">				&#125;</div></pre></td></tr></table></figure></p>
+<p>这里关键用到的属性是<code>PorterDuff.Mode.SRC_OVER</code><br>整体思路是<br>1、创建一个需要和源bitmap合成的全新的bitmap<br><code>Bitmap output = Bitmap.createBitmap(width, height,
+                                Bitmap.Config.ARGB_8888);</code><br>传入了源bitmap的宽和高，和使用高质量的bitmap配置参数。</p>
+<p>2、使用刚才新生成的bitmap创建一个画布<br><code>Canvas canvas = new Canvas(output);</code><br>这样我们就可以在这个画布上画上源bitmap了。</p>
+<p>3、给画布涂白，因为我们要实现的效果是合成白色背景的bitmap。</p>
+<p>4、如何将源bitmap画到画布上去，我们需要一个画笔paint<br><code>Paint imgPaint = new Paint();
+                    imgPaint.setAntiAlias(true);</code></p>
+<p>5、设置画笔的模式<br><code>imgPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_OVER));</code><br>Paint有一个setXfermode的方法，可以设置画笔的绘画模式，每种模式会有不同的表现，这里是让源bitmap浮在画布上面显示</p>
+<p>6、利用画布进行绘制<br><code>Rect srcRect = new Rect(0, 0, width, height);
+                        canvas.drawBitmap(srcBmp, srcRect, srcRect, imgPaint);</code></p>
+<p>##TextView富文本</p>
+<p>###构建SpannableString对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">private SpannableString getSpannableString(TextView textView, String title) &#123;</div><div class="line">			SpannableString spannableTitle = null;</div><div class="line">			final String placeIcon = &quot;[icon]&quot;;</div><div class="line">			Drawable drawable = getResources().getDrawable(R.drawable.ico_forum_closed);</div><div class="line">			int textWidth = PlatformUtil.getDisplayWidth(ActivitySubForumList.this) - Util.dip2px(ActivitySubForumList.this, 50);</div><div class="line">			textWidth = textWidth - drawable.getIntrinsicWidth();</div><div class="line">			title = getEllipsizeStr(textView.getPaint(), title, textWidth);</div><div class="line">			spannableTitle = new SpannableString(title + placeIcon);</div><div class="line">			drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());</div><div class="line">			ImageSpan span = new ImageSpan(drawable, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</div><div class="line">			spannableTitle.setSpan(span, title.length(), title.length() + placeIcon.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</div><div class="line">			return spannableTitle;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		private String getEllipsizeStr(TextPaint textPaint, String origin, int maxTextWidth) &#123;</div><div class="line">			if (textPaint != null) &#123;</div><div class="line">				// 根据长度截取出剪裁后的文字,如果字数不够,则返回未阶段字数</div><div class="line">				final String ellipsizeStr = (String) TextUtils.ellipsize(origin, textPaint, maxTextWidth, TextUtils.TruncateAt.END);</div><div class="line">				return ellipsizeStr;</div><div class="line">			&#125;</div><div class="line">			return &quot;&quot;;</div><div class="line">		&#125;</div></pre></td></tr></table></figure>
+<p>使用场景就是，当textview需要显示一些标签，并且限制了textview的行数的时候需要用到。</p>
+<p>思路是：1、计算textview用于显示文本所需的最大宽度，一般是textview宽度减去drawable的宽度。<br>2、利用TextUtils.ellipsize计算textview裁剪后的文本信息。传入TextUtils.TruncateAt.END可以获取末尾省略的文本。<br>3、给drawable设置bounds，创建ImageSpan对象。<br>4、给spannableTitle设置setSpan。</p>
+<p>经过上面四步一个带有drawable标签的spannableTitle就可以返回了。</p>
+<p>当textview需要换行显示的时候，并且icon显示在末尾会出问题。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Created by chenxiaodong on 16/7/20.</div><div class="line"> */</div><div class="line">public class ImageSpanTextView &#123;</div><div class="line"></div><div class="line">    //just for test</div><div class="line">    private static String[] testStr = &#123;&quot;测试组合课程然后又是企业指派&quot;, &quot;测试组合课程然后又是企业指派测试组合课程然后又是企业指派&quot;, &quot;测试组合课程然后又&quot;, &quot;测试组合课程然后又是企业&quot;, &quot;daffad&quot;, &quot;测试组合课程然后又是企业测试组&quot;, &quot;测试组合课程测试组合课程然后又是企业&quot;&#125;;</div><div class="line">    private static int count = 0;</div><div class="line"></div><div class="line">    private static SpannableString getSpannableString(TextView textView, String title, int widthOfLine, int maxLines, int imageRes) &#123;</div><div class="line">        title = testStr[count%testStr.length];</div><div class="line">        count ++;</div><div class="line">        final String blank = &quot;  &quot;;</div><div class="line">        title += blank;</div><div class="line">//        int textWidth = PlatformUtil.getDisplayWidth(widget.getContext()) - Util.dip2px(widget.getContext(), 150);</div><div class="line">        int textWidth = widthOfLine;</div><div class="line">        int maxTextWidth = textWidth * maxLines;</div><div class="line"></div><div class="line">        SpannableString spannableTitle = new SpannableString(title);</div><div class="line">        final String placeIcon = &quot;[icon]&quot;;</div><div class="line">//        if (count%2 &gt; 0) &#123;</div><div class="line">        Drawable drawable = null;</div><div class="line">        CustomMyCourseCardImageSpan span = null;</div><div class="line">//            if (displayData.compositeType == CourseConst.COMPOSITE_TYPE_MICRO) &#123;</div><div class="line">        drawable = textView.getContext().getResources().getDrawable(imageRes);</div><div class="line">//            &#125; else if (displayData.compositeType == CourseConst.COMPOSITE_TYPE_SERIES) &#123;</div><div class="line">//                drawable = widget.getContext().getResources().getDrawable(R.drawable.ic_mycourse_series);</div><div class="line">//            &#125; else &#123;</div><div class="line">//                return spannableTitle;</div><div class="line">//            &#125;</div><div class="line">        maxTextWidth = maxTextWidth - drawable.getIntrinsicWidth();</div><div class="line"></div><div class="line">        Drawable assignDrawable = null;</div><div class="line">//            if (count%2 &gt; 0) &#123;</div><div class="line">        assignDrawable = textView.getContext().getResources().getDrawable(imageRes);</div><div class="line">        int blankWidth = (int) Layout.getDesiredWidth(blank, 0, blank.length(), textView.getPaint());</div><div class="line">        maxTextWidth = maxTextWidth - assignDrawable.getIntrinsicWidth() - blankWidth;</div><div class="line">        title = getEllipsizeStr(textView, title, maxTextWidth);</div><div class="line">        spannableTitle = new SpannableString(title + placeIcon + blank + placeIcon);</div><div class="line">//            &#125; else &#123;</div><div class="line">//                displayData.title = getEllipsizeStr(widget, displayData.title, maxTextWidth);</div><div class="line">//                spannableTitle = new SpannableString(displayData.title + placeIcon);</div><div class="line">//            &#125;</div><div class="line"></div><div class="line">        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());</div><div class="line">        span = new CustomMyCourseCardImageSpan(drawable, CustomMyCourseCardImageSpan.ALIGN_BASELINE);</div><div class="line">        spannableTitle.setSpan(span, title.length(), title.length() + placeIcon.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</div><div class="line"></div><div class="line">//            if (count%2 &gt; 0) &#123;</div><div class="line">        assignDrawable.setBounds(0, 0, assignDrawable.getIntrinsicWidth(), assignDrawable.getIntrinsicHeight());</div><div class="line">        CustomMyCourseCardImageSpan secondSpan = new CustomMyCourseCardImageSpan(assignDrawable, CustomMyCourseCardImageSpan.ALIGN_BASELINE);</div><div class="line">        spannableTitle.setSpan(secondSpan, title.length() + placeIcon.length() + blank.length(), title.length() + placeIcon.length() * 2 + blank.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</div><div class="line">//            &#125;</div><div class="line">//        &#125; else if (displayData.isEnterpriseAssign) &#123;</div><div class="line">//            displayData.title = getEllipsizeStr(widget, displayData.title, maxTextWidth);</div><div class="line">//</div><div class="line">//            Drawable drawable = widget.getContext().getResources().getDrawable(R.drawable.ic_mycourse_enterprise_assign);</div><div class="line">//            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), Util.dip2px(widget.getContext(), 14) + 0);</div><div class="line">//            CustomMyCourseCardImageSpan span = new CustomMyCourseCardImageSpan(drawable, CustomMyCourseCardImageSpan.ALIGN_BASELINE);</div><div class="line">//            spannableTitle = new SpannableString(displayData.title + placeIcon);</div><div class="line">//            spannableTitle.setSpan(span, displayData.title.length(), displayData.title.length() + placeIcon.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);</div><div class="line">//        &#125;</div><div class="line"></div><div class="line">        return spannableTitle;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static String getEllipsizeStr(TextView widget, String origin, int maxTextWidth) &#123;</div><div class="line">        if (widget.getPaint() != null) &#123;</div><div class="line"></div><div class="line">            // 根据长度截取出剪裁后的文字,如果字数不够,则返回未阶段字数</div><div class="line">            final String ellipsizeStr = (String) TextUtils.ellipsize(origin, widget.getPaint(), maxTextWidth, TextUtils.TruncateAt.END);</div><div class="line">            return ellipsizeStr;</div><div class="line">        &#125;</div><div class="line">        return &quot;&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**自定义ImageSpan,重写draw方法,实现我的学习卡片上tag标签显示问题*/</div><div class="line">    private static class CustomMyCourseCardImageSpan extends ImageSpan &#123;</div><div class="line"></div><div class="line">        public CustomMyCourseCardImageSpan(Drawable d, int verticalAlignment) &#123;</div><div class="line">            super(d, verticalAlignment);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public void draw(Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint) &#123;</div><div class="line">            Drawable b = getCachedDrawable();</div><div class="line">            if (b != null) &#123;</div><div class="line">                canvas.save();</div><div class="line">                int transY = bottom - b.getBounds().bottom;</div><div class="line">                //这种方法计算错了,在网上看到的,被人误导了</div><div class="line">//                if (mVerticalAlignment == ALIGN_BASELINE) &#123;</div><div class="line">//                    if (x &gt; 0) &#123;    //当tag单行显示时,tag标签太居上问题,原因是textview默认有行间距</div><div class="line">//                        transY -= paint.getFontMetricsInt().descent;</div><div class="line">//                    &#125; else if (x == 0) &#123;</div><div class="line">//                        transY = (int) (Math.ceil(paint.getFontMetrics().descent - paint.getFontMetrics().top) + 4);</div><div class="line">//                    &#125;</div><div class="line">//                &#125;</div><div class="line">                //这种方法可以完美解决居中对齐文字的问题</div><div class="line">                transY = ((bottom-top) - b.getBounds().bottom)/2+top;</div><div class="line">                //抗锯齿</div><div class="line">                canvas.setDrawFilter(new PaintFlagsDrawFilter(0, Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG));</div><div class="line">                canvas.translate(x, transY);</div><div class="line">                b.draw(canvas);</div><div class="line">                canvas.restore();</div><div class="line">            &#125; else &#123;</div><div class="line">                super.draw(canvas, text, start, end, x, top, y, bottom, paint);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        private Drawable getCachedDrawable() &#123;</div><div class="line">            WeakReference&lt;Drawable&gt; wr = mDrawableRef;</div><div class="line">            Drawable d = null;</div><div class="line"></div><div class="line">            if (wr != null)</div><div class="line">                d = wr.get();</div><div class="line"></div><div class="line">            if (d == null) &#123;</div><div class="line">                d = getDrawable();</div><div class="line">                mDrawableRef = new WeakReference&lt;Drawable&gt;(d);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            return d;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        private WeakReference&lt;Drawable&gt; mDrawableRef;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2016/10/23/Android打包的那些事/" data-toggle="tooltip" data-placement="top" title="Android打包的那些事">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2016/10/01/View事件分发及滑动冲突的处理/" data-toggle="tooltip" data-placement="top" title="View事件分发及滑动冲突的处理">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#android" title="android">android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; fancychendong&#39;s Blog 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://fancychendong.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

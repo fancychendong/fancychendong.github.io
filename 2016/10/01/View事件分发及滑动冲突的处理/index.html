@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          View事件分发及滑动冲突的处理 - fancy的博客 | fancy&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://fancychendong.github.io/2016/10/01/View事件分发及滑动冲突的处理/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">fancychendong&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#android" title="android">android</a>
+                        
+                    </div>
+                    <h1>View事件分发及滑动冲突的处理</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by xiaodong Chen on
+                        2016-10-01
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>@(【读书笔记】)</p>
+<p>#View事件分发及滑动冲突的处理</p>
+<p>1、dispatchTouchEvent(MotionEvent ev)<br>用来进行事件分发，如果事件可以传递到当前view，那么此方法一定会被调用到(相比onInterceptTouchEvent就不一定都调用到)。返回结果受当前view的onTouchEvent和下级view的dispatchTouchEvent方法的影响，表示是否消耗当前事件。</p>
+<p>【引用一段代码中的注释增强解释】<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">     * 说明：一旦dispatTouchEvent返回true，即表示当前View就是事件传递需要的 targetView，事件不会再传递给</div><div class="line">     * 其他View，如果需要将事件继续传递给子View，可以手动传递</div><div class="line">     * 由于dispatchTouchEvent处理事件的优先级高于子View，也高于onTouchEvent,所以在这里进行处理</div><div class="line">     * 好处一：当有子View，并且子View可以获取焦点的时候，子View的onTouchEvent会优先处理，如果当前逻辑</div><div class="line">     * 在onTouchEnent中，则事件无法到达，逻辑失效</div><div class="line">     * 好处二：当子View是拥有滑动事件时，例如ListView，ScrollView等，不需要对子View的事件进行拦截，可以</div><div class="line">     * 全部让该父控件处理，在需要的地方手动将事件传递给子View，保证滑动的流畅性，结尾两行代码就是证明：</div><div class="line">     * super.dispatchTouchEvent(ev);</div><div class="line">     * return true;</div><div class="line">     */</div></pre></td></tr></table></figure></p>
+<p>2、onInterceptTouchEvent<br>在dispatchTouchEvent方法内部调用，用来判断是否拦截某个事件，如果当前view拦截了某个事件，那么在同一事件序列中，此方法不会被再次调用，返回结果表示是否拦截当前事件。</p>
+<p>3、onTouchEvent<br>在dispatchTouchEvent方法内部调用，用来处理点击事件。返回结果表示是否消耗当前事件，如果不消耗，则同一个事件序列中，当前view无法再次接收到事件。</p>
+<p>可以用下面的伪代码表示关系<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public boolean dispatchTouchEvent(MotionEvent ev) &#123;</div><div class="line">	boolean consume = false;</div><div class="line">	if (onInterceptTouchEvent(ev)) &#123;</div><div class="line">		consume = onTouchEvent(ev);</div><div class="line">	&#125; else &#123;</div><div class="line">		consume = child.dispatchTouchEvent(ev);</div><div class="line">	&#125;</div><div class="line">	return consume;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>由一段代码引发的思考：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">     * 说明：一旦dispatTouchEvent返回true，即表示当前View就是事件传递需要的 targetView，事件不会再传递给</div><div class="line">     * 其他View，如果需要将事件继续传递给子View，可以手动传递</div><div class="line">     * 由于dispatchTouchEvent处理事件的优先级高于子View，也高于onTouchEvent,所以在这里进行处理</div><div class="line">     * 好处一：当有子View，并且子View可以获取焦点的时候，子View的onTouchEvent会优先处理，如果当前逻辑</div><div class="line">     * 在onTouchEnent中，则事件无法到达，逻辑失效</div><div class="line">     * 好处二：当子View是拥有滑动事件时，例如ListView，ScrollView等，不需要对子View的事件进行拦截，可以</div><div class="line">     * 全部让该父控件处理，在需要的地方手动将事件传递给子View，保证滑动的流畅性，结尾两行代码就是证明：</div><div class="line">     * super.dispatchTouchEvent(ev);</div><div class="line">     * return true;</div><div class="line">     */</div><div class="line">    @Override</div><div class="line">    public boolean dispatchTouchEvent(MotionEvent ev) &#123;</div><div class="line">        .......                  </div><div class="line">        switch (ev.getAction()) &#123;</div><div class="line">            //Down事件主要初始化变量</div><div class="line">            case MotionEvent.ACTION_DOWN:</div><div class="line">                .......</div><div class="line">                break;</div><div class="line">            case MotionEvent.ACTION_MOVE:</div><div class="line">                .......</div><div class="line">                /**</div><div class="line">                 * 这里要注意，对于垂直滑动来说，给出以下三个条件</div><div class="line">                 * 头部没有固定，允许滑动的View处于第一条可见，当前按下的点在头部区域</div><div class="line">                 * 三个条件满足一个即表示需要滚动当前布局，否者不处理，将事件交给子View去处理</div><div class="line">                 */</div><div class="line">                if (verticalScrollFlag &amp;&amp; (!isStickied() || mScrollable.isTop() || isClickHead)) &#123;</div><div class="line">                    //如果是向下滑，则deltaY小于0，对于scrollBy来说</div><div class="line">                    //正值为向上和向左滑，负值为向下和向右滑，这里要注意</div><div class="line">                    scrollBy(0, (int) (deltaY + 0.5));</div><div class="line">                    invalidate();</div><div class="line">                &#125;</div><div class="line">                break;</div><div class="line">            case MotionEvent.ACTION_UP:</div><div class="line">                。。。。。。。</div><div class="line">                break;</div><div class="line">            case MotionEvent.ACTION_CANCEL:</div><div class="line">                recycleVelocityTracker();</div><div class="line">                break;</div><div class="line">            default:</div><div class="line">                break;</div><div class="line">        &#125;</div><div class="line">        //手动将事件传递给子View，让子View自己去处理事件</div><div class="line">        super.dispatchTouchEvent(ev);</div><div class="line">        //消费事件，返回True表示当前View需要消费事件，就是事件的TargetView</div><div class="line">        return true;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>中间省略若干代码，这里在ACTION_MOVE中调用了invalidate()方法来重绘当前view。并且通过super.dispatchTouchEvent(ev);把事件传递给了子view处理。<br>并且该子view是一个ViewPager，ViewPager里面嵌了三个AbsListView控件。</p>
+<p>然后这样思考这种方式可不可以？以前从来没这么用过。因为MotionEvent事件最终会到达AbsListView中，所以跟踪AbsListView里的代码，发现AbsListView里面实现滚动的效果也是用的invalidate()方法来做到的。</p>
+<p>AbsListView里的onTouchEvent方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">   public boolean onTouchEvent(MotionEvent ev) &#123;</div><div class="line">       .......</div><div class="line">       switch (actionMasked) &#123;</div><div class="line">           case MotionEvent.ACTION_DOWN: &#123;</div><div class="line">               onTouchDown(ev);</div><div class="line">               break;</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           case MotionEvent.ACTION_MOVE: &#123;</div><div class="line">               onTouchMove(ev, vtev);</div><div class="line">               break;</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           case MotionEvent.ACTION_UP: &#123;</div><div class="line">               onTouchUp(ev);</div><div class="line">               break;</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           case MotionEvent.ACTION_CANCEL: &#123;</div><div class="line">               onTouchCancel();</div><div class="line">               break;</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           case MotionEvent.ACTION_POINTER_UP: &#123;</div><div class="line">               .....</div><div class="line">               break;</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           case MotionEvent.ACTION_POINTER_DOWN: &#123;</div><div class="line">               ......</div><div class="line">               break;</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       if (mVelocityTracker != null) &#123;</div><div class="line">           mVelocityTracker.addMovement(vtev);</div><div class="line">       &#125;</div><div class="line">       vtev.recycle();</div><div class="line">       return true;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>在MOVE中调用了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">private void onTouchMove(MotionEvent ev, MotionEvent vtev) &#123;</div><div class="line">        ......</div><div class="line">        switch (mTouchMode) &#123;</div><div class="line">            case TOUCH_MODE_DOWN:</div><div class="line">            case TOUCH_MODE_TAP:</div><div class="line">            case TOUCH_MODE_DONE_WAITING:</div><div class="line">                ........</div><div class="line">                break;</div><div class="line">            case TOUCH_MODE_SCROLL:</div><div class="line">            case TOUCH_MODE_OVERSCROLL:</div><div class="line">                scrollIfNeeded((int) ev.getX(pointerIndex), y, vtev);</div><div class="line">                break;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>在该方法中又调用了scrollIfNeeded<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">private void scrollIfNeeded(int x, int y, MotionEvent vtev) &#123;</div><div class="line">        .......</div><div class="line">		if (incrementalDeltaY &gt; 0) &#123;</div><div class="line">           mEdgeGlowTop.onPull((float) -overscroll / getHeight(),</div><div class="line">                   (float) x / getWidth());</div><div class="line">           if (!mEdgeGlowBottom.isFinished()) &#123;</div><div class="line">               mEdgeGlowBottom.onRelease();</div><div class="line">           &#125;</div><div class="line">           invalidateTopGlow();</div><div class="line">       &#125; else if (incrementalDeltaY &lt; 0) &#123;</div><div class="line">           mEdgeGlowBottom.onPull((float) overscroll / getHeight(),</div><div class="line">                   1.f - (float) x / getWidth());</div><div class="line">           if (!mEdgeGlowTop.isFinished()) &#123;</div><div class="line">               mEdgeGlowTop.onRelease();</div><div class="line">           &#125;</div><div class="line">           invalidateBottomGlow();</div><div class="line">       &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">private void invalidateTopGlow() &#123;</div><div class="line">        if (mEdgeGlowTop == null) &#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        final boolean clipToPadding = getClipToPadding();</div><div class="line">        final int top = clipToPadding ? mPaddingTop : 0;</div><div class="line">        final int left = clipToPadding ? mPaddingLeft : 0;</div><div class="line">        final int right = clipToPadding ? getWidth() - mPaddingRight : getWidth();</div><div class="line">        invalidate(left, top, right, top + mEdgeGlowTop.getMaxHeight());</div><div class="line">    &#125;</div><div class="line">    </div><div class="line"></div><div class="line">View里的</div><div class="line">public void invalidate(int l, int t, int r, int b) &#123;</div><div class="line">        final int scrollX = mScrollX;</div><div class="line">        final int scrollY = mScrollY;</div><div class="line">        invalidateInternal(l - scrollX, t - scrollY, r - scrollX, b - scrollY, true, false);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>所以我们可以放心使用这种方式，因为系统的AbsListView就是用这种方式实现滚动效果的。</p>
+<p>再回到主题，滑动事件的处理其实只要牢牢记住文章开头的三个方法的关系就很好解决了，一切都是套路！！！！！</p>
+<p>再补充一点<br>【摘自：<a href="http://waynehu16.iteye.com/blog/1926741】" target="_blank" rel="external">http://waynehu16.iteye.com/blog/1926741】</a><br>事件发生截断的时候，会像子View发出ACTION_CANCEL，但是我在ChildLayout的onInterceptTouchEvent里面return true之后，却没有收到ACTION_CANCEL，经实验发现，谈谈关于ACTION_CANCEL的事情。ACTION_CANCEL的发出是有条件的：如果子一层曾经处理过事件，即事件进入到onTouchEvent中，则此时截断事件，上一层会向下一层发出ACTION_CANCEL。例如在ChildLayout的onInterceptTouchEvent中对event.getAction()进行判断，如果是ACTION_DOWN，返回false，在ACTION_MOVE的时候，返回true进行截断。则可以发现MyView接到了action为ACTION_DOWN的事件，但是当出现ACTION_MOVE在ChildLayout截断发生时，MyView则收到了ACTION_CANCEL的消息。代码如下：<br>ChildLayout就是像下面这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">@Override  </div><div class="line"> public boolean onInterceptTouchEvent(MotionEvent ev) &#123;  </div><div class="line">     boolean result = super.onInterceptTouchEvent(ev);  </div><div class="line">     switch(ev.getAction()) &#123;  </div><div class="line">     case MotionEvent.ACTION_DOWN:  </div><div class="line">         Log.i(&quot;ZZZZ&quot;, &quot;ChildLayout onInterceptTouchEvent ACITON_DOWN:&quot;);  </div><div class="line">         break;  </div><div class="line">     case MotionEvent.ACTION_MOVE:  </div><div class="line">         Log.i(&quot;ZZZZ&quot;, &quot;ChildLayout onInterceptTouchEvent ACITON_MOVE:&quot;);  </div><div class="line">         result = true;  </div><div class="line">         break;  </div><div class="line">     case MotionEvent.ACTION_CANCEL:  </div><div class="line">         Log.i(&quot;ZZZZ&quot;, &quot;ChildLayout onInterceptTouchEvent ACITON_CANCEL:&quot;);  </div><div class="line">         break;  </div><div class="line">     case MotionEvent.ACTION_UP:  </div><div class="line">         Log.i(&quot;ZZZZ&quot;, &quot;ChildLayout onInterceptTouchEvent ACITON_UP:&quot;);  </div><div class="line">         break;  </div><div class="line">     &#125;  </div><div class="line">     Log.i(&quot;ZZZZ&quot;, &quot;ChildLayout onInterceptTouchEvent return &quot;+result);  </div><div class="line">     return result;  </div><div class="line"> &#125;  </div><div class="line">  </div><div class="line"> @Override  </div><div class="line"> public boolean onTouchEvent(MotionEvent ev) &#123;  </div><div class="line">     boolean result = super.onTouchEvent(ev);  </div><div class="line">     switch(ev.getAction()) &#123;  </div><div class="line">     case MotionEvent.ACTION_DOWN:  </div><div class="line">         Log.i(&quot;ZZZZ&quot;, &quot;ChildLayout onTouchEvent ACTION_DOWN&quot;);  </div><div class="line">         break;  </div><div class="line">     case MotionEvent.ACTION_MOVE:  </div><div class="line">         Log.i(&quot;ZZZZ&quot;, &quot;ChildLayout onTouchEvent ACTION_MOVE&quot;);  </div><div class="line">         break;  </div><div class="line">     case MotionEvent.ACTION_CANCEL:  </div><div class="line">         Log.i(&quot;ZZZZ&quot;, &quot;ChildLayout onTouchEvent ACTION_CANCEL&quot;);  </div><div class="line">     case MotionEvent.ACTION_UP:  </div><div class="line">         Log.i(&quot;ZZZZ&quot;, &quot;ChildLayout onTouchEvent ACTION_UP&quot;);  </div><div class="line">         break;  </div><div class="line">     &#125;  </div><div class="line">  </div><div class="line">     result = true;  </div><div class="line">     Log.i(&quot;ZZZZ&quot;, &quot;ChildLayout onTouchEvent return &quot;+result);  </div><div class="line">     return result;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在所有的AbsListView里面，如果触发了AbsListView的滚动事件，即scrollIfNeeded()方法，则AbsListView的parentView的onInterceptTouchEvent不会再调用了，因为在该方法里面执行了parent.requestDisallowInterceptTouchEvent(true); </p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2016/10/15/Android 代码片段整理/" data-toggle="tooltip" data-placement="top" title="Android 代码片段整理">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2016/09/05/AngularJs学习/" data-toggle="tooltip" data-placement="top" title="AngularJs学习">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#android" title="android">android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; fancychendong&#39;s Blog 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://fancychendong.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

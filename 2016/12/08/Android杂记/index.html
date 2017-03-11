@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Android杂记 - fancy的博客 | fancy&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://fancychendong.github.io/2016/12/08/Android杂记/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">fancychendong&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#android" title="android">android</a>
+                        
+                    </div>
+                    <h1>Android杂记</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by xiaodong Chen on
+                        2016-12-08
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>@(【安卓深入思考】)</p>
+<p>#Android杂记</p>
+<p>[TOC]</p>
+<p>##批量统计App里面使用到的权限<br>写个脚本，然后通过AAPT指令，一步就可以获取所有权限~</p>
+<p>##对JAVA集合进行遍历删除时务必要用迭代器<br>今天同事写了几行类似这样的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public static void main(String args[]) &#123;</div><div class="line">    List&lt;String&gt; famous = new ArrayList&lt;String&gt;();</div><div class="line">    famous.add(&quot;liudehua&quot;);</div><div class="line">    famous.add(&quot;madehua&quot;);</div><div class="line">    famous.add(&quot;liushishi&quot;);</div><div class="line">    famous.add(&quot;tangwei&quot;);</div><div class="line">    for (String s : famous) &#123;</div><div class="line">        if (s.equals(&quot;madehua&quot;)) &#123;</div><div class="line">            famous.remove(s);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行出异常:<br>Exception in thread “main” java.util.ConcurrentModificationException<br>at java.util.AbstractList$Itr.checkForComodification(AbstractList.java:372)<br>at java.util.AbstractList$Itr.next(AbstractList.java:343)<br>at com.bes.Test.main(Test.java:15)<br>Java新手最容易犯的错误，对JAVA集合进行遍历删除时务必要用迭代器。切记。<br>其实对于如上for循环，运行过程中还是转换成了如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">for(Iterator&lt;String&gt; it = famous.iterator();it.hasNext();)&#123;</div><div class="line">         String s = it.next();</div><div class="line">         if(s.equals(&quot;madehua&quot;))&#123;</div><div class="line">             famous.remove(s);</div><div class="line">         &#125;</div><div class="line">     &#125;</div></pre></td></tr></table></figure>
+<p>仍然采用的是迭代器，但删除操作却用了错误的方法。如将famous.remove(s)改成it.remove()<br>则运行正常，结果也无误。<br>当然如果改成:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">for (int i = 0; i &lt; famous.size(); i++) &#123;</div><div class="line">            String s = famous.get(i);</div><div class="line">            if (s.equals(&quot;madehua&quot;)) &#123;</div><div class="line">                famous.remove(s);</div><div class="line">            &#125;</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+<p>这种方法，也是可以完成功能，但一般也不这么写。<code>因为这种方式会漏掉元素，famous的size变了，会有几个元素遍历不出来！！！</code><br>为什么用了迭代码器就不能采用famous.remove(s)操作? 这种因为ArrayList与Iterator混合使用时会导致各自的状态出现不一样，最终出现异常。<br>我们看一下ArrayList中的Iterator实现:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">private class Itr implements Iterator&lt;E&gt; &#123;</div><div class="line">   /**</div><div class="line">    * Index of element to be returned by subsequent call to next.</div><div class="line">    */</div><div class="line">   int cursor = 0;</div><div class="line">   /**</div><div class="line">    * Index of element returned by most recent call to next or</div><div class="line">    * previous.  Reset to -1 if this element is deleted by a call</div><div class="line">    * to remove.</div><div class="line">    */</div><div class="line">   int lastRet = -1;</div><div class="line">   /**</div><div class="line">    * The modCount value that the iterator believes that the backing</div><div class="line">    * List should have.  If this expectation is violated, the iterator</div><div class="line">    * has detected concurrent modification.</div><div class="line">    */</div><div class="line">   int expectedModCount = modCount;</div><div class="line">   public boolean hasNext() &#123;</div><div class="line">           return cursor != size();</div><div class="line">   &#125;</div><div class="line">   public E next() &#123;</div><div class="line">           checkForComodification();</div><div class="line">       try &#123;</div><div class="line">       E next = get(cursor);</div><div class="line">       lastRet = cursor++;</div><div class="line">       return next;</div><div class="line">       &#125; catch (IndexOutOfBoundsException e) &#123;</div><div class="line">       checkForComodification();</div><div class="line">       throw new NoSuchElementException();</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">   public void remove() &#123;</div><div class="line">       if (lastRet == -1)</div><div class="line">       throw new IllegalStateException();</div><div class="line">           checkForComodification();</div><div class="line">       try &#123;</div><div class="line">       AbstractList.this.remove(lastRet);</div><div class="line">       if (lastRet &lt; cursor)</div><div class="line">           cursor--;</div><div class="line">       lastRet = -1;</div><div class="line">       expectedModCount = modCount;</div><div class="line">       &#125; catch (IndexOutOfBoundsException e) &#123;</div><div class="line">       throw new ConcurrentModificationException();</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">   final void checkForComodification() &#123;</div><div class="line">       if (modCount != expectedModCount)</div><div class="line">       throw new ConcurrentModificationException();</div><div class="line">   &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>基本上ArrayList采用size属性来维护自已的状态，而Iterator采用cursor来来维护自已的状态。<br>当size出现变化时，cursor并不一定能够得到同步，除非这种变化是Iterator主动导致的。<br>从上面的代码可以看到当Iterator.remove方法导致ArrayList列表发生变化时，他会更新cursor来同步这一变化。但其他方式导致的ArrayList变化，Iterator是无法感知的。ArrayList自然也不会主动通知Iterator们，那将是一个繁重的工作。Iterator到底还是做了努力：为了防止状态不一致可能引发的无法设想的后果，Iterator会经常做checkForComodification检查，以防有变。如果有变，则以异常抛出，所以就出现了上面的异常。</p>
+<p>##Android Window FEATURE</p>
+<ul>
+<li>Window.FEATURE_ACTION_BAR_OVERLAY<br>使用FEATURE_ACTION_BAR_OVERLAY实现actionbar浮动且透明<br><img src="./1473766557257.png" alt="Alt text"><br>如上图所示，谷歌地图的actionbar是透明的，且浮动在整个布局之上，没有占用布局空间。其实要做到这样的效果，我们首先想到的是两个方面：<br>1.将让actionbar浮动起来。<br>2.给actionbar一个背景，可以为颜色也可以为图片。<br>下面我以背景色为颜色举个例子。<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">getWindow().requestFeature(Window.FEATURE_ACTION_BAR_OVERLAY);</div><div class="line">ActionBar actionBar = getActionBar();</div><div class="line">actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor(&quot;#330000ff&quot;)));</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>google的actionbar是分为上下两栏显示的，上面的代码只能设置顶部actionbar的背景色，为了让下面的背景色一致，还需要添加一行代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">actionBar.setSplitBackgroundDrawable(newColorDrawable(Color.parseColor(&quot;#330000ff&quot;)));</div></pre></td></tr></table></figure></p>
+<p>如果我们不想在代码中设置actionbar背景，而是在style中修改xml，可以自定义actionbar，然后设置下面三个属性：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;style name=&quot;MyActionBar&quot; parent=&quot;@android:style/Widget.Holo.ActionBar&quot;&gt;</div><div class="line">    &lt;item name=&quot;android:background&quot;&gt;@drawable/ab_stacked_solid_inverse_holo&lt;/item&gt;</div><div class="line">    &lt;item name=&quot;android:backgroundStacked&quot;&gt;#346c36&lt;/item&gt;</div><div class="line">    &lt;item name=&quot;android:backgroundSplit&quot;&gt;@drawable/ab_stacked_solid_inverse_holo&lt;/item&gt;</div><div class="line">                                                                                                                                                                                                                                                                          </div><div class="line">&lt;/style&gt;</div></pre></td></tr></table></figure></p>
+<p>其中的background和setBackgroundDrawable对应，backgroundSplit和setSplitBackgroundDrawable对应，而backgroundStacked代表的是actionbar选项卡的背景色。<br>但是actionbar的背景如果设置为纯色，或者为不透明的图片，那么上面的方法无法使actionbar达到透明的效果。注意上面的代码中，我们的颜色值并不是纯色的而是有一定的透明度。#330000ff的前两位代表透明度。</p>
+<ul>
+<li>FEATURE_ACTION_MODE_OVERLAY</li>
+</ul>
+<p>关于Android长按出现复制粘贴栏在顶部占位问题解决方法<br>大家都知道，在Android长按WebView或EditText等组件时，4.0以上的系统顶部会出现复制/粘贴栏（以下使用使用操作栏作为描述），而如果有使用ActionBar，则操作栏就会悬浮在ActionBar上，但如果没有使用ActionBar，则会插入顶部并且占居一定的位置，如果是自定义的顶部栏，那么新插入的操作栏就会影响美观与体验(如下图)。所以，带着这个问题，去研究与分析Activity的界面层次布局，从而找出解决方案。<br><img src="./1473767079334.png" alt="Alt text"><br>在研究了一遍ActionBar的界面层次源码后，得到的了解决方法</p>
+<p>将操作栏设置为悬浮方式:</p>
+<p>1、在Activity使用setContentView方法之前，调用requestWindowFeature(Window.FEATURE_ACTION_MODE_OVERLAY);</p>
+<p>2、如果是继承ActionBarActivity，则调用以下方法<br>supportRequestWindowFeature(WindowCompat.FEATURE_ACTION_MODE_OVERLAY);</p>
+<p>##让多个Fragment 切换时不重新实例化<br>在项目中需要进行Fragment的切换，一直都是用replace()方法来替换Fragment：</p>
+<p>public void switchContent(Fragment fragment) {<br>    if(mContent != fragment) {<br>        mContent = fragment;<br>        mFragmentMan.beginTransaction()<br>            .setCustomAnimations(android.R.anim.fade_in, R.anim.slide_out)<br>            .replace(R.id.content_frame, fragment) // 替换Fragment，实现切换<br>            .commit();<br>    }<br>}</p>
+<p>但是，这样会有一个问题：<br>每次切换的时候，Fragment都会重新实例化，重新加载一边数据，这样非常消耗性能和用户的数据流量。<br>就想，如何让多个Fragment彼此切换时不重新实例化？</p>
+<p>翻看了Android官方Doc，和一些组件的源代码，发现，replace()这个方法只是在上一个Fragment不再需要时采用的简便方法。</p>
+<p>正确的切换方式是add()，切换时hide()，add()另一个Fragment；再次切换时，只需hide()当前，show()另一个。<br>这样就能做到多个Fragment切换不重新实例化：</p>
+<p>public void switchContent(Fragment from, Fragment to) {<br>    if (mContent != to) {<br>        mContent = to;<br>        FragmentTransaction transaction = mFragmentMan.beginTransaction().setCustomAnimations(<br>                android.R.anim.fade_in, R.anim.slide_out);<br>        if (!to.isAdded()) {    // 先判断是否被add过<br>            transaction.hide(from).add(R.id.content_frame, to).commit(); // 隐藏当前的fragment，add下一个到Activity中<br>        } else {<br>            transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个<br>        }<br>    }<br>}<br>————Edited 2015.2.7————-</p>
+<p>问题一：保存UI与数据的内存消耗</p>
+<p>上面所述为避免重新实例化而带来的“重新加载一边数据”、“消耗数据流量”，其实是这个Fragment不够“纯粹”。</p>
+<p>Fragment应该分为UI Fragment和Headless Fragment。</p>
+<p>前者是指一般的定义了UI的Fragment，后者则是无UI的Fragment，即在onCreateView()中返回的是null。将与UI处理无关的异步任务都可以放到后者中，而且一般地都会在onCreate()中加上setRetainInstance(true)，故而可以在横竖屏切换时不被重新创建和重复执行异步任务。</p>
+<p>这样做了之后，便可以不用管UI Fragment的重新创建与否了，因为数据和异步任务都在无UI的Fragment中，再通过Activity 的 FragmentManager 交互即可。</p>
+<p>只需记得在Headless Fragment销毁时将持有的数据清空、停止异步任务。</p>
+<p>UIFragment.java<br>public class UIFragment extends Fragment{<br>  @Override<br>  public View onCreateView(LayoutInflater inflater, ViewGroup container,<br>      Bundle savedInstanceState) {<br>    View view = inflater.inflate(R.layout.fragment,<br>        container, false);<br>    return view;<br>  }<br>  …<br>}<br>HeadlessFragment.java<br>public class HeadlessFragment extends Fragment{<br>  @Override<br>  public void onCreate(Bundle savedInstanceState) {<br>    setRetainInstance(true);<br>  }<br>  @Override<br>  public View onCreateView(LayoutInflater inflater, ViewGroup container,<br>      Bundle savedInstanceState) {<br>    return null;<br>  }<br>  …<br>}<br>具体实例代码如下:</p>
+<p>ApiDemo: FragmentRetainInstance.java</p>
+<p>MostafaGazar Sample: PhotosListTaskFragment.java</p>
+<p>问题二：Fragment重叠</p>
+<p>其实是由Activity被回收后重启所导致的Fragment重复创建和重叠的问题。</p>
+<p>在Activity onCreate()中添加Fragment的时候一定不要忘了检查一下savedInstanceState：</p>
+<p>if (savedInstanceState == null) {<br>    getFragmentManager().beginTransaction().add(android.R.id.content,<br>                new UIFragment()).commit();<br>}<br>多个Fragment重叠则可以这样处理：通过FragmentManager找到所有的UI Fragment，按需要show()某一个Fragment，hide()其他即可！</p>
+<p>为了能准确找出所需的Fragment，所以在add()或者replace() Fragment的时候记得要带上tag参数，因为一个ViewGroup 容器可以依附add()多个Fragment，它们的id自然是相同的。</p>
+<p>if (savedInstanceState == null) {<br>    // getFragmentManager().beginTransaction()…commit()<br>}else{<br>    //先通过id或者tag找到“复活”的所有UI-Fragment<br>    UIFragment fragment1 = getFragmentManager().findFragmentById(R.id.fragment1);<br>    UIFragment fragment2 = getFragmentManager().findFragmentByTag(“tag”);<br>    UIFragment fragment3 = …<br>    …<br>    //show()一个即可<br>    getFragmentManager().beginTransaction()<br>            .show(fragment1)<br>            .hide(fragment2)<br>            .hide(fragment3)<br>            .hide(…)<br>            .commit();<br>}<br>注: 关于Fragment id的问题建议阅读 FragmentManager中moveToState()源码</p>
+<p>##ListView.getCount() 与 ListView.getChildCount()</p>
+<p> ListView.getCount()（实际上是 AdapterView.getCount()） 返回的是其 Adapter.getCount() 返回的值。也就是“所包含的 Item 总个数”。</p>
+<p> ListView.getChildCount()（ViewGroup.getChildCount） 返回的是显示层面上的“所包含的子 View 个数”。</p>
+<pre><code>二者有什么不同？当 ListView 中的 Item 比较少无需滚动即可全部显示时，二者是等价的；当 Item 个数较多需要滚动才能浏览全部的话， getChildCount() &lt; getCount() 其中 getChildCount() 返回的是当前可见的 Item 个数。
+
+其实 Android framework 的这一设计并不难理解：当一些 Item 当前不显示的时候为什么还要保留它们的 View 呢？移动设备的资源有限，“能省则省”嘛。
+</code></pre><p>##图解Android View的scrollTo(),scrollBy(),getScrollX(), getScrollY()</p>
+<p>Android系统手机屏幕的左上角为坐标系，同时y轴方向与笛卡尔坐标系的y轴方向想反。通过提供的api如getLeft , getTop, getBottom, getRight可以获得控件在parent中的相对位置。同时，也可以获得控件在屏幕中的绝对位置，详细用法可参考android应用程序中获取view的位置</p>
+<p>当我们编写一些自定义的滑动控件时，会用到一些api如scrollTo(),scrollBy(),getScrollX(), getScrollY()。由于常常会对函数getScrollX(), getScrollY()返回的值的含义产生混淆，尤其是正负关系，因此本文将使用几幅图来对这些函数进行讲解以方便大家记忆。</p>
+<p>注意：调用View的scrollTo()和scrollBy()是用于滑动View中的内容，而不是把某个View的位置进行改变。如果想改变莫个View在屏幕中的位置，可以使用如下的方法。</p>
+<p>调用public void offsetLeftAndRight(int offset)用于左右移动方法或public void offsetTopAndBottom(int offset)用于上下移动。</p>
+<pre><code>如：button.offsetLeftAndRignt(300)表示将button控件向左移动300个像素。
+</code></pre><p>scrollTo(int x, int y) 是将View中内容滑动到相应的位置，参考的坐标系原点为parent View的左上角。</p>
+<pre><code>调用scrollTo(100, 0)表示将View中的内容移动到x = 100， y = 0的位置，如下图所示。注意，图中黄色矩形区域表示的是一个parent View，绿色虚线矩形为parent view中的内容。一般情况下两者的大小一致，本文为了显示方便，将虚线框画小了一点。图中的黄色区域的位置始终不变，发生位置变化的是显示的内容。
+</code></pre><p><img src="./1477133963863.png" alt="Alt text"></p>
+<p>同理，scrollTo(0, 100)的效果如下图所示：</p>
+<p><img src="./1477133980908.png" alt="Alt text"></p>
+<p>scrollTo(100, 100)的效果图如下：</p>
+<p><img src="./1477133995413.png" alt="Alt text"></p>
+<p>若函数中参数为负值，则子View的移动方向将相反。</p>
+<p><img src="./1477134011294.png" alt="Alt text"></p>
+<p>scrollBy(int x, int y)其实是对scrollTo的包装，移动的是相当位置。 scrollTo(int x, int y)的源码和scrollBy(int x, int y)源码自行查找.</p>
+<p>可见，mScrollX和mScrollY是View类中专门用于记录滑动位置的变量。这两个函数最终调用onScrollChanged()函数，感兴趣者可以参考他们的源代码。<br>理解了scrollTo(int x, int y)和scrollBy(int x, int y)的用法，就不难理解getScrollX() 和getScrollY()。这两个函数的源码自行查找。</p>
+<p><code>所以这里的scrollTo和scrollBy移动的其实是里面的内容，这其实也可以解释为什么正值看起来向xy轴反方向移动了，因为相对ViewGroup里面的内容来说，这个ViewGroup其实是向xy轴的正方向移动的，所以相对论的思想在android代码里体现了。</code></p>
+<p><code>setTranslationX和setTranslationY的参数正负值就是，正数表示向xy轴正方向移动，负数表示向xy轴反方向移动。</code></p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2016/12/15/Android Data Binding/" data-toggle="tooltip" data-placement="top" title="Android Data Binding">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2016/12/01/Java基础/" data-toggle="tooltip" data-placement="top" title="Java基础">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#android" title="android">android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; fancychendong&#39;s Blog 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://fancychendong.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

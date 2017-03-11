@@ -13,11 +13,11 @@
 
     <title>
         
-          Example Post using Keynote Layout - fancy的博客 | fancy&#39;s Blog
+          AS性能调试工具的使用 - fancy的博客 | fancy&#39;s Blog
         
     </title>
 
-    <link rel="canonical" href="http://fancychendong.github.io/2015/07/09/js-module-7day/">
+    <link rel="canonical" href="http://fancychendong.github.io/2017/01/23/AS性能调试工具的使用/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -155,42 +155,29 @@
 <!-- Post Header -->
 <style type="text/css">
     header.intro-header{
-        /*background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}')*/
-        height: 500px;
-        overflow: hidden;
-    }
-    header iframe{
-        width: 100%;
-        height: 100%;
-        border: 0;
+        background-image: url('/img/home-bg.jpg')
     }
 </style>
 <header class="intro-header" >
-    <iframe src="http://huangxuan.me/js-module-7day/"/>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                    <div class="post-heading">
-                        <div class="tags">
-                            
-                              <a class="tag" href="/tags/前端开发/" title="前端开发">前端开发</a>
-                            
-                              <a class="tag" href="/tags/JavaScript/" title="JavaScript">JavaScript</a>
-                            
-                        </div>
-
-                        <h1>Example Post using Keynote Layout</h1>
-                        <h2 class="subheading">Keynote: JavaScript Modularization Journey</h2>
-                        <span class="meta">
-                            Posted by Hux on
-                            2015-07-09
-                        </span>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#android" title="android">android</a>
                         
                     </div>
+                    <h1>AS性能调试工具的使用</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by xiaodong Chen on
+                        2017-01-23
+                    </span>
                 </div>
             </div>
         </div>
-    </iframe>
+    </div>
 </header>
 
 <!-- Post Content -->
@@ -204,25 +191,19 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <blockquote>
-<p>下滑这里查看更多内容</p>
-</blockquote>
-<p>7月9日，我在公司内部进行了名为「JavaScript 模块化七日谈」分享，并将该 Slides 分享到了微博上。出乎意料地，这篇微博先后被 @JS小组 @尤小右 @寸志 等近 200 人转发，阅读达到 10w，获得了还不错的评价。</p>
-<p>于是，我决定将它重新发到我的博客上，并为它专门制作了适用于 Keynote 展示文稿的新布局。它能自动根据屏幕大小/旋转以一定比例填充屏幕，你也可以直接点击下方链接在新页面打开，来获得更好的、沉浸式的全屏体验</p>
-<h3 id="Watch-Slides-→"><a href="#Watch-Slides-→" class="headerlink" title="Watch Slides →"></a><a href="http://huangxuan.me/js-module-7day" target="_blank" rel="external">Watch Slides →</a></h3><p><img src="http://huangxuan.me/js-module-7day/attach/qrcode.png" width="350" height="350"></p>
-<p><small class="img-hint">你也可以通过扫描二维码在手机上观看</small></p>
-<p>这个 Web Slides 开源在<a href="https://github.com/Huxpro/js-module-7day" target="_blank" rel="external">我的 Github 上</a>，欢迎你帮助我完善这个展示文稿，你可以给我提 issue，可以 fork &amp; pull request。如果它能帮助到你了，希望你还能不吝啬 star 一下这个项目</p>
-<h3 id="Catalog"><a href="#Catalog" class="headerlink" title="Catalog"></a>Catalog</h3><ul>
-<li>第一日 上古时期 <strong><em>Module?</em></strong> 从设计模式说起</li>
-<li>第二日 石器时代 <strong><em>Script Loader</em></strong> 只有封装性可不够，我们还需要加载</li>
-<li>第三日 蒸汽朋克 <strong><em>Module Loader</em></strong> 模块化架构的工业革命</li>
-<li>第四日 号角吹响 <strong><em>CommonJS</em></strong> 征服世界的第一步是跳出浏览器</li>
-<li>第五日 双塔奇兵 <strong><em>AMD/CMD</em></strong> 浏览器环境模块化方案</li>
-<li>第六日 精灵宝钻 <strong><em>Browserify/Webpack</em></strong> 大势所趋，去掉这层包裹！</li>
-<li>第七日 王者归来 <strong><em>ES6 Module</em></strong> 最后的战役</li>
-</ul>
-<h3 id="Thanks"><a href="#Thanks" class="headerlink" title="Thanks"></a>Thanks</h3><p><a href="http://lab.hakim.se/reveal-js" target="_blank" rel="external">Reveal.js</a></p>
-
+                <h1 id="AS性能调试工具的使用"><a href="#AS性能调试工具的使用" class="headerlink" title="AS性能调试工具的使用"></a>AS性能调试工具的使用</h1><h2 id="使用Dump-Heap调试内存问题："><a href="#使用Dump-Heap调试内存问题：" class="headerlink" title="使用Dump Heap调试内存问题："></a>使用Dump Heap调试内存问题：</h2><p>Dump Java Heap前执行一次Full GC操作<br><img src="./1489226891033.png" alt="Alt text"></p>
+<p><code>这样会减少很多无用的对象。点击之后，有时候能够明显看出内存变化</code></p>
+<p>点击Dump Java Heap分析内存对象占用<br><img src="./1489226926484.png" alt="Alt text"></p>
+<p><code>有一个10M大小的Bitmap被gpuimage里面的模块把持住了。通过这些信息，基本就可以解决绝大部分OOM问题</code></p>
+<h2 id="使用Allocation-Tracking工具分析内存分配："><a href="#使用Allocation-Tracking工具分析内存分配：" class="headerlink" title="使用Allocation Tracking工具分析内存分配："></a>使用Allocation Tracking工具分析内存分配：</h2><p><img src="./1489226972508.png" alt="Alt text"></p>
+<p><code>默认选择Group by Method模式下，可以观察到执行单个方法总共分配内存的次数，及内存占用的字节数</code></p>
+<p><code>Count：分配内存次数  Size：占用内存大小 byte字节)</code><br><img src="./1489227002117.png" alt="Alt text"></p>
+<p><code>手动选择Group by Allocator模式下，可以观察到每个类所消耗内存的大小，及分配了多少次内存 即类中new了多少个变量</code></p>
+<p>PS : Allocation Tracking工具可以很直观的分析app在运行过程中内存分配情况，供开发人员追踪分析可能存在问题的代码 </p>
+<h2 id="使用TraceView工具对性能调优："><a href="#使用TraceView工具对性能调优：" class="headerlink" title="使用TraceView工具对性能调优："></a>使用TraceView工具对性能调优：</h2><p><img src="./1489227046933.png" alt="Alt text"></p>
+<p><code>从上图可以看出YktCourseDetailLogic.getContinueLearnLesson里调用了底层数据库查询操作，CPU执
+行单个数据查询操作耗时20ms。并且被getChildView方法调用，在UI线程中更新视图不得超过16ms，否则产生卡顿</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Incl Cpu Time:Cpu执行该方法及其子方法所花费时间;</div><div class="line">Incl Cpu T%ime :Cpu执行该方法及其子方法所花费占Cpu总执行时间的分比;</div><div class="line">Excl Cpu Time:Cpu执行该方法所花费时间;</div><div class="line">Excl Cpu T%ime :Cpu执行该方法所花费的时间占Cpu总时间的分比;</div><div class="line">Incl Real Time:该方法及其子方法执行所花费的实际时间，从执行该方法到结束一共花了多时间;</div><div class="line">Incl Real T%ime :上述时间占总的运行时间的分比;</div><div class="line">Excl Real Time :该方法自身的实际运时间;</div><div class="line">Excl Real T%ime :上述时间占总的允许时间的分比;</div><div class="line">Calls+Recur:调用次数+递归次数，只在方法显示;</div><div class="line">Calls/Total:调用次数和总次数占比;</div><div class="line">Cpu Time/Call:代表该函数消耗cpu的平时间;</div><div class="line">Real Time/Call:代表该函数实际平均执</div></pre></td></tr></table></figure>
 
                 <hr>
 
@@ -230,13 +211,9 @@
 
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/" data-toggle="tooltip" data-placement="top" title="关于获取当前Activity的一些思考(转载)">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/" data-toggle="tooltip" data-placement="top" title="Example Post With Default Header Image">Next Post &rarr;</a>
+                            <a href="/2017/01/21/善用Android Studio异常调试功能/" data-toggle="tooltip" data-placement="top" title="善用Android Studio异常调试功能">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -246,6 +223,8 @@
                 
 
             </div>
+    <!-- Side Catalog Container -->
+        
 
     <!-- Sidebar Container -->
 
@@ -260,7 +239,9 @@
                     <!-- no hr -->
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
-                        <a class="tag-link" href="/tags/JavaScript/">JavaScript</a><a class="tag-link" href="/tags/Linux/">Linux</a><a class="tag-link" href="/tags/OS/">OS</a><a class="tag-link" href="/tags/Unix/">Unix</a><a class="tag-link" href="/tags/android/">android</a><a class="tag-link" href="/tags/hexo/">hexo</a><a class="tag-link" href="/tags/webapp/">webapp</a><a class="tag-link" href="/tags/前端开发/">前端开发</a><a class="tag-link" href="/tags/开发错误收集/">开发错误收集</a><a class="tag-link" href="/tags/生活/">生活</a><a class="tag-link" href="/tags/翻译/">翻译</a>
+                       
+                          <a class="tag" href="/tags/#android" title="android">android</a>
+                        
                     </div>
                 </section>
                 

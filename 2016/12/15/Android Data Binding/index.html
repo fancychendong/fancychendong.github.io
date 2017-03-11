@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Android Data Binding - fancy的博客 | fancy&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://fancychendong.github.io/2016/12/15/Android Data Binding/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="http://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">fancychendong&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#android" title="android">android</a>
+                        
+                    </div>
+                    <h1>Android Data Binding</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by xiaodong Chen on
+                        2016-12-15
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>#Android Data Binding</p>
+<p><a href="#1">MVC，MVP 和 MVVM 的图示</a><br><a href="#1.1">一、MVC</a><br><a href="#1.2">二、MVP</a><br><a href="#2">三、Data Binding Library</a><br><a href="#2">3.1、基本语法</a><br><a href="#2">3.2、基本语法</a></p>
+<h2 id="1">MVC，MVP 和 MVVM 的图示</h2>
+
+<p></p><h3 id="1.1">一、MVC</h3><br>MVC模式的意思是，软件可以分成三个部分。<p></p>
+<p><img src="./1479786096428.png" alt="Alt text"></p>
+<ul>
+<li>视图（View）：用户界面。</li>
+<li>控制器（Controller）：业务逻辑</li>
+<li>模型（Model）：数据保存</li>
+</ul>
+<p>各部分之间的通信方式如下。<br><img src="./1479786136502.png" alt="Alt text"></p>
+<ol>
+<li>View 传送指令到 Controller</li>
+<li>Controller 完成业务逻辑后，要求 Model 改变状态</li>
+<li>Model 将新的数据发送到 View，用户得到反馈</li>
+</ol>
+<p>MVC 的优点：</p>
+<ul>
+<li>把业务逻辑和展示逻辑分离，模块化程度高。且当应用逻辑需要变更的时候，不需要变更业务逻辑和展示逻辑，只需要Controller换成另外一个Controller就行了（Swappable Controller）。</li>
+<li>观察者模式可以做到多视图同时更新。</li>
+</ul>
+<p>MVC 的缺点：</p>
+<ul>
+<li>Controller 测试困难。因为视图同步操作是由 View 自己执行，而 View 只能在 UI 环境下运行。在没有 UI 环境下对 Controller 进行单元测试的时候，应用逻辑正确性是无法验证的：Model 更新的时候，无法对 View 的更新操作进行断言。</li>
+<li>View 无法组件化。View 是强依赖特定的 Model 的，如果需要把这个 View 抽出来作为一个另外一个应用程序可复用的组件就困难了。因为不同程序的的 Model 是不一样的。</li>
+<li>当有变化的时候需要同时维护 Model, View, Controller 及其交互，这显然让事情复杂化了。</li>
+</ul>
+<p>更多关于MVC的变种参见：<a href="http://www.ruanyifeng.com/blog/2015/02/mvcmvp_mvvm.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2015/02/mvcmvp_mvvm.html</a></p>
+<p></p><h3 id="1.2">二、MVP</h3><br>MVP 模式将 Controller 改名为 Presenter，同时改变了通信方向。<br><img src="./1479786499494.png" alt="Alt text"><p></p>
+<ol>
+<li>各部分之间的通信，都是双向的。</li>
+<li>View 与 Model 不发生联系，都通过 Presenter 传递。</li>
+<li>View 非常薄，不部署任何业务逻辑，称为”被动视图”（Passive View），即没有任何主动性，而 Presenter非常厚，所有逻辑都部署在那里。</li>
+</ol>
+<p>MVP 的优点：</p>
+<ul>
+<li>便于测试。Presenter 对 View 是通过接口进行，在对 Presenter 进行不依赖 UI 环境的单元测试的时候。可以通过 Mock 一个 View 对象，这个对象只需要实现了 View 的接口即可。</li>
+<li>View 可以进行组件化。在 MVP 当中，View 不依赖 Model。这样就可以让 View 从特定的业务场景中脱离出来，可以说 View 可以做到对业务完全无知。它只需要提供一系列接口提供给上层操作。这样就可以做到高度可复用的 View组件。</li>
+</ul>
+<p>MVP 缺点：</p>
+<ul>
+<li>Presenter 中除了应用逻辑以外，还有大量的 View-&gt;Model，Model-&gt;View 的手动同步逻辑，造成 Presenter 比较笨重，维护起来会比较困难。</li>
+</ul>
+<p></p><h3 id="1.3">三、MVVM</h3><br>MVVM 模式将 Presenter 改名为 ViewModel，基本上与 MVP 模式完全一致。<p></p>
+<p><img src="./1479786578507.png" alt="Alt text"></p>
+<p>唯一的区别是，它采用双向绑定（data-binding）：View的变动，自动反映在 ViewModel，反之亦然。Angular 和 Ember 都采用这种模式。</p>
+<p><strong>个人理解的MVVM就是为了把MVP中的P里的代码逻辑变的更简化，ViewModel和View的关系是自动互相反映</strong></p>
+<p>MVVM 优点：</p>
+<ul>
+<li>省去了model变化之后手动修改view和view变化之后手动修改model的繁琐工作；</li>
+<li>UI和功能更加松耦合了，功能的可测试性就越来越强。</li>
+</ul>
+<p>MVVM 缺点：</p>
+<ul>
+<li>在复杂的情况下，很难预先设计好足够通用的 ViewModel；</li>
+<li>通常会依赖于特定的数据绑定框架；</li>
+</ul>
+<p></p><h2 id="2">Data Binding Library</h2><br>This document explains how to use the Data Binding Library to write declarative layouts and minimize the glue code necessary to bind your application logic and layouts.<p></p>
+<p>The Data Binding Library offers both flexibility and broad compatibility — it’s a support library, so you can use it with all Android platform versions back to Android 2.1 (API level 7+).</p>
+<p>To use data binding, Android Plugin for Gradle 1.5.0-alpha1 or higher is required. See how to update the Android Plugin for Gradle.</p>
+<p></p><h3 id="2.1">Build Environment</h3><br>To get started with Data Binding, download the library from the Support repository in the Android SDK manager.<p></p>
+<p>To configure your app to use data binding, add the dataBinding element to your build.gradle file in the app module.</p>
+<p>Use the following code snippet to configure data binding:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    ....</div><div class="line">    dataBinding &#123;</div><div class="line">        enabled = true</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>If you have an app module that depends on a library which uses data binding, your app module must configure data binding in its build.gradle file as well.（如果app依赖的库工程使用了data binding，那么你的app主工程也必须在build.gradle中配置支持data binding）</p>
+<p>Also, make sure you are using a compatible version of Android Studio. Android Studio 1.3 and later provides support for data binding as described in Android Studio Support for Data Binding.</p>
+<p></p><h3 id="2.2">Data Binding Layout Files</h3><p></p>
+<p></p><h4 id="2.2.1">Writing your first set of data binding expressions</h4><br>Data-binding layout files are slightly different and start with a root tag of layout followed by a data element and a view root element. This view element is what your root would be in a non-binding layout file. A sample file looks like this:<p></p>
+<p><img src="./1479796088689.png" alt="Alt text"><br>The user variable within data describes a property that may be used within this layout.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;variable name=&quot;user&quot; type=&quot;com.example.User&quot;/&gt;</div></pre></td></tr></table></figure></p>
+<p>Expressions within the layout are written in the attribute properties using the “@{}” syntax. Here, the TextView’s text is set to the firstName property of user:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;TextView android:layout_width=&quot;wrap_content&quot;</div><div class="line">          android:layout_height=&quot;wrap_content&quot;</div><div class="line">          android:text=&quot;@&#123;user.firstName&#125;&quot;/&gt;</div></pre></td></tr></table></figure></p>
+<p></p><h4 id="2.3">Data Object</h4><br>Let’s assume for now that you have a plain-old Java object (POJO) for User:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public class User &#123;</div><div class="line">   public final String firstName;</div><div class="line">   public final String lastName;</div><div class="line">   public User(String firstName, String lastName) &#123;</div><div class="line">       this.firstName = firstName;</div><div class="line">       this.lastName = lastName;</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p></p>
+<p>This type of object has data that never changes. It is common in applications to have data that is read once and never changes thereafter. It is also possible to use a JavaBeans objects:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public class User &#123;</div><div class="line">   private final String firstName;</div><div class="line">   private final String lastName;</div><div class="line">   public User(String firstName, String lastName) &#123;</div><div class="line">       this.firstName = firstName;</div><div class="line">       this.lastName = lastName;</div><div class="line">   &#125;</div><div class="line">   public String getFirstName() &#123;</div><div class="line">       return this.firstName;</div><div class="line">   &#125;</div><div class="line">   public String getLastName() &#123;</div><div class="line">       return this.lastName;</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>From the perspective of data binding, these two classes are equivalent. The expression @{user.firstName} used for the TextView’s android:text attribute will access the firstName field in the former class and the getFirstName() method in the latter class. Alternatively, it will also be resolved to firstName() if that method exists.</p>
+<p></p><h4 id="2.4">Binding Data</h4><br>By default, a Binding class will be generated based on the name of the layout file, converting it to Pascal case and suffixing “Binding” to it. The above layout file was main_activity.xml so the generate class was MainActivityBinding. This class holds all the bindings from the layout properties (e.g. the user variable) to the layout’s Views and knows how to assign values for the binding expressions.The easiest means for creating the bindings is to do it while inflating:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Override</div><div class="line">protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">   super.onCreate(savedInstanceState);</div><div class="line">   MainActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.main_activity);</div><div class="line">   User user = new User(&quot;Test&quot;, &quot;User&quot;);</div><div class="line">   binding.setUser(user);</div><div class="line">&#125;</div></pre></td></tr></table></figure><p></p>
+<p>You’re done! Run the application and you’ll see Test User in the UI. Alternatively, you can get the view via:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">MainActivityBinding binding = MainActivityBinding.inflate(getLayoutInflater());</div></pre></td></tr></table></figure></p>
+<p>If you are using data binding items inside a ListView or RecyclerView adapter, you may prefer to use:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ListItemBinding binding = ListItemBinding.inflate(layoutInflater, viewGroup, false);</div><div class="line">//or</div><div class="line">ListItemBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.list_item, viewGroup, false);</div></pre></td></tr></table></figure></p>
+<p></p><h3 id="2.5">Event Handling</h3><br>Data Binding allows you to write expressions handling events that are dispatched from the views (e.g. onClick). Event attribute names are governed by the name of the listener method with a few exceptions. For example, View.OnLongClickListener has a method onLongClick(), so the attribute for this event is android:onLongClick. There are two ways to handle an event.<p></p>
+<p>Method References: In your expressions, you can reference methods that conform to the signature of the listener method. When an expression evaluates to a method reference, Data Binding wraps the method reference and owner object in a listener, and sets that listener on the target view. If the expression evaluates to null, Data Binding does not create a listener and sets a null listener instead.<br>Listener Bindings: These are lambda expressions that are evaluated when the event happens. Data Binding always creates a listener, which it sets on the view. When the event is dispatched, the listener evaluates the lambda expression.<br>Method References<br>Events can be bound to handler methods directly, similar to the way android:onClick can be assigned to a method in an Activity. One major advantage compared to the View#onClick attribute is that the expression is processed at compile time, so if the method does not exist or its signature is not correct, you receive a compile time error.</p>
+<p>The major difference between Method References and Listener Bindings is that the actual listener implementation is created when the data is bound, not when the event is triggered. If you prefer to evaluate the expression when the event happens, you should use listener binding.</p>
+<p>To assign an event to its handler, use a normal binding expression, with the value being the method name to call. For example, if your data object has two methods:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public class MyHandlers &#123;</div><div class="line">    public void onClickFriend(View view) &#123; ... &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>The binding expression can assign the click listener for a View:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;layout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;</div><div class="line">   &lt;data&gt;</div><div class="line">       &lt;variable name=&quot;handlers&quot; type=&quot;com.example.Handlers&quot;/&gt;</div><div class="line">       &lt;variable name=&quot;user&quot; type=&quot;com.example.User&quot;/&gt;</div><div class="line">   &lt;/data&gt;</div><div class="line">   &lt;LinearLayout</div><div class="line">       android:orientation=&quot;vertical&quot;</div><div class="line">       android:layout_width=&quot;match_parent&quot;</div><div class="line">       android:layout_height=&quot;match_parent&quot;&gt;</div><div class="line">       &lt;TextView android:layout_width=&quot;wrap_content&quot;</div><div class="line">           android:layout_height=&quot;wrap_content&quot;</div><div class="line">           android:text=&quot;@&#123;user.firstName&#125;&quot;</div><div class="line">           android:onClick=&quot;@&#123;handlers::onClickFriend&#125;&quot;/&gt;</div><div class="line">   &lt;/LinearLayout&gt;</div><div class="line">&lt;/layout&gt;</div></pre></td></tr></table></figure>
+<p>Note that the signature of the method in the expression must exactly match the signature of the method in the Listener object.</p>
+<p>Listener Bindings<br>Listener Bindings are binding expressions that run when an event happens. They are similar to method references, but they let you run arbitrary data binding expressions. This feature is available with Android Gradle Plugin for Gradle version 2.0 and later.</p>
+<p>In method references, the parameters of the method must match the parameters of the event listener. In Listener Bindings, only your return value must match the expected return value of the listener (unless it is expecting void). For example, you can have a presenter class that has the following method:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public class Presenter &#123;</div><div class="line">    public void onSaveClick(Task task)&#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Then you can bind the click event to your class as follows:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;layout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;</div><div class="line">    &lt;data&gt;</div><div class="line">        &lt;variable name=&quot;task&quot; type=&quot;com.android.example.Task&quot; /&gt;</div><div class="line">        &lt;variable name=&quot;presenter&quot; type=&quot;com.android.example.Presenter&quot; /&gt;</div><div class="line">    &lt;/data&gt;</div><div class="line">    &lt;LinearLayout android:layout_width=&quot;match_parent&quot; android:layout_height=&quot;match_parent&quot;&gt;</div><div class="line">        &lt;Button android:layout_width=&quot;wrap_content&quot; android:layout_height=&quot;wrap_content&quot;</div><div class="line">        android:onClick=&quot;@&#123;() -&gt; presenter.onSaveClick(task)&#125;&quot; /&gt;</div><div class="line">    &lt;/LinearLayout&gt;</div><div class="line">&lt;/layout&gt;</div></pre></td></tr></table></figure>
+<p>Listeners are represented by lambda expressions that are allowed only as root elements of your expressions. When a callback is used in an expression, Data Binding automatically creates the necessary listener and registers for the event. When the view fires the event, Data Binding evaluates the given expression. As in regular binding expressions, you still get the null and thread safety of Data Binding while these listener expressions are being evaluated.</p>
+<p>Note that in the example above, we haven’t defined the view parameter that is passed into onClick(android.view.View). Listener bindings provide two choices for listener parameters: you can either ignore all parameters to the method or name all of them. If you prefer to name the parameters, you can use them in your expression. For example, the expression above could be written as:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android:onClick=&quot;@&#123;(view) -&gt; presenter.onSaveClick(task)&#125;&quot;</div></pre></td></tr></table></figure>
+<p>Or if you wanted to use the parameter in the expression, it could work as follows:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public class Presenter &#123;</div><div class="line">    public void onSaveClick(View view, Task task)&#123;&#125;</div><div class="line">&#125;</div><div class="line">  android:onClick=&quot;@&#123;(theView) -&gt; presenter.onSaveClick(theView, task)&#125;&quot;</div></pre></td></tr></table></figure>
+<p>You can use a lambda expression with more than one parameter:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public class Presenter &#123;</div><div class="line">    public void onCompletedChanged(Task task, boolean completed)&#123;&#125;</div><div class="line">&#125;</div><div class="line">  &lt;CheckBox android:layout_width=&quot;wrap_content&quot; android:layout_height=&quot;wrap_content&quot;</div><div class="line">        android:onCheckedChanged=&quot;@&#123;(cb, isChecked) -&gt; presenter.completeChanged(task, isChecked)&#125;&quot; /&gt;</div></pre></td></tr></table></figure>
+<p>If the event you are listening to returns a value whose type is not void, your expressions must return the same type of value as well. For example, if you want to listen for the long click event, your expression should return boolean.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public class Presenter &#123;</div><div class="line">    public boolean onLongClick(View view, Task task)&#123;&#125;</div><div class="line">&#125;</div><div class="line">  android:onLongClick=&quot;@&#123;(theView) -&gt; presenter.onLongClick(theView, task)&#125;&quot;</div></pre></td></tr></table></figure>
+<p>If the expression cannot be evaluated due to null objects, Data Binding returns the default Java value for that type. For example, null for reference types, 0 for int, false for boolean, etc.</p>
+<p>If you need to use an expression with a predicate (e.g. ternary), you can use void as a symbol.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android:onClick=&quot;@&#123;(v) -&gt; v.isVisible() ? doSomething() : void&#125;&quot;</div></pre></td></tr></table></figure>
+<p>Avoid Complex Listeners<br>Listener expressions are very powerful and can make your code very easy to read. On the other hand, listeners containing complex expressions make your layouts hard to read and unmaintainable. These expressions should be as simple as passing available data from your UI to your callback method. You should implement any business logic inside the callback method that you invoked from the listener expression.<br>Some specialized click event handlers exist and they need an attribute other than android:onClick to avoid a conflict. The following attributes have been created to avoid such conflicts:<br><img src="./1479827223390.png" alt="Alt text"></p>
+<hr>
+<p>参阅：<br>MVVM 和 Android Data Binding <a href="http://www.jianshu.com/p/2047db8df2c7" target="_blank" rel="external">http://www.jianshu.com/p/2047db8df2c7</a><br>官方文档<br><a href="https://developer.android.com/topic/libraries/data-binding/index.html" target="_blank" rel="external">https://developer.android.com/topic/libraries/data-binding/index.html</a></p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2016/12/21/Android神兵利器笔记/" data-toggle="tooltip" data-placement="top" title="Android神兵利器笔记">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2016/12/08/Android杂记/" data-toggle="tooltip" data-placement="top" title="Android杂记">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#android" title="android">android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; fancychendong&#39;s Blog 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://fancychendong.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("http://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
