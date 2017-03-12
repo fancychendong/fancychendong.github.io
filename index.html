@@ -97,14 +97,14 @@
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
@@ -255,22 +255,24 @@
 
 <div class="post-preview">
 
-    <a href="/2016/12/21/Android神兵利器笔记/">
+    <a href="/2016/10/23/Android打包的那些事/">
         <h2 class="post-title">
-            Android神兵利器笔记
+            Android打包的那些事
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            Android神兵利器笔记[TOC]
-与Gradle的爱恨情仇使用gradle dependencies显示项目树结构通过终端cd到需要显示依赖结构的moduel中，然后执行 gradle dependencies命令。
-如何看懂gradle dependencies 输出的依赖树，里面的出现的各种符号都是什么意思？在stackoverflow上提出了同样的问题，那边已经有人回答了:tree......
+            @(【安卓开发工具】)[马克飞象]
+###Android打包的那些事使用gradle打包apk已经成为当前主流趋势，我也在这个过程中经历了各种需求，并不断结合gradle新的支持，一一改进。在此，把这些相关的东西记录，做一总结。
+#####1. 替换AndroidManifest中的占位符
+我想把其中的${app_label}替换为@string/app_name
+12345android&......
         </div>
     </a>
     <p class="post-meta">
         Posted by xiaodong Chen on
-        2016-12-21
+        2016-10-23
     </p>
 
 </div>
@@ -278,57 +280,23 @@
 
 <div class="post-preview">
 
-    <a href="/2016/12/15/Android Data Binding/">
+    <a href="/2016/10/15/Android 代码片段整理/">
         <h2 class="post-title">
-            Android Data Binding
+            Android 代码片段整理
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            #Android Data Binding
-MVC，MVP 和 MVVM 的图示一、MVC二、MVP三、Data Binding Library3.1、基本语法3.2、基本语法
-MVC，MVP 和 MVVM 的图示
-
-一、MVCMVC模式的意思是，软件可以分成三个部分。
-
-
-视图（View）：用户界面。
-控制器（Controller）：业务逻辑
-模型（Model）：数据保存
-
-各部分之间的通......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by xiaodong Chen on
-        2016-12-15
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2016/12/08/Android杂记/">
-        <h2 class="post-title">
-            Android杂记
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            @(【安卓深入思考】)
-#Android杂记
+            #Android 代码片段整理
 [TOC]
-##批量统计App里面使用到的权限写个脚本，然后通过AAPT指令，一步就可以获取所有权限~
-##对JAVA集合进行遍历删除时务必要用迭代器今天同事写了几行类似这样的代码：
-123456789101112public static void main(String args[]) &#123;    List&lt;String&gt;......
+##Bitmap图片的合成
+###合成白色背景的bitmap123456789101112131415161718192021// 生成一个白色背景的bitmap				public Bitmap getWhiteBackgroundBitmap(Bitmap srcBmp, int width, int height) &#123;					Pa......
         </div>
     </a>
     <p class="post-meta">
         Posted by xiaodong Chen on
-        2016-12-08
+        2016-10-15
     </p>
 
 </div>
@@ -336,28 +304,94 @@ MVC，MVP 和 MVVM 的图示
 
 <div class="post-preview">
 
-    <a href="/2016/12/01/Java基础/">
+    <a href="/2016/10/01/View事件分发及滑动冲突的处理/">
         <h2 class="post-title">
-            Java基础
+            View事件分发及滑动冲突的处理
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            @(【面试笔试】)
-#Java基础
+            @(【读书笔记】)
+#View事件分发及滑动冲突的处理
+1、dispatchTouchEvent(MotionEvent ev)用来进行事件分发，如果事件可以传递到当前view，那么此方法一定会被调用到(相比onInterceptTouchEvent就不一定都调用到)。返回结果受当前view的onTouchEvent和下级view的dispatchTouchEvent方法的影响，表示是否消耗......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by xiaodong Chen on
+        2016-10-01
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2016/09/05/AngularJs学习/">
+        <h2 class="post-title">
+            AngularJs学习
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            #AngularJs学习
+##简介AngularJS 是一个 JavaScript 框架。它可通过 &lt;script&gt; 标签添加到 HTML 页面。AngularJS 通过 指令 扩展了 HTML，且通过 表达式 绑定数据到 HTML。
+AngularJS 是一个 JavaScript 框架可通过 script 标签添加到网页中&lt;script src=&quot;http:/......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by xiaodong Chen on
+        2016-09-05
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2016/09/04/WebApp开发/">
+        <h2 class="post-title">
+            WebApp开发
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            #Web app开发
+##认识cordova[百度百科]Cordova提供了一组设备相关的API，通过这组API，移动应用能够以JavaScript访问原生的设备功能，如摄像头、麦克风等。Cordova还提供了一组统一的JavaScript类库，以及为这些类库所用的设备相关的原生后台代码。Cordova支持如下移动操作系统：iOS, Android,ubuntu phone os, Blac......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by xiaodong Chen on
+        2016-09-04
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2016/09/04/使用Hexo+GithubPage搭建博客/">
+        <h2 class="post-title">
+            使用Hexo+Github Page搭建博客
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            #使用Hexo+Github Page搭建博客
+[hexo 中文网站： https://hexo.io/zh-cn/]
+该网站上有丰富的文档说明，写的非常详细了。
 [TOC]
-##Java修饰符-Synchronized和Transient,volatile修饰符Java语言提供了很多修饰符，主要分为以下两类：
-
-访问修饰符
-非访问修饰符
-
-修饰符用来定义类、方法或者变量，通常放在语句的最前端。我们通过下面的例子来说明：123456789public class className &#123;   // ...&#......
+##错误记录
+###一、记录一次引用第三方主题的错误经历
+第三方主题地址：https://github.com/Kaijun/hexo-theme-huxblog里面的readme有很详细的使用流程，帮你把执行的命令行......
         </div>
     </a>
     <p class="post-meta">
         Posted by xiaodong Chen on
-        2016-12-01
+        2016-09-04
     </p>
 
 </div>
@@ -365,72 +399,22 @@ MVC，MVP 和 MVVM 的图示
 
 <div class="post-preview">
 
-    <a href="/2016/11/21/Android开发注意事项/">
+    <a href="/2016/09/02/Deployer-not-found-github/">
         <h2 class="post-title">
-            Android开发注意事项
+            Deployer not found: github
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            @(【安卓深入思考】)
-#Android开发注意事项
-[TOC]
-##关注应用流畅性1、切记不要在UI线程中执行数据库的查找，for循环的遍历等耗时操作。考虑用AsyncTask来做处理。
-2、考虑在接口请求数据返回之后，中间尽量不要再插入其他操作导致接口数据请求成功后，加载状态依然在的情况。比如：
-12345678910111213@Override	protected Response&......
+            “Deployer not found: github”
+更新文章执行hexo deploy时，出现以上提示，找来找去始终没发现原因。我备份了原来的source、themes文件夹和_config.yml主配置文件。后来终于在一些技术社区里找到了原因，需要将原来_config.yml配置中的deploy下的“type”字段中的“github”改为“git”。再执行
+1npm install ......
         </div>
     </a>
     <p class="post-meta">
         Posted by xiaodong Chen on
-        2016-11-21
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2016/11/05/scheme is now not allowed to be attached with Intent on targetSdkVersion 24 (Android Nougat). And here is the solution/">
-        <h2 class="post-title">
-            file:// scheme is now not allowed to be attached with Intent on targetSdkVersion 24
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            @(【每日英文博客】)
-#file:// scheme is now not allowed to be attached with Intent on targetSdkVersion 24 (Android Nougat). And here is the solution.Posted on 23 Jul 2016 15:11 | 1291 reads | 0 shares
-链接地址：......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by xiaodong Chen on
-        2016-11-05
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2016/11/05/收集Android错误/">
-        <h2 class="post-title">
-            收集Android错误
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            @(开发错误收集)
-#收集Android错误
-[TOC]
-##字体大小不随系统改变微信Android中是如何做到字体大小不随系统设置而改变的，扩展一点，安卓 App中的字体如何独立于系统的设置?123456789activity基类添加Overridepublic Resources getResources() &#123;Resources res = super.getResource......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by xiaodong Chen on
-        2016-11-05
+        2016-09-02
     </p>
 
 </div>
@@ -471,17 +455,15 @@ MVC，MVP 和 MVVM 的图示
                     <div class="tags">
                         
                             
-                            <a href="/tags/#hexo" title="hexo" rel="2">hexo</a>
-                            
-                        
-                            
                             <a href="/tags/#webapp" title="webapp" rel="2">webapp</a>
                             
                         
                             
-                            <a href="/tags/#android" title="android" rel="15">android</a>
+                            <a href="/tags/#hexo" title="hexo" rel="2">hexo</a>
                             
                         
+                            
+                            <a href="/tags/#android" title="android" rel="8">android</a>
                             
                         
                             
