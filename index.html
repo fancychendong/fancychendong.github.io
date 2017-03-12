@@ -97,14 +97,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -181,77 +181,6 @@
             
                 <!-- Main Content -->
 
-
-<div class="post-preview">
-
-    <a href="/2017/01/23/AS性能调试工具的使用/">
-        <h2 class="post-title">
-            AS性能调试工具的使用
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            AS性能调试工具的使用使用Dump Heap调试内存问题：Dump Java Heap前执行一次Full GC操作
-这样会减少很多无用的对象。点击之后，有时候能够明显看出内存变化
-点击Dump Java Heap分析内存对象占用
-有一个10M大小的Bitmap被gpuimage里面的模块把持住了。通过这些信息，基本就可以解决绝大部分OOM问题
-使用Allocation Tracking工具分......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by xiaodong Chen on
-        2017-01-23
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2017/01/21/善用Android Studio异常调试功能/">
-        <h2 class="post-title">
-            善用Android Studio异常调试功能
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            善用Android Studio异常调试功能开发过程中遇到如下崩溃：提示Canvas: trying to use a recycled bitmap android.graphics.Bitmap@e9fe63，但是并没有说到底是哪个ImageView，并且代码中也没有手动回收bitmap的操作，面对这样的crash也是无从下手。
-善用Android Studio异常调试功能：
-在管理断点......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by xiaodong Chen on
-        2017-01-21
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2017/01/20/Android高级进阶笔记/">
-        <h2 class="post-title">
-            Android高级进阶笔记
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            Android高级进阶笔记[TOC]
-基础篇动画机制帧动画 Frame Animation使用xml文件配置&lt;animation-list&gt;
-使用代码方式1234AnimationDrawable.addFrame(drawable, 120)imageView.setBackgroundDrawable(animationDrawable);animationDrawable.......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by xiaodong Chen on
-        2017-01-20
-    </p>
-
-</div>
-<hr>
 
 <div class="post-preview">
 
@@ -420,6 +349,78 @@ AngularJS 是一个 JavaScript 框架可通过 script 标签添加到网页中&l
 </div>
 <hr>
 
+<div class="post-preview">
+
+    <a href="/2016/05/02/dialog/">
+        <h2 class="post-title">
+            Dialog中值得学习之-sendXXMessage
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            #Dialog中值得学习之-sendXXMessage
+在Dialog源码中，dialog的显示与隐藏是通过mWindowManager.addView/removeViewImmediate来实现的，并且当dialog设置了
+123dialog.setOnShowListener();dialog.setOnDismissListener();dialog.setOnCancelListe......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by xiaodong Chen on
+        2016-05-02
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2016/03/02/android-current-activity/">
+        <h2 class="post-title">
+            关于获取当前Activity的一些思考(转载)
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            在Android开发过程中，我们有时候需要获取当前的Activity实例，比如弹出Dialog操作，必须要用到这个。关于如何实现由很多种思路，这其中有的简单，有的复杂，这里简单总结一下个人的一些经验吧。
+##反射反射是我们经常会想到的方法，思路大概为
+1 获取ActivityThread中所有的ActivityRecord
+2 从ActivityRecord中获取状态不是pause的Acti......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by xiaodong Chen on
+        2016-03-02
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2015/07/09/js-module-7day/">
+        <h2 class="post-title">
+            Example Post using Keynote Layout
+        </h2>
+        <h3 class="post-subtitle">
+            Keynote: JavaScript Modularization Journey
+        </h3>
+        <div class="post-content-preview">
+            
+下滑这里查看更多内容
+
+7月9日，我在公司内部进行了名为「JavaScript 模块化七日谈」分享，并将该 Slides 分享到了微博上。出乎意料地，这篇微博先后被 @JS小组 @尤小右 @寸志 等近 200 人转发，阅读达到 10w，获得了还不错的评价。
+于是，我决定将它重新发到我的博客上，并为它专门制作了适用于 Keynote 展示文稿的新布局。它能自动根据屏幕大小/旋转以一定比例填充......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by Hux on
+        2015-07-09
+    </p>
+
+</div>
+<hr>
+
 
 
 <!-- Pager -->
@@ -463,7 +464,7 @@ AngularJS 是一个 JavaScript 框架可通过 script 标签添加到网页中&l
                             
                         
                             
-                            <a href="/tags/#android" title="android" rel="8">android</a>
+                            <a href="/tags/#android" title="android" rel="5">android</a>
                             
                         
                             
