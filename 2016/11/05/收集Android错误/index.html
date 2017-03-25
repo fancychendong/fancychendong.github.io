@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          收集Android错误 - fancy的博客 | fancy&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://fancychendong.github.io/2016/11/05/收集Android错误/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">fancychendong&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#开发错误收集" title="开发错误收集">开发错误收集</a>
+                        
+                    </div>
+                    <h1>收集Android错误</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by xiaodong Chen on
+                        2016-11-05
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>@(开发错误收集)</p>
+<p>#收集Android错误</p>
+<p>[TOC]</p>
+<p>##字体大小不随系统改变<br>微信Android中是如何做到字体大小不随系统设置而改变的，扩展一点，安卓 App中的字体如何独立于系统的设置?<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">activity基类添加</div><div class="line"><span class="function">Override</span></div><div class="line"><span class="keyword">public</span> Resources <span class="title">getResources</span><span class="params">()</span> &#123;</div><div class="line">Resources res = <span class="keyword">super</span>.getResources();</div><div class="line">Configuration config=<span class="keyword">new</span> Configuration();</div><div class="line">config.setToDefaults();</div><div class="line">res.updateConfiguration(config,res.getDisplayMetrics() );</div><div class="line"><span class="keyword">return</span> res;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>##编译出错peer not authenticated</p>
+<ol>
+<li>build时出现以下错误</li>
+</ol>
+<p>Cause: peer not authenticated</p>
+<p>通常情况下这是HTTPS下载时认证不通过造成的。这时可看出现问题的链接是什么，如果是下载gradle插件自身，则可以找到gradle/wrapper/gradle-wrapper.properties 这个文件。</p>
+<p>把文件中的istributionUrl从Https改为http</p>
+<p>如果是下载其载依赖库造成的，如果是采用jcenter, 则可以用以下代码代替。</p>
+<p>jcenter {<br>            url “<a href="http://jcenter.bintray.com/" target="_blank" rel="external">http://jcenter.bintray.com/</a>“<br>        }</p>
+<p>##Android获取字体高度和设置行高<br>网络中好多资料介绍获取字体高度的方法如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getFontHeight</span><span class="params">(<span class="keyword">float</span> fontSize)</span>  </span></div><div class="line">&#123;  </div><div class="line">    Paint paint = <span class="keyword">new</span> Paint();  </div><div class="line">    paint.setTextSize(fontSize);  </div><div class="line">    FontMetrics fm = paint.getFontMetrics();  </div><div class="line">    <span class="keyword">return</span> (<span class="keyword">int</span>) Math.ceil(fm.descent - fm.top) + <span class="number">2</span>;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>个人更倾向于以下方式获取字体实际高度：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Math.ceil(fm.descent - fm.ascent)</div></pre></td></tr></table></figure></p>
+<p>通过实际的截图对文字高度的确定，后者更准确一些。 </p>
+<p>有了字体高度信息，就可以添加行与行之间的空隙，调整行高。<br>个人实现方式如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">paint.setTextSize(fFontWidth);  </div><div class="line">FontMetrics fm = paint.getFontMetrics();  </div><div class="line">  </div><div class="line">fFontHeight = (<span class="keyword">float</span>)Math.ceil(fm.descent - fm.ascent);  </div><div class="line"><span class="keyword">if</span>(fFontHeight &gt; fLineHeight)  </div><div class="line">&#123;  </div><div class="line">    fMulValue = fLineHeight / fFontHeight;  </div><div class="line">    fAddValue = -<span class="number">1</span>;  </div><div class="line">&#125;  </div><div class="line"><span class="keyword">else</span>  </div><div class="line">&#123;  </div><div class="line">    fMulValue = <span class="number">1</span>;  </div><div class="line">    fAddValue = fLineHeight - fFontHeight;  </div><div class="line">&#125;  </div><div class="line">textViewLeft.setTextSize(fFontWidth);  </div><div class="line">textViewLeft.setLineSpacing(fAddValue, fMulValue);</div></pre></td></tr></table></figure></p>
+<p>实践验证这种方式对多种分辨率的屏幕的适应性较强。<br>以上是个人在实际的功能实现过程中的总结，水平较浅，若看官有不同的看法或者见解，望不惜赐教！</p>
+<p>##android 获取字符串的高度和宽度<br>计算出当前绘制出来的字符串有多宽，可以这么来！</p>
+<p>方法1：<br>Paint pFont = new Paint();<br>Rect rect = new Rect();</p>
+<p>//返回包围整个字符串的最小的一个Rect区域<br>pFont.getTextBounds(str, 0, 1, rect); </p>
+<p>strwid = rect.width();<br>strhei = rect.height();</p>
+<p>方法2：</p>
+<p>//直接返回参数字符串所占用的宽度<br>strwid = paintHead.measureText(str);</p>
+<p>##Gradle的执行顺序</p>
+<p>问题1<br>gradle的解析顺序：rootproject 的setting.gradle,然后是rootproject的build.gradle,然后是各个subproject。所以project下的build.gradle会先于app下的build.gradle。<br>问题2<br>在build.gradle中，我们可以通过apply plugin: 引入插件，也可以通过 apply from .gradle引入其他gradle脚本中的函数定义或task等<br>问题3<br>你说的check，clean实际是task，一般hook我们指的是gradle的生命周期：</p>
+<p>在解析setting.gradle之后，开始解析build.gradle之前，这里如果要干些事情（更改build.gradle校本内容），可以写在beforeEvaluate<br>举个例子，我们将我们的一个subproject中的apply plugin改掉，原来是一个library工程，我们希望它被当作application处理：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">project.beforeEvaluate &#123;</div><div class="line">            <span class="comment">// Change android plugin from `lib' to `application' dynamically</span></div><div class="line">            <span class="comment">// <span class="doctag">FIXME:</span> Any better way without edit file?</span></div><div class="line"></div><div class="line">            <span class="keyword">if</span> (mBakBuildFile.exists()) &#123;</div><div class="line">                <span class="comment">// With `tidyUp', should not reach here</span></div><div class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"Conflict buildFile, please delete file $mBakBuildFile or "</span> +</div><div class="line">                        <span class="string">"$&#123;project.buildFile&#125;"</span>)</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            def text = project.buildFile.text.replaceAll(</div><div class="line">                    <span class="string">'com\\.android\\.library'</span>, <span class="string">'com.android.application'</span>)</div><div class="line">            project.buildFile.renameTo(mBakBuildFile)</div><div class="line">            project.buildFile.write(text)</div><div class="line">        &#125;</div></pre></td></tr></table></figure></p>
+<p>在所有build.gradle解析完成后，开始执行task之前，此时所有的脚本已经解析完成，task，plugins等所有信息可以获取，task的依赖关系也已经生成，如果此时需要做一些事情，可以写在afterEvaluate<br>project.afterEvaluate {<br>            // Set application id<br>            def manifest = new XmlParser().parse(project.android.sourceSets.main.manifestFile)<br>            project.android.defaultConfig.applicationId = manifest.@package<br>        }<br>每个task都可以定义doFirst，doLast，用于定义在此task执行之前或之后执行的代码<br>project.assemble.doLast {<br>                    println “assemble finish”<br>                }<br>project.assemble.doFirst {<br>                    println “assemble start”<br>                }<br>问题4<br>gradle基于的语言是groovy，也是一个编程框架：<br>官方文档：<a href="https://docs.gradle.org/current/dsl/" target="_blank" rel="external">https://docs.gradle.org/current/dsl/</a><br>Android插件文档：<a href="https://github.com/google/android-gradle" target="_blank" rel="external">https://github.com/google/android-gradle</a>…<br>最后你应该从编程的角度来看gradle，通过查阅文档解决问题：<a href="http://m.blog.csdn.net/article/details?i" target="_blank" rel="external">http://m.blog.csdn.net/article/details?i</a>…</p>
+<hr>
+<p>##使用了系统的AlertDialog导致的一个问题<br>错误：<a href="http://stackoverflow.com/questions/21814825/you-need-to-use-a-theme-appcompat-theme-or-descendant-with-this-activity" target="_blank" rel="external">http://stackoverflow.com/questions/21814825/you-need-to-use-a-theme-appcompat-theme-or-descendant-with-this-activity</a></p>
+<p>使用了系统的AlertDialog导致的一个问题<br>The reason you are having this problem is because the activity you are trying to apply the dialog theme to is extending ActionBarActivity which requires the AppCompat theme to be applied.</p>
+<p>Change the Java inheritance from ActionBarActivity to Activity and leave the dialog theme in the manifest as it is.</p>
+<hr>
+<p>##多个类定义attr属性重复的问题:Attribute ＂xxx＂ has already been defined<br>有时候做自定义控件时就会遇到命名冲突，改变有冲突的名字自然是最直接有效的方式，但是感觉很傻。我搜了下别人的解决方案，觉得很值得借鉴。就是把重名的属性，独立出来写一下，然后在定义时直接写属性名字即可。</p>
+<p>比如：下面两个declare-styleable中icon重名了，我们就需要将icon独立出来写。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;? xml version = "1.0" encoding = "utf-8" ?&gt;</div><div class="line">&lt; resources &gt;</div><div class="line">     &lt; declare-styleable name= "PreferenceHeader" &gt;</div><div class="line">        &lt;!-- Identifier value for the header. --&gt;</div><div class="line">        &lt; attr name= "id" format = "integer"/&gt;</div><div class="line">        &lt; attr name= "icon" format = "integer" /&gt;</div><div class="line">        &lt;!-- The fragment that is displayed when the user selects this item. --&gt;</div><div class="line">    &lt;/declare-styleable &gt;</div><div class="line">    &lt; declare-styleable name= "Preference" &gt;</div><div class="line">        &lt; attr name= "icon" format = "integer" /&gt;</div><div class="line">        &lt;!-- The key to store the Preference value. --&gt;</div><div class="line">        &lt; attr name= "key" format = "string" /&gt;</div><div class="line">    &lt;/declare-styleable &gt;</div><div class="line">&lt;/ resources &gt;</div></pre></td></tr></table></figure></p>
+<p>icon独立定义，就可以被多次引用了。<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;? xml version = "1.0" encoding = "utf-8" ?&gt;</div><div class="line">&lt; resources &gt;</div><div class="line">     &lt; attr name = "icon" format = "integer" /&gt;</div><div class="line"></div><div class="line">     &lt; declare-styleable name= "PreferenceHeader" &gt;</div><div class="line">        &lt;!-- Identifier value for the header. --&gt;</div><div class="line">        &lt; attr name= "id" format = "integer"/&gt;</div><div class="line">        &lt; attr name= "icon" /&gt;</div><div class="line">    &lt;/declare-styleable &gt;</div><div class="line"></div><div class="line">    &lt; declare-styleable name= "Preference" &gt;</div><div class="line">        &lt; attr name= "icon"  /&gt;</div><div class="line">        &lt;!-- The key to store the Preference value. --&gt;</div><div class="line">        &lt; attr name= "key" format = "string" /&gt;</div><div class="line">    &lt;/declare-styleable &gt;</div><div class="line"></div><div class="line">&lt;/ resources &gt;</div></pre></td></tr></table></figure></p>
+<p>##计算Adapter中getView的View高度必须由LinearLayout组成<br>Adapter中getView方法返回的View的必须由LinearLayout组成，因为只有LinearLayout才有measure()方法，如果使用其他的布局如RelativeLayout，在调用listItem.measure(0,0);时就会抛异常，因为除LinearLayout外的其他布局的这个方法就是直接抛异常的，没理由…。我最初使用的就是这个方法，但是因为子控件的顶层布局是RelativeLayout，所以一直报错，不得不放弃这个方法。</p>
+<p>##Android Studio集成crashlytics后无法编译的问题<br>问题描述：</p>
+<p>在用fabric集成后编译出现如下错误，</p>
+<p>Error:Cause: hostname in certificate didn’t match: <maven.fabric.io> != &lt;<em>.motili.com&gt; OR &lt;</em>.motili.com&gt; OR <motili.com></motili.com></maven.fabric.io></p>
+<p>build.gradle部分脚本（fabric插件自动生成的）:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">buildscript &#123;</div><div class="line">    repositories &#123;</div><div class="line">        maven &#123; url <span class="string">'https://maven.fabric.io/public'</span> &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    dependencies &#123;</div><div class="line">        classpath <span class="string">'io.fabric.tools:gradle:1.+'</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">apply plugin: <span class="string">'com.android.application'</span></div><div class="line">apply plugin: <span class="string">'io.fabric'</span></div><div class="line"></div><div class="line">repositories &#123;</div><div class="line">    maven &#123; url <span class="string">'https://maven.fabric.io/public'</span> &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>仔细看了一下那个<a href="https://maven.fabric.io/public网站的证书(如下图)，证书里指定的网站是*.motili.com，显然错了，不知道这个插件是怎么生成的。" target="_blank" rel="external">https://maven.fabric.io/public网站的证书(如下图)，证书里指定的网站是*.motili.com，显然错了，不知道这个插件是怎么生成的。</a></p>
+<p><img src="./1470751202997.png" alt="Alt text"><br>studio在请求<a href="https://maven.fabric.io/public无法完成证书校验，所以直接报错，而且在settings把https证书验证去掉也不行。" target="_blank" rel="external">https://maven.fabric.io/public无法完成证书校验，所以直接报错，而且在settings把https证书验证去掉也不行。</a></p>
+<p>然后给support发邮件问原因，3天后才给回复，回复内容如下：<br>Hey there,</p>
+<p>Are you by any chance connecting through a proxy server, or are you behind a firewall?</p>
+<p>Cheers,<br>Bear<br>Helpful? Click to give Bear Douglas thanks!<br>没有实际内容，是support反应太慢，还是support根本就已经不重视这块crashlytics了。</p>
+<p>问题原因：<br><a href="https://maven.fabric.io/public" target="_blank" rel="external">https://maven.fabric.io/public</a> 无法访问（证书不匹配)，那么其实只要把这个网址换掉即可，后面找到了可以换成:<br><a href="https://twittersdk.artifactoryonline.com/twittersdk/public" target="_blank" rel="external">https://twittersdk.artifactoryonline.com/twittersdk/public</a></p>
+<p>build.gradle直接替换即可，改成：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">buildscript &#123;</div><div class="line">    repositories &#123;</div><div class="line">        maven &#123; url <span class="string">'https://twittersdk.artifactoryonline.com/twittersdk/public'</span> &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    dependencies &#123;</div><div class="line">        classpath <span class="string">'io.fabric.tools:gradle:1.+'</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">apply plugin: <span class="string">'com.android.application'</span></div><div class="line">apply plugin: <span class="string">'io.fabric'</span></div><div class="line"></div><div class="line">repositories &#123;</div><div class="line">    maven &#123; url <span class="string">'https://twittersdk.artifactoryonline.com/twittersdk/public'</span> &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>另外个人使用crashlytics的一些感受：</p>
+<ol>
+<li>fabric.io界面，crash分析功能比较全，可惜没有ANR/卡顿的检测，这块有点弱。</li>
+</ol>
+<p>2.虽然有studio插件，但是studio集成速度太慢了，国外的网站还经常上不去，反正那个插件点按钮半天没反应</p>
+<p>3.gradle编译连接下载aar库时也是非常慢，要有耐心</p>
+<p>4.登陆fabric.io查看数据有时候也很卡，反应太慢，对于要快点进去查看数据的开发者相当不友好</p>
+<p>5.界面排版有点太杂了，很多时候让用户不知所措，不知道点哪里。</p>
+<ol>
+<li>收集到一些crash不知为何是乱码的，看不到原始数据</li>
+</ol>
+<p>##android/ios调用微信分享出现由于hit push hold 无法分享到微信<br>你分享的微信账号在其他手机登陆了，但是本机还没有退出登陆。</p>
+<p>导致没有权限分享。重新进入微信并登陆就好了。</p>
+<p>简单的说：重新登录微信</p>
+<p>##The number of method references in a .dex file cannot exceed 64K.<br>Error:The number of method references in a .dex file cannot exceed 64K.<br>Learn how to resolve this issue at <a href="https://developer.android.com/tools/building/multidex.html" target="_blank" rel="external">https://developer.android.com/tools/building/multidex.html</a></p>
+<p>##使用FragmentTransaction执行多事务的坑记录<br>使用FragmentTransaction执行多事务的时候，比如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mTransaction.remove(mFragmentLogin);</div><div class="line">            mTransaction.add(R.id.learncenter_contain, mFragmentLogin).commitAllowingStateLoss();</div></pre></td></tr></table></figure></p>
+<p>发现并没有remove掉之前的fragment，不知道为什么。</p>
+<p><strong>据说是mTransaction.remove(mFragmentLogin)会返回一个FragmentTransaction重新给mTransaction赋值，然后再add可以</strong><br>所以，如果遇到上面的需求，其实直接用replace就可以，没必要手动remove然后再add。</p>
+<p><strong>关于cannot perform this action after onsaveinstancestate的解决办法</strong><br>如何避免</p>
+<p>1 在activity生命周期方法内使用FragmentTransaction#commit()应谨慎<br>   多数的应用会在onCreate()中使用该方法，所以不会遇到这样的问题，但如果在onActivityResult(), onStart()或onResume()中使用时就有可能遇到了。那么如果因为一些原因一定要在这些方法中使用FragmentTransaction#commit()该怎么办呢（比如说从下一个页面回来时需要刷新界面的时候）。这时最好在FragmentActivity#onResumeFragments()或者Activity#onPostResume()中使用。这两个方法会保证在activity恢复到最初状态后被调用。</p>
+<p>2 commitAllowingStateLoss()只能当做最后的手段<br>    commit和commitAllowingStateLoss()之间的唯一区别是如果状态丢失后者仅仅是不抛出异常而已。一般情况下你不会想用这个方法因为它仍然会有状态丢失的可能。</p>
+<p>由于在百度上看到多数的解决办法是使用commitAllowingStateLoss()，并非说这个办法不行，而是尽量精益求精，找到问题的本质所在。翻译有出入 ，请尽量看原文。<br>详细的信息请参考原作者文章：<a href="http://www.androiddesignpatterns.com/2013/08/fragment-transaction-commit-state-loss.html" target="_blank" rel="external">http://www.androiddesignpatterns.com/2013/08/fragment-transaction-commit-state-loss.html</a></p>
+<p><code>PS：挖坟，顺便告知后来者，如果在onActivityResult(), onStart()或onResume()中必须调用，可以在activity.runOnUiThread或者view.post里面调用需要的方法，就可以避免这个问题</code></p>
+<p>##EditText clearFocus 光标还在<br>使用EditText clearFocus 光标依然在EditText上，需要在它的parent Layout 设置<br>android:focusable=”true”<br>android:focusableInTouchMode=”true”<br>这样clearFocus就可以把光标消失掉。</p>
+<p>###如何实现EditText 的 ellipse 起作用<br>如何实现EditText 的 ellipse 起作用，看过很多的文章，也看过别人的实现。但是都不如意，以下是我的几种实现方式的探索：</p>
+<p>实现之前请先设置相关参数，例如：setEllipsize(TextUtils.TruncateAt.END);setSingleLine();setLines(1);</p>
+<p>首先最简单的设置，在xml 中设置editorable = false，enable = false，就可以现实ellipse 中的…的效果，但是如果想在代码中动态设置editorable这个属性，很抱歉，这个属性没有对外开放，不能动态设置。</p>
+<p>开始正题，BufferType 用于标识当前的是否可编辑的属性，在Edittext中</p>
+<p>android EditText 怎样使ellipse 起作用<br>已经严格控制了这个输入类型的设置。所以从这个方向暂时行不通，但是查到一个非常关键的方法</p>
+<p>android EditText 怎样使ellipse 起作用<br>这个方法用于创建当前的编辑器，什么时候会忽略这个编辑器的创建，并且对外开放呢？ 答案是：setKeyListener，所以正确的设置方法为：</p>
+<p>setEllipsize(TextUtils.TruncateAt.END);<br>setSingleLine();<br>setLines(1);<br>setKeyListener(null);<br>既然可以设置成ellipse效果，那肯定可以还原原来的效果，<br>setKeyListener(new BaseKeyListener() {<br>            @Override<br>            public int getInputType() {<br>                // 返回当前的输入法<br>                return inputType;<br>            }<br>        })<br>这里面还有一个坑就是，在你切换这两种显示的时候，一定要从新调用 setText()方法.</p>
+<p>以上就是android EditText 怎样使ellipse 起作用的全文介绍,希望对您学习Android应用开发有所帮助.</p>
+<p>##自定义ExpandableFlowLayout嵌入在ListView中复用问题</p>
+<p><img src="./1473667904698.png" alt="Alt text"><br>在项目开发中，需要折叠展开tag，并且该组件嵌入到listview中，考虑到复用性能的问题。</p>
+<p>一、自定义控件，实现乱排版效果<br>使用开源的FlowLayout，但是需要自己添加折叠收起的功能。<br>第一反应，重写FlowLayout，为了遵循开闭原则，继承FlowLayout重新定义一个ExpandableFlowLayout。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public void collapse() &#123;</div><div class="line">       if (expandStyle == STYLE_EXPANDABLE) &#123;</div><div class="line">           maxLines = oldMaxLines;</div><div class="line">           requestLayout();</div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   public void expand() &#123;</div><div class="line">       if (expandStyle == STYLE_EXPANDABLE) &#123;</div><div class="line">           oldMaxLines = maxLines;</div><div class="line">           maxLines = Integer.MAX_VALUE;</div><div class="line">           requestLayout();</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
+<p>看了FlowLayout的源码是实现了onMeasure计算子view的高宽和需要layout排版的left和top的值；<br>然后再实现onlayout实现对子view的排版；</p>
+<p>所以要实现折叠展开可以使用requestLayout实现。会导致onMeasure和onLayout重新执行。</p>
+<p>二、考虑嵌入ListView中复用的问题<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line">private class HolderView extends LinearLayout &#123;</div><div class="line"></div><div class="line">        ExpandableFlowLayout mFlowLayout;</div><div class="line">        List&lt;TextView&gt; mTagViews = new ArrayList&lt;&gt;();</div><div class="line">        View mExpandWidget;</div><div class="line">        View triangleIcon;</div><div class="line">        TextView expandText;</div><div class="line"></div><div class="line">        public HolderView(Context context) &#123;</div><div class="line">            this(context, null);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public HolderView(Context context, AttributeSet attrs) &#123;</div><div class="line">            super(context, attrs);</div><div class="line">            this.mFlowLayout = (ExpandableFlowLayout) mInflater.inflate(R.layout.item_main_third_category_flowlayout, null);</div><div class="line">            this.mExpandWidget = mInflater.inflate(R.layout.view_green_triangle_expand_widget, null);</div><div class="line">            triangleIcon = mExpandWidget.findViewById(R.id.expand_icon);</div><div class="line">            expandText = (TextView) mExpandWidget.findViewById(R.id.expand_text);</div><div class="line">            mExpandWidget.setOnClickListener(new OnClickListener() &#123;</div><div class="line">                @Override</div><div class="line">                public void onClick(View v) &#123;</div><div class="line">                    displayExpandWidget(!mFlowLayout.isExpanded());</div><div class="line">                    trackExpand(mFlowLayout.isExpanded());</div><div class="line">                    if (mFlowLayout.isExpanded()) &#123;</div><div class="line">                        mFlowLayout.collapse();</div><div class="line">                        if (getTag() != null) &#123;</div><div class="line">                            mChildViewExpandStateMap.put(getTag(), false);</div><div class="line">                        &#125;</div><div class="line">                    &#125; else &#123;</div><div class="line">                        mFlowLayout.expand();</div><div class="line">                        if (getTag() != null) &#123;</div><div class="line">                            mChildViewExpandStateMap.put(getTag(), true);</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">            mFlowLayout.setExpandView(mExpandWidget);</div><div class="line">            addView(mFlowLayout);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        public void bind(List&lt;MobCategoryVo&gt; categoryList, boolean isExpanded) &#123;</div><div class="line">            if (categoryList != null) &#123;</div><div class="line">                if (mTagViews == null) &#123;</div><div class="line">                    mTagViews = new ArrayList&lt;&gt;();</div><div class="line">                &#125;</div><div class="line">                //三级类目前统一加全部</div><div class="line">                MobCategoryVo allCategoryVo = new MobCategoryVo();</div><div class="line">                allCategoryVo.setId(-1);</div><div class="line">                allCategoryVo.setName(&quot;全部&quot;);</div><div class="line">                categoryList.add(0, allCategoryVo);</div><div class="line"></div><div class="line">                if (mTagViews.size() &gt; categoryList.size()) &#123;</div><div class="line">                    int startIndex = categoryList.size();</div><div class="line">                    for (;startIndex &lt; mTagViews.size(); startIndex++) &#123;</div><div class="line">                        mTagViews.get(startIndex).setVisibility(GONE);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                displayExpandWidget(isExpanded);</div><div class="line">                mFlowLayout.reset(isExpanded);</div><div class="line">                for (int i = 0; i &lt; categoryList.size(); i++) &#123;</div><div class="line">                    final MobCategoryVo item = categoryList.get(i);</div><div class="line">                    if (item != null) &#123;</div><div class="line">                        TextView textView = null;</div><div class="line">                        if (i &lt; mTagViews.size()) &#123;</div><div class="line">                            textView = mTagViews.get(i);</div><div class="line">                            textView.setVisibility(VISIBLE);</div><div class="line">                            textView.setText(item.getName());</div><div class="line">                        &#125; else &#123;</div><div class="line">                            textView = (TextView) mInflater.inflate(R.layout.item_main_third_category_itemview, null);</div><div class="line">                            textView.setVisibility(VISIBLE);</div><div class="line">                            textView.setText(item.getName());</div><div class="line">                            mTagViews.add(textView);</div><div class="line">                            mFlowLayout.addView(textView, mFlowLayout.getChildCount() - 1);</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div></pre></td></tr></table></figure></p>
+<p>使用了HolderView，在内部保存了一个view的列表，然后实现相关逻辑。<br>如果不够inflater出来，够了从缓存的view列表中get出来然后重新设置值。</p>
+<p>三、实现FlowLayout自定义折叠展开控件的实现bug问题<br>实现了嵌入ListView复用问题，控件提供折叠展开功能，在onMeasure方法中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//将之后的view都移动到下一行</div><div class="line">                if (lastChildIndex &gt; 0 &amp;&amp; lastChildIndex + 1 &lt; getChildCount()) &#123;</div><div class="line">                    for (int j = lastChildIndex + 1; j &lt; getChildCount(); j++) &#123;</div><div class="line">                        View nextChild = getChildAt(j);</div><div class="line">                        if (expandChild == null || nextChild != expandChild) &#123;</div><div class="line">                            LayoutParams params = (LayoutParams) nextChild.getLayoutParams();</div><div class="line">                            nextChild.measure(</div><div class="line">                                    getChildMeasureSpec(widthMeasureSpec, this.getPaddingLeft()</div><div class="line">                                            + this.getPaddingRight(), lp.width),</div><div class="line">                                    getChildMeasureSpec(heightMeasureSpec, this.getPaddingTop()</div><div class="line">                                            + this.getPaddingBottom(), lp.height));</div><div class="line">                            params.setPosition(getPaddingLeft(), breakLineThickness + getPaddingTop());</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div></pre></td></tr></table></figure></p>
+<p>刚开始并没有让隐藏的，不需要显示的childView进行measure，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">nextChild.measure(</div><div class="line">                                    getChildMeasureSpec(widthMeasureSpec, this.getPaddingLeft()</div><div class="line">                                            + this.getPaddingRight(), lp.width),</div><div class="line">                                    getChildMeasureSpec(heightMeasureSpec, this.getPaddingTop()</div><div class="line">                                            + this.getPaddingBottom(), lp.height));</div></pre></td></tr></table></figure></p>
+<p>但是发现listview复用的时候会出现，展开的时候，展开的子view会复用getView里的其它子view的width，导致宽度不对。<br><code>也是一个很经典的问题，很难发现bug原因</code></p>
+<p>##Android Toast having Icon<br><a href="http://stackoverflow.com/questions/36768679/android-toast-having-icon" target="_blank" rel="external">http://stackoverflow.com/questions/36768679/android-toast-having-icon</a><br>In my app I am showing a toast message. But in One Plus One device it shows an icon on left top corner(as shown in attached image).<br>Can any body help me how can I remove it ?<br><a href="http://i.stack.imgur.com/nknIE.png![Alt" target="_blank" rel="external">http://i.stack.imgur.com/nknIE.png![Alt</a> text](./1475130589017.png)</p>
+<p>This is a feature of Cyanogen OS/Cyanogenmod. You can not change this behaviour inside your app. Cyanogenmod will always show the App-Icon in this location. The only possible solution would be to provide a fully transparent App-Icon, this would result in your app having no icon at all.</p>
+<p>##关于java.lang.OutOfMemoryError的解决方案</p>
+<p>【 崩溃类型 】<br>java.lang.OutOfMemoryError</p>
+<p>【 异常描述 】<br>bitmap size exceeds VM budget</p>
+<p>【 出错堆栈 】<br>com.example.outofmemorytest E/AndroidRuntime: FATAL EXCEPTION: main<br>        java.lang.OutOfMemoryError<br>        at android.graphics.BitmapFactory.nativeDecodeAsset(Native Method)<br>        at android.graphics.BitmapFactory.decodeStream(BitmapFactory.java:503)<br>        at android.graphics.BitmapFactory.decodeStream(BitmapFactory.java:603)<br>        at com.example.outofmemorytest.MainActivity$1.(MainActivity.java:78)<br>        at android.view.View.performClick(View.java:4240)<br>        at android.view.View$PerformClick.run(View.java:17721)<br>        at android.os.Handler.handleCallback(Handler.java:730)<br>        at android.os.Handler.dispatchMessage(Handler.java:92)<br>        at android.os.Looper.loop(Looper.java:137)<br>        at android.app.ActivityThread.main(ActivityThread.java:5103)<br>        at java.lang.reflect.Method.invokeNative(Native Method)<br>        at java.lang.reflect.Method.invoke(Method.java:525)<br>        at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:737)<br>        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:553)<br>        at dalvik.system.NativeStart.main(Native Method)<br>【 解决方案 】<br>OOM的常见异常错误提示有：</p>
+<pre><code>1. java.lang.OutOfMemoryError: bitmap size exceeds VM budget
+2. java.lang.OutOfMemoryError: Java heap space
+3. Root cause of ServletException java.lang.OutOfMemoryError
+4. java.lang.OutOfMemoryError
+</code></pre><p> 根据导致OutOfMemoryError异常的常见原因进行分类：</p>
+<pre><code>1. 内存中加载的数据太大导致内存不足，如一次从数据库取出过多数据、加载的图片过大；
+2. 内存泄露堆积导致内存溢出；
+3. 启动参数内存值设定的过小；
+</code></pre><p> 针对上面的不同情况，分析如下：</p>
+<p> 一、内存中加载的数据量过大<br>     最常见的就是android图片加载时内存溢出错误。 例如，如下代码：<br>Bitmap bmp = BitmapFactory.decodeFile(pePicFile.getAbsolutePath() + “/“+info.getImage());<br>或者 image =BitmapFactory.decodeStream(assetManager.open(imgFilename));<br>      上面代码常用于读取和加载图片文件，当文件较小时，程序能够正常运行，但是当选择一张大图时，程序就会抛出OOM异常错误。<br>      对于该问题，解决方案如下：</p>
+<pre><code>1. 你可以通过修改图片的颜色模式（Color schema)来减少创建图片使用的内存量
+2. 你也可以通过加载一个缩放之后的图片，来减少创建图片时的内存分配量，但是需要注意图片缩放后可能会损失质量
+3. 你可以根据用户手机屏幕的大小来计算图片的尺寸，并且时刻注意图片处理后进行内存回收。
+</code></pre><p>二、内存泄露<br>      一些对象有着有限的生命周期。当这些对象所要做的事情完成了，我们希望他们会被回收掉。但是如果由于设计不合理，当程序结束时它却没有被释放而继续占用内存，这就造成了内存泄露。持续累加，内存很快被耗尽。而当内存耗尽时，则会产生内存溢出错误。<br>      常见的内存泄露产生原因及解决方案如下：</p>
+<pre><code> 1. 频繁的使用static关键字修饰
+ 由于static声明变量的生命周期其实是和APP的生命周期一样的（进程级别）。大量的使用的话，就会占据内存空间不释放，积少成多也会造成内存的不断开销。
+ static的合理使用一般用来修饰基本数据类型或者轻量级对象，尽量避免修复集合或者大对象，常用作修饰全局配置项、工具类方法、内部类。
+ 2. 页面背景图
+ 背景与图片引用导致的内存泄露。
+ 在布局和代码中设置背景和图片的时候，如果是纯色，尽量使用color。如果是规则图形，尽量使用shape画图。如果稍微复杂点，可以使用9patch图。如果不能使用9patch的情况下，针对几种主流分辨率的机型进行切图。
+ 3. View缓存
+ 重复生成View。
+ 在ListView和GridView中，列表中的很多项(convertView)是可以重用的，不需要每次getView就重新生成一项。
+ 4. 引用滥用
+ 滥用Activity引用对象。
+ Activity中生成的对象原则上是应该在Activity生命周期结束之后就释放的。Activity对象本身也是，所以应该尽量避免有appliction进程级别的对象来引用Activity级别的对象，如果有的话也应该在Activity结束的时候解引用。如不应用applicationContext在Activity中获取资源。
+ 5. BroadCastReceiver、Service 绑定
+ 未解绑。
+ 绑定广播和服务，一定要记得在不需要的时候给解绑。
+ 6. handler 引用
+ 未清除Handler引用。
+ 在Activity的onDestroy方法中调用handler.removeCallbacksAndMessages(null);取消所有的消息的处理，包括待处理的消息。
+ 7. 数据库Cursor引用
+ Cursor未及时关闭。
+ 在查询SQLite数据库时，会返回一个Cursor，当查询完毕后，及时关闭，这样就可以把查询的结果集及时给回收掉。
+ 8. 线程
+ 线程开启过多或未及时关闭。
+线程不再需要继续执行的时候要记得及时关闭，开启线程数量不易过多，一般和自己机器内核数一样最好，推荐开启线程的时候，使用线程池。
+</code></pre><p>##Caused by: java.lang.IllegalArgumentException: Comparison method violates its general contract!</p>
+<p>Caused by: java.lang.IllegalArgumentException: Comparison method violates its general contract!</p>
+<p>问题</p>
+<p>导致该异常的原因有以下两点构成：1.使用了jdk7 2.使用了比较器，并且比较器违反了比较规则<br>以下是关于比较器不兼容的声明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Area: API: Utilities  </div><div class="line">Synopsis: Updated sort behavior for Arrays and Collections may throw an IllegalArgumentException  </div><div class="line">Description: The sorting algorithm used by java.util.Arrays.sort and (indirectly) by java.util.Collections.sort has been replaced.   </div><div class="line">The new sort implementation may throw an IllegalArgumentException if it detects a Comparable that violates the Comparable contract.   </div><div class="line">The previous implementation silently ignored such a situation.  </div><div class="line">If the previous behavior is desired, you can use the new system property, java.util.Arrays.useLegacyMergeSort,   </div><div class="line">to restore previous mergesort behavior.  </div><div class="line">Nature of Incompatibility: behavioral  </div><div class="line">RFE: 6804124</div></pre></td></tr></table></figure>
+<p>描述的意思是说，java.util.Arrays.sort(java.util.Collections.sort调用的也是此方法)方法中的排序算法在JDK7中已经被替换了。如果违法了比较的约束新的排序算法也许会抛出llegalArgumentException异常。JDK6中的实现则忽略了这种情况。那么比较的约束是什么呢？看这里，大体如下：<br><img src="./1478173473777.png" alt="Alt text"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sgn(compare(x, y)) == -sgn(compare(y, x))</div><div class="line">((compare(x, y)&gt;0) &amp;&amp; (compare(y, z)&gt;0)) implies compare(x, z)&gt;0</div><div class="line">compare(x, y)==0 implies that sgn(compare(x, z))==sgn(compare(y, z)) for all z</div></pre></td></tr></table></figure></p>
+<p>当x == y时，sgn(compare(x, y)) = -1，-sgn(compare(y, x)) = 1，这违背了sgn(compare(x, y)) == -sgn(compare(y, x))约束，所以在JDK7中抛出了本文标题的异常。</p>
+<p>解决方式</p>
+<p>1.JVM加入如下参数-Djava.util.Arrays.useLegacyMergeSort=true，表示使用JDK6的排序算法</p>
+<p>2.按照规定的比较规则进行值的返回，a==b 返回 0，ab 返回 1</p>
+<p>参考<br><a href="http://blog.2baxb.me/archives/993" target="_blank" rel="external">http://blog.2baxb.me/archives/993</a></p>
+<p>##关于Universal-Image-Loader加载同一张图只成功一张的问题</p>
+<p>ImageLoader#loadImage(Java.lang.String, ImageLoadingListener);</p>
+<p>当使用这个方法加载图片的时候，如果同一本地路径下的图片被加载多次。<br>你会发现除了最后一个加载任务成功收到onComplete回调，前面的加载任务<br>都是onCanceled方法被回调。</p>
+<p>研究了一下ImagerLoader的源码，会发现最后调用的还是displayImage方法。并且构造了一个NonViewAware对象，该对象的成员变量imageUri被赋值为你需要<br>加载的图片的路径。</p>
+<p>如果同一路径下 的图片，同一个任务如果在队列中存在的话，已存在的会被cancel掉，<br>当被cancel掉的任务调用run方法是，直接回调onCancel方法，不会调用onComplete方法。</p>
+<p>解决方法：<br>调用displayImage方法，传递一个NonViewAware对象，其iamgeUrl成员变赋值成一个递增的数字，这样的话，即使是重复路径的任务也会执行。</p>
+<p>方法二：<br>具体情况看我们的option配置是cache到什么地方<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DisplayImageOptions options = new DisplayImageOptions.Builder()					.cacheOnDisc(true).cacheInMemory(true).build();</div></pre></td></tr></table></figure></p>
+<p>可以在oncancel中从cache中获取图片地址<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">		public void onLoadingCancelled(String imageUri, View view) &#123;</div><div class="line">			if (ImageLoader.getInstance().getDiskCache() != null) &#123;		//当前后加载的两张图片是同一张图片链接地址时,加载完第二张会回调到该函数中</div><div class="line">				File file = ImageLoader.getInstance().getDiskCache().get(imageUri);</div><div class="line">				if (file != null &amp;&amp; !TextUtils.isEmpty(file.getPath())) &#123;</div><div class="line">					try &#123;</div><div class="line">						Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());</div><div class="line">						handleBitmap(bitmap);</div><div class="line">					&#125; catch (Exception e) &#123;</div><div class="line">						NTLog.e(&quot;ActivityGallery&quot;, e.getMessage());</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">		&#125;</div></pre></td></tr></table></figure></p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2016/11/05/scheme is now not allowed to be attached with Intent on targetSdkVersion 24 (Android Nougat). And here is the solution/" data-toggle="tooltip" data-placement="top" title="file:// scheme is now not allowed to be attached with Intent on targetSdkVersion 24">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2016/11/01/代码重构/" data-toggle="tooltip" data-placement="top" title="代码重构">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#开发错误收集" title="开发错误收集">开发错误收集</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; fancychendong&#39;s Blog 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://fancychendong.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

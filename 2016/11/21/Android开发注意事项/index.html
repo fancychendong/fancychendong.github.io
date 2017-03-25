@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Android开发注意事项 - fancy的博客 | fancy&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://fancychendong.github.io/2016/11/21/Android开发注意事项/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">fancychendong&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#android" title="android">android</a>
+                        
+                    </div>
+                    <h1>Android开发注意事项</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by xiaodong Chen on
+                        2016-11-21
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>@(【安卓深入思考】)</p>
+<p>#Android开发注意事项</p>
+<p>[TOC]</p>
+<p>##关注应用流畅性<br>1、切记不要在UI线程中执行数据库的查找，for循环的遍历等耗时操作。考虑用AsyncTask来做处理。</p>
+<p>2、考虑在接口请求数据返回之后，中间尽量不要再插入其他操作导致接口数据请求成功后，加载状态依然在的情况。<br>比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">	protected Response&lt;BaseResponseData&gt; parseNetworkResponse(</div><div class="line">			NetworkResponse response) &#123;</div><div class="line">		String parsed;</div><div class="line">		//.....代码省略</div><div class="line">		BaseResponseData brd = mParser.fromJson(parsed, BaseResponseData.class);</div><div class="line">		if (brd != null) &#123;</div><div class="line">			brd.setSquence(getSequence());</div><div class="line">			brd.setType(mType);</div><div class="line">			MyCourseResultList resultList = mParser.fromJson(brd.results, MyCourseResultList.class);</div><div class="line">				save(resultList);//这里尽量不要插入耗时操作</div><div class="line">			return Response.success(brd, HttpHeaderParser.parseCacheHeaders(response));</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<p>3、关注性能，流畅性，处理for循环、数据库操作、文件读写等耗时操作，切记多考虑可能会出现的流畅性问题。</p>
+<p>#避免在onCreate/onResume/onStart方法中耗时太长</p>
+<ul>
+<li>冷启动：即杀掉应用后重新启动的速度</li>
+<li>热启动：按back键后，应用还在后台运行</li>
+</ul>
+<p>使用<code>adb shell am start -W packagename/activity</code>计算apk的启动时间。通过android stdio打印的日志看到淘宝app的包名是com.taobao.taobao，启动的activity为com.taobao.tao.welcome.Welcome</p>
+<p>不应在Application以及Activity的生命周期回调中做任何费时操作，具体指标大概是在onCreate，onResume，onStart等回调中所花费的总时间最好不要超过400ms，否则用户在桌面点击你的应用图标后，将感觉到明显的卡顿。</p>
+<p><img src="./1473585038337.png" alt="Alt text"></p>
+<p>##开发者工具-GPU显示配置文件<br><img src="./1473585489782.png" alt="Alt text"></p>
+<p>随着界面的刷新,界面上会滚动显示垂直的柱状图来表示每帧画面所需要渲染的时间，柱状图越高表示花费的渲染时间越长。中间有一根绿色的横线，代表16ms，我们需要确保每一帧花费的总时间都低于这条横线，这样才能够避免出现卡顿的问题。每一条柱状线都包含三部分，蓝色代表测量绘制Display List的时间，红色代表OpenGL渲染Display List所需要的时间，黄色代表CPU等待GPU处理的时间。</p>
+<p>##使用Hierarchy Viewer分析app本质<br>文件位置在：<br>sdk/tools/hierarchyviewer<br>双击就可打开，分析app是webapp还是native app<br>比如淘宝首页分析是native app，这个怎么看出来的，打开这个工具慢慢发现就能知道。</p>
+<p>##开发者选项-显示GPU过度渲染<br>蓝色，淡绿，淡红，深红代表了4种不同程度的Overdraw情况，我们的目标就是尽量减少红色Overdraw，看到更多的蓝色区域。Overdraw有时候是因为你的UI布局存在大量重叠的部分，还有的时候是因为非必须的重叠背景。例如某个Activity有一个背景，然后里面的Layout又有自己的背景，同时子View又分别有自己的背景。仅仅是通过移除非必须的背景图片，这就能够减少大量的红色Overdraw区域，增加蓝色区域的占比。这一措施能够显著提升程序性能。</p>
+<p><img src="./1473586639865.png" alt="Alt text"></p>
+<p>##Inspect Code 对工程代码做静态扫描<br>通过Android Studio中的 Analyze-&gt;Inspect Code 对工程代码做静态扫描；找出潜在的问题代码并修改。里面也会包括很多安全隐患。api的兼容性等等。</p>
+<p>##DDMS的TraceView工具测试<br>启动sdk/tools/ddms<br>然后选中需要测试的app进程，点击<br><img src="./1473589201253.png" alt="Alt text"><br>然后对app进行操作，再次点击结束，会自动弹出一个TraceView的窗口。</p>
+<p>1.使用说明：参考博客<a href="http://bxbxbai.github.io/2014/10/25/use-trace-view/" target="_blank" rel="external">http://bxbxbai.github.io/2014/10/25/use-trace-view/</a></p>
+<p>2.参数说明：<br><img src="./1473588899538.png" alt="Alt text"><br>使用该工具分析淘宝客户端发现<br><img src="./1473588992931.png" alt="Alt text"><br>淘宝的首页使用了recycleView实现，当然同时也嵌入了一个uc webview内核<br><img src="./1473589072615.png" alt="Alt text"><br>要不然每次活动怎么开展。</p>
+<p>附上一篇比较实用的案例：<a href="http://www.cnblogs.com/sunzn/p/3192231.html" target="_blank" rel="external">http://www.cnblogs.com/sunzn/p/3192231.html</a></p>
+<p>##电量消耗<br>1.操作应用后，退出应用，让应用处于后台，一段时间后通过adb shell dumpsysbatterystats查看电量消耗日志看是否存在异常。</p>
+<p>2.应用进入后台后不应异常消耗电量</p>
+<p>3.推荐博客：<a href="http://hukai.me/android-performance-battery/" target="_blank" rel="external">http://hukai.me/android-performance-battery/</a></p>
+<p>##内存抖动<br>介绍：内存抖动是因为大量的对象被创建又在短时间内马上被释放，瞬间产生大量的对象会严重占用YoungGeneration的内存区域，当达到阀值，剩余空间不够的时候，也会触发GC。即使每次分配的对象占用了很少的内存，但是他们叠加在一起会增加Heap的压力，从而触发更多其他类型的GC。这个操作有可能会影响到帧率，并使得用户感知到性能问题。</p>
+<p>方法：如果你在Memory Monitor里面查看到短时间发生了多次内存的涨跌，这意味着很有可能发生了内存抖动</p>
+<p>##性能检测网站nimbledroid<br>这个网站好像是需要翻墙的，也需要有一定英语水平。我把淘宝的放上去查看了下。点击画圈处，可以查看具体是什么导致的。感觉很方便。</p>
+<p><img src="./1473589496588.png" alt="Alt text"></p>
+<p>选择一个进去看看。可以看到FEJSCaptureActivity在onCreat的时候耗时很长。其中还可以看到JSBridge,做过和web和native打交道的应该知道。从这里进一步印证，阿里的H5太多也是导致慢卡的一个原因。<br><img src="./1473589523562.png" alt="Alt text"><br>再来看看淘宝的资源占比，通过分析这个，有利于我们对自己APP瘦身。当然好像android studio2.2好像也有一个工具可以分析app的资源占比。<br><img src="./1473589534812.png" alt="Alt text"></p>
+<p>通过对淘宝的简单分析，来总结一些，性能分析的一些工具方法等。我们可以看到几点原因。</p>
+<p>a.淘宝本身的业务的复杂性，导致app过于庞大。在Application启动的时候，会初始化，加载很多东西。</p>
+<p>b.使用太多的H5，需要app端去进行网络请求，获取服务器返回的数据，加载慢。这里并没有说h5不好，h5比native要灵活很多。不过最终还是建立在用户的接受程度上。</p>
+<p>c.网速也是硬伤。</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2016/12/01/Java基础/" data-toggle="tooltip" data-placement="top" title="Java基础">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2016/11/05/scheme is now not allowed to be attached with Intent on targetSdkVersion 24 (Android Nougat). And here is the solution/" data-toggle="tooltip" data-placement="top" title="file:// scheme is now not allowed to be attached with Intent on targetSdkVersion 24">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#android" title="android">android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; fancychendong&#39;s Blog 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://fancychendong.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

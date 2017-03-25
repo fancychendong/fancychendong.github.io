@@ -97,14 +97,14 @@
 
                         
                         <li>
-                            <a href="/tags/">Tags</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/tags/">Tags</a>
                         </li>
                         
                     
@@ -184,24 +184,22 @@
 
 <div class="post-preview">
 
-    <a href="/2016/10/23/Android打包的那些事/">
+    <a href="/2017/03/25/热修复实践/">
         <h2 class="post-title">
-            Android打包的那些事
+            热修复实践
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            @(【安卓开发工具】)[马克飞象]
-###Android打包的那些事使用gradle打包apk已经成为当前主流趋势，我也在这个过程中经历了各种需求，并不断结合gradle新的支持，一一改进。在此，把这些相关的东西记录，做一总结。
-#####1. 替换AndroidManifest中的占位符
-我想把其中的${app_label}替换为@string/app_name
-12345android&......
+            热修复实践android平台上热修复的技术已经没有那么神秘了。
+原理其实很简单：当apk出现线上bug时，通过对产生bug的类进行修复，然后生成“补丁”dex文件，apk要支持发现有“补丁”dex的时候要及时下载并且和apk自身的dex进行合并，让“补丁”dex替换掉apk的dex中产生bug的类。
+Android的类加载机制Android的类加载器分为两种,PathClassLoader和......
         </div>
     </a>
     <p class="post-meta">
         Posted by xiaodong Chen on
-        2016-10-23
+        2017-03-25
     </p>
 
 </div>
@@ -209,23 +207,151 @@
 
 <div class="post-preview">
 
-    <a href="/2016/10/15/Android 代码片段整理/">
+    <a href="/2017/01/23/AS性能调试工具的使用/">
         <h2 class="post-title">
-            Android 代码片段整理
+            AS性能调试工具的使用
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            #Android 代码片段整理
+            AS性能调试工具的使用使用Dump Heap调试内存问题：Dump Java Heap前执行一次Full GC操作
+这样会减少很多无用的对象。点击之后，有时候能够明显看出内存变化
+点击Dump Java Heap分析内存对象占用
+有一个10M大小的Bitmap被gpuimage里面的模块把持住了。通过这些信息，基本就可以解决绝大部分OOM问题
+使用Allocation Tracking工具分......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by xiaodong Chen on
+        2017-01-23
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/01/21/善用Android Studio异常调试功能/">
+        <h2 class="post-title">
+            善用Android Studio异常调试功能
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            善用Android Studio异常调试功能开发过程中遇到如下崩溃：提示Canvas: trying to use a recycled bitmap android.graphics.Bitmap@e9fe63，但是并没有说到底是哪个ImageView，并且代码中也没有手动回收bitmap的操作，面对这样的crash也是无从下手。
+善用Android Studio异常调试功能：
+在管理断点......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by xiaodong Chen on
+        2017-01-21
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2017/01/20/Android高级进阶笔记/">
+        <h2 class="post-title">
+            Android高级进阶笔记
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Android高级进阶笔记[TOC]
+基础篇动画机制帧动画 Frame Animation使用xml文件配置&lt;animation-list&gt;
+使用代码方式1234AnimationDrawable.addFrame(drawable, 120)imageView.setBackgroundDrawable(animationDrawable);animationDrawable.......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by xiaodong Chen on
+        2017-01-20
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2016/12/21/Android神兵利器笔记/">
+        <h2 class="post-title">
+            Android神兵利器笔记
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Android神兵利器笔记[TOC]
+与Gradle的爱恨情仇使用gradle dependencies显示项目树结构通过终端cd到需要显示依赖结构的moduel中，然后执行 gradle dependencies命令。
+如何看懂gradle dependencies 输出的依赖树，里面的出现的各种符号都是什么意思？在stackoverflow上提出了同样的问题，那边已经有人回答了:tree......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by xiaodong Chen on
+        2016-12-21
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2016/12/15/Android Data Binding/">
+        <h2 class="post-title">
+            Android Data Binding
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            #Android Data Binding
+MVC，MVP 和 MVVM 的图示一、MVC二、MVP三、Data Binding Library3.1、基本语法3.2、基本语法
+MVC，MVP 和 MVVM 的图示
+
+一、MVCMVC模式的意思是，软件可以分成三个部分。
+
+
+视图（View）：用户界面。
+控制器（Controller）：业务逻辑
+模型（Model）：数据保存
+
+各部分之间的通......
+        </div>
+    </a>
+    <p class="post-meta">
+        Posted by xiaodong Chen on
+        2016-12-15
+    </p>
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2016/12/08/Android杂记/">
+        <h2 class="post-title">
+            Android杂记
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            @(【安卓深入思考】)
+#Android杂记
 [TOC]
-##Bitmap图片的合成
-###合成白色背景的bitmap123456789101112131415161718192021// 生成一个白色背景的bitmap				public Bitmap getWhiteBackgroundBitmap(Bitmap srcBmp, int width, int height) &#123;					Pa......
+##批量统计App里面使用到的权限写个脚本，然后通过AAPT指令，一步就可以获取所有权限~
+##对JAVA集合进行遍历删除时务必要用迭代器今天同事写了几行类似这样的代码：
+123456789101112public static void main(String args[]) &#123;    List&lt;String&gt;......
         </div>
     </a>
     <p class="post-meta">
         Posted by xiaodong Chen on
-        2016-10-15
+        2016-12-08
     </p>
 
 </div>
@@ -233,94 +359,28 @@
 
 <div class="post-preview">
 
-    <a href="/2016/10/01/View事件分发及滑动冲突的处理/">
+    <a href="/2016/12/01/Java基础/">
         <h2 class="post-title">
-            View事件分发及滑动冲突的处理
+            Java基础
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            @(【读书笔记】)
-#View事件分发及滑动冲突的处理
-1、dispatchTouchEvent(MotionEvent ev)用来进行事件分发，如果事件可以传递到当前view，那么此方法一定会被调用到(相比onInterceptTouchEvent就不一定都调用到)。返回结果受当前view的onTouchEvent和下级view的dispatchTouchEvent方法的影响，表示是否消耗......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by xiaodong Chen on
-        2016-10-01
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2016/09/05/AngularJs学习/">
-        <h2 class="post-title">
-            AngularJs学习
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            #AngularJs学习
-##简介AngularJS 是一个 JavaScript 框架。它可通过 &lt;script&gt; 标签添加到 HTML 页面。AngularJS 通过 指令 扩展了 HTML，且通过 表达式 绑定数据到 HTML。
-AngularJS 是一个 JavaScript 框架可通过 script 标签添加到网页中&lt;script src=&quot;http:/......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by xiaodong Chen on
-        2016-09-05
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2016/09/04/WebApp开发/">
-        <h2 class="post-title">
-            WebApp开发
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            #Web app开发
-##认识cordova[百度百科]Cordova提供了一组设备相关的API，通过这组API，移动应用能够以JavaScript访问原生的设备功能，如摄像头、麦克风等。Cordova还提供了一组统一的JavaScript类库，以及为这些类库所用的设备相关的原生后台代码。Cordova支持如下移动操作系统：iOS, Android,ubuntu phone os, Blac......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by xiaodong Chen on
-        2016-09-04
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2016/09/04/使用Hexo+GithubPage搭建博客/">
-        <h2 class="post-title">
-            使用Hexo+Github Page搭建博客
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            #使用Hexo+Github Page搭建博客
-[hexo 中文网站： https://hexo.io/zh-cn/]
-该网站上有丰富的文档说明，写的非常详细了。
+            @(【面试笔试】)
+#Java基础
 [TOC]
-##错误记录
-###一、记录一次引用第三方主题的错误经历
-第三方主题地址：https://github.com/Kaijun/hexo-theme-huxblog里面的readme有很详细的使用流程，帮你把执行的命令行......
+##Java修饰符-Synchronized和Transient,volatile修饰符Java语言提供了很多修饰符，主要分为以下两类：
+
+访问修饰符
+非访问修饰符
+
+修饰符用来定义类、方法或者变量，通常放在语句的最前端。我们通过下面的例子来说明：123456789public class className &#123;   // ...&#......
         </div>
     </a>
     <p class="post-meta">
         Posted by xiaodong Chen on
-        2016-09-04
+        2016-12-01
     </p>
 
 </div>
@@ -328,22 +388,25 @@ AngularJS 是一个 JavaScript 框架可通过 script 标签添加到网页中&l
 
 <div class="post-preview">
 
-    <a href="/2016/09/02/Deployer-not-found-github/">
+    <a href="/2016/11/21/Android开发注意事项/">
         <h2 class="post-title">
-            Deployer not found: github
+            Android开发注意事项
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            “Deployer not found: github”
-更新文章执行hexo deploy时，出现以上提示，找来找去始终没发现原因。我备份了原来的source、themes文件夹和_config.yml主配置文件。后来终于在一些技术社区里找到了原因，需要将原来_config.yml配置中的deploy下的“type”字段中的“github”改为“git”。再执行
-1npm install ......
+            @(【安卓深入思考】)
+#Android开发注意事项
+[TOC]
+##关注应用流畅性1、切记不要在UI线程中执行数据库的查找，for循环的遍历等耗时操作。考虑用AsyncTask来做处理。
+2、考虑在接口请求数据返回之后，中间尽量不要再插入其他操作导致接口数据请求成功后，加载状态依然在的情况。比如：
+12345678910111213@Override	protected Response&......
         </div>
     </a>
     <p class="post-meta">
         Posted by xiaodong Chen on
-        2016-09-02
+        2016-11-21
     </p>
 
 </div>
@@ -351,71 +414,22 @@ AngularJS 是一个 JavaScript 框架可通过 script 标签添加到网页中&l
 
 <div class="post-preview">
 
-    <a href="/2016/05/02/dialog/">
+    <a href="/2016/11/05/scheme is now not allowed to be attached with Intent on targetSdkVersion 24 (Android Nougat). And here is the solution/">
         <h2 class="post-title">
-            Dialog中值得学习之-sendXXMessage
+            file:// scheme is now not allowed to be attached with Intent on targetSdkVersion 24
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            #Dialog中值得学习之-sendXXMessage
-在Dialog源码中，dialog的显示与隐藏是通过mWindowManager.addView/removeViewImmediate来实现的，并且当dialog设置了
-123dialog.setOnShowListener();dialog.setOnDismissListener();dialog.setOnCancelListe......
+            @(【每日英文博客】)
+#file:// scheme is now not allowed to be attached with Intent on targetSdkVersion 24 (Android Nougat). And here is the solution.Posted on 23 Jul 2016 15:11 | 1291 reads | 0 shares
+链接地址：......
         </div>
     </a>
     <p class="post-meta">
         Posted by xiaodong Chen on
-        2016-05-02
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2016/03/02/android-current-activity/">
-        <h2 class="post-title">
-            关于获取当前Activity的一些思考(转载)
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            在Android开发过程中，我们有时候需要获取当前的Activity实例，比如弹出Dialog操作，必须要用到这个。关于如何实现由很多种思路，这其中有的简单，有的复杂，这里简单总结一下个人的一些经验吧。
-##反射反射是我们经常会想到的方法，思路大概为
-1 获取ActivityThread中所有的ActivityRecord
-2 从ActivityRecord中获取状态不是pause的Acti......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by xiaodong Chen on
-        2016-03-02
-    </p>
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2015/07/09/js-module-7day/">
-        <h2 class="post-title">
-            Example Post using Keynote Layout
-        </h2>
-        <h3 class="post-subtitle">
-            Keynote: JavaScript Modularization Journey
-        </h3>
-        <div class="post-content-preview">
-            
-下滑这里查看更多内容
-
-7月9日，我在公司内部进行了名为「JavaScript 模块化七日谈」分享，并将该 Slides 分享到了微博上。出乎意料地，这篇微博先后被 @JS小组 @尤小右 @寸志 等近 200 人转发，阅读达到 10w，获得了还不错的评价。
-于是，我决定将它重新发到我的博客上，并为它专门制作了适用于 Keynote 展示文稿的新布局。它能自动根据屏幕大小/旋转以一定比例填充......
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by Hux on
-        2015-07-09
+        2016-11-05
     </p>
 
 </div>
@@ -456,15 +470,15 @@ AngularJS 是一个 JavaScript 框架可通过 script 标签添加到网页中&l
                     <div class="tags">
                         
                             
-                            <a href="/tags/#webapp" title="webapp" rel="2">webapp</a>
-                            
-                        
-                            
                             <a href="/tags/#hexo" title="hexo" rel="2">hexo</a>
                             
                         
                             
-                            <a href="/tags/#android" title="android" rel="5">android</a>
+                            <a href="/tags/#android" title="android" rel="16">android</a>
+                            
+                        
+                            
+                            <a href="/tags/#webapp" title="webapp" rel="2">webapp</a>
                             
                         
                             
@@ -475,6 +489,8 @@ AngularJS 是一个 JavaScript 框架可通过 script 标签添加到网页中&l
                         
                             
                             <a href="/tags/#JavaScript" title="JavaScript" rel="3">JavaScript</a>
+                            
+                        
                             
                         
                             

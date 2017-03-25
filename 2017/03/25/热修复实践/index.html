@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          热修复实践 - fancy的博客 | fancy&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://fancychendong.github.io/2017/03/25/热修复实践/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">fancychendong&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#android" title="android">android</a>
+                        
+                    </div>
+                    <h1>热修复实践</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by xiaodong Chen on
+                        2017-03-25
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="热修复实践"><a href="#热修复实践" class="headerlink" title="热修复实践"></a>热修复实践</h1><p>android平台上热修复的技术已经没有那么神秘了。</p>
+<p>原理其实很简单：<br><code>当apk出现线上bug时，通过对产生bug的类进行修复，然后生成“补丁”dex文件，apk要支持发现有“补丁”dex的时候要及时下载并且和apk自身的dex进行合并，让“补丁”dex替换掉apk的dex中产生bug的类。</code></p>
+<p><strong>Android的类加载机制</strong><br>Android的类加载器分为两种,PathClassLoader和DexClassLoader，两者都继承自BaseDexClassLoader</p>
+<p>PathClassLoader代码位于libcore\dalvik\src\main\Java\dalvik\system\PathClassLoader.java<br>DexClassLoader代码位于libcore\dalvik\src\main\java\dalvik\system\DexClassLoader.java<br>BaseDexClassLoader代码位于libcore\dalvik\src\main\java\dalvik\system\BaseDexClassLoader.java</p>
+<p><strong><em>PathClassLoader</em></strong><br>用来加载系统类和应用类</p>
+<p><strong><em>DexClassLoader</em></strong></p>
+<p>用来加载jar、apk、dex文件.加载jar、apk也是最终抽取里面的Dex文件进行加载.</p>
+<p>可以去下面这个网站上找源码：<br><a href="http://androidxref.com" target="_blank" rel="external">http://androidxref.com</a><br><img src="./1490447106837.png" alt="Alt text"></p>
+<p>比较关键的地方在于如何<code>让补丁dex和apk的dex合并，并且保证补丁dex在apk的dex之前的问题</code></p>
+<p>这里合并使用了反射，</p>
+<p>首先，通过<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">getField(baseDexClassLoader,Class.forName(&quot;dalvik.system.BaseDexClassLoader&quot;),&quot;pathList&quot;)</div></pre></td></tr></table></figure></p>
+<p>获取到BaseDexClassLoader里的pathList变量</p>
+<p>然后，再获取pathList变量对象里的dexElements变量，是一个dex数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">getField(obj,obj.getClass(),&quot;dexElements&quot;)</div></pre></td></tr></table></figure></p>
+<p>最后，PathClassLoader加载的apk里的dex  +  DexClassLoader加载的补丁dex   进行合并。合并完了，再把值赋值给dexElements<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">private static void setField(Object obj,Class&lt;?&gt; cl, String field, Object value) throws Exception &#123;</div><div class="line">        Field localField = cl.getDeclaredField(field);</div><div class="line">        localField.setAccessible(true);</div><div class="line">        localField.set(obj,value);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>但是在实践的过程中，发现如果app进程在你发布“补丁”dex修复bug前已经在后台了，这个时候你即使再去执行merge dex的操作好像也是不行，我猜想应该是dalvik虚拟机加载完类的时候是有缓存的。<br>当你的app冷启动merge dex完成后，就生效了！</p>
+<p>附上完整代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div></pre></td><td class="code"><pre><div class="line">public class HotFixUtils &#123;</div><div class="line"></div><div class="line">    public static void loadFixedDex(Context context) &#123;</div><div class="line">        if (context == null) &#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        HashSet&lt;File&gt; fixedDexSet = new HashSet&lt;&gt;();</div><div class="line"></div><div class="line">        //遍历所有已经修复过的dex</div><div class="line">        File fixedDexDir = context.getDir(MainActivity.DEX_DIR, Context.MODE_PRIVATE);</div><div class="line">        File[] dexs = fixedDexDir.listFiles();</div><div class="line">        for (File dex : dexs) &#123;</div><div class="line">            if (dex.getName().startsWith(&quot;classes&quot;) &amp;&amp; dex.getName().endsWith(&quot;.dex&quot;)) &#123;</div><div class="line">                fixedDexSet.add(dex);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        //将app的dex和已修复过的dex合并</div><div class="line">        String optimizeDir = fixedDexDir.getAbsolutePath() + File.separator + &quot;opt_dex&quot;;</div><div class="line">        File fopt = new File(optimizeDir);</div><div class="line">        if(!fopt.exists())&#123;</div><div class="line">            fopt.mkdirs();</div><div class="line">        &#125;</div><div class="line">        //1. 加载应用程序的dex</div><div class="line">        PathClassLoader pathClassLoader = (PathClassLoader) context.getClassLoader();</div><div class="line"></div><div class="line">        try &#123;</div><div class="line">            for (File fixedDex : fixedDexSet) &#123;</div><div class="line">                DexClassLoader dexClassLoader = new DexClassLoader(fixedDex.getAbsolutePath(),</div><div class="line">                        optimizeDir, null, context.getClassLoader());</div><div class="line">                //3.合并</div><div class="line">                Object dexObj = getPathList(dexClassLoader);</div><div class="line">                Object pathObj = getPathList(pathClassLoader);</div><div class="line">                Object mDexElementsList = getDexElements(dexObj);</div><div class="line">                Object pathDexElementsList = getDexElements(pathObj);</div><div class="line">                //合并完成</div><div class="line">                Object dexElements = combineArray(mDexElementsList, pathDexElementsList);</div><div class="line">                //重写给PathList里面的lement[] dexElements;赋值</div><div class="line">                Object pathList = getPathList(pathClassLoader);</div><div class="line">                setField(pathList, pathList.getClass(), &quot;dexElements&quot;, dexElements);</div><div class="line">            &#125;</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static Object getField(Object obj, Class&lt;?&gt; cl, String field)</div><div class="line">            throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException &#123;</div><div class="line">        Field localField = cl.getDeclaredField(field);</div><div class="line">        localField.setAccessible(true);</div><div class="line">        return localField.get(obj);</div><div class="line">    &#125;</div><div class="line">    private static Object getPathList(Object baseDexClassLoader) throws Exception &#123;</div><div class="line">        return getField(baseDexClassLoader,Class.forName(&quot;dalvik.system.BaseDexClassLoader&quot;),&quot;pathList&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static Object getDexElements(Object obj) throws Exception &#123;</div><div class="line">        return getField(obj,obj.getClass(),&quot;dexElements&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 两个数组合并</div><div class="line">     * @param arrayLhs</div><div class="line">     * @param arrayRhs</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    private static Object combineArray(Object arrayLhs, Object arrayRhs) &#123;</div><div class="line">        Class&lt;?&gt; localClass = arrayLhs.getClass().getComponentType();</div><div class="line">        int i = Array.getLength(arrayLhs);</div><div class="line">        int j = i + Array.getLength(arrayRhs);</div><div class="line">        Object result = Array.newInstance(localClass, j);</div><div class="line">        for (int k = 0; k &lt; j; ++k) &#123;</div><div class="line">            if (k &lt; i) &#123;</div><div class="line">                Array.set(result, k, Array.get(arrayLhs, k));</div><div class="line">            &#125; else &#123;</div><div class="line">                Array.set(result, k, Array.get(arrayRhs, k - i));</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static void setField(Object obj,Class&lt;?&gt; cl, String field, Object value) throws Exception &#123;</div><div class="line">        Field localField = cl.getDeclaredField(field);</div><div class="line">        localField.setAccessible(true);</div><div class="line">        localField.set(obj,value);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void makeBug(Context context) &#123;</div><div class="line">        Toast.makeText(context, &quot;修复成功了&quot;, Toast.LENGTH_SHORT).show();</div><div class="line">//        throw new NullPointerException(&quot;fasjfld;sajl;jf;a&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/01/23/AS性能调试工具的使用/" data-toggle="tooltip" data-placement="top" title="AS性能调试工具的使用">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#android" title="android">android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; fancychendong&#39;s Blog 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://fancychendong.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
