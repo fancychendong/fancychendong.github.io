@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Android——RecyclerView优化之旅 - fancy的博客 | fancy&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://fancychendong.github.io/2017/04/27/Android——RecyclerView优化之旅/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">fancychendong&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#android" title="android">android</a>
+                        
+                    </div>
+                    <h1>Android——RecyclerView优化之旅</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by xiaodong Chen on
+                        2017-04-27
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>#Android——RecyclerView优化之旅</p>
+<p>实现的需求类似下图这种<br><img src="./1493283992881.png" alt="Alt text"><br>支持排序方式切换，支持刷新，加载更多功能。</p>
+<p>使用recyclerview实现。</p>
+<p>###问题一：在进行切换排序方式，更新recyclerview列表的时候发生闪退。<br>java.lang.IndexOutOfBoundsException: Inconsistency detected. Invalid view holder adapter positionViewHolder{431a7450 position=1 id=-1, oldPos=-1, pLpos:-1 scrap [attachedScrap] tmpDetached no parent}<br><code>android.support.v7.widget.RecyclerView$Recycler.validateViewHolderForOffsetPosition(RecyclerView.java:4251)</code><br>发生异常的代码是recyclerview内部抛出的。<br>网上找到<a href="http://blog.csdn.net/lovexieyuan520/article/details/50537846有提供了一个解决方案。" target="_blank" rel="external">http://blog.csdn.net/lovexieyuan520/article/details/50537846有提供了一个解决方案。</a><br>需要在LinearLayoutManager类里捕获super.onLayoutChildren(recycler, state); 方法的异常崩溃。</p>
+<p>其实发生该异常的原因就是：刷新recyclerview数量不对，刷新前有20条数据，刷新后变成10条，并且我用的notify方法还是mResultAdapter.notifyItemRangeChanged(notifyStart, notifyCount);这种方式。而非mResultAdapter.notifyDataSetChanged();<br>并且这里，我为了实现在点击切换排序按钮有ripple水波纹效果，特意用notifyItemRangeChanged，而不能用notifyDataSetChanged。因为用notifyDataSetChanged的话，切换排序的按钮ripple效果一下就会被notifyDataSetChanged更新掉，体验不好。<br>并且这个recyclerview的header和footer不应该在每次加载更多或者刷新的时候update，这样用notifyItemRangeChanged(notifyStart, notifyCount)可以提高性能，免去不必要视图的更新。</p>
+<p>###问题二：多viewtype时快速滑动加载更多容易崩溃<br>需求如下：<br><img src="./1493283926562.png" alt="Alt text"><br>当快速滑动到底部加载更多偶现如下bug（手速一定要快，不断重复加载更多让recyclerview去刷新notify）<br>java.lang.IllegalArgumentException: Scrapped or attached views may not be recycled</p>
+<p>stackoverflow上对该异常有解决办法：</p>
+<p><a href="http://stackoverflow.com/questions/40263355/scrapped-or-attached-views-may-not-be-recycled-since-support-lib-25-0-0" target="_blank" rel="external">http://stackoverflow.com/questions/40263355/scrapped-or-attached-views-may-not-be-recycled-since-support-lib-25-0-0</a></p>
+<p>To prevent the crash from this issue, you need to call setHasStableIds(boolean) from your adapter and pass the parameter as true:</p>
+<p><code>adapter.setHasStableIds(true);</code><br>Explanation: The problem occurs when you call adapter.notifyDataSetChanged();</p>
+<p>The recyclerView then calls detachAndScrapAttachedViews(recycler); It temporarily detaches and scraps all currently attached child views. Views will be scrapped into the given Recycler. The Recycler may prefer to reuse scrap views.</p>
+<p>Then scrapOrRecycleView(recycler, (int) position, (View) child); is called. This function checks if “hasStableIds” is true or false. If its false then you get the following error :</p>
+<p><code>&quot;Scrapped or attached views may not be recycled.&quot;</code><br>Stable IDs allow the View (RecyclerView, ListView, etc.) to optimize for the case when items remain the same between notifyDataSetChanged calls. <code>hasStableIds() == true</code> indicates whether the item ids are stable across changes to the underlying data.</p>
+<p>If the item ids are stable then it can be reused by the view i.e. “recycled” making the process of re-rendering after the call to notifyDataSetChanged() efficient. If item ids are not stable, there is no guarantee that the item has been recycled as there is no way to track them.</p>
+<p>Note: Setting <code>setHasStableIds()</code>to true is not a way to request stable IDs, but to tell Recycler/List/Grid Views that you are providing the said stability.</p>
+<p>意思其实就是使用setHasStableIds(true)就是为了提高recyclerview的性能，并且要结合getItemId()使用。这个id就是和每个itemview绑定，如果要复用itemview的时候，直接通过检索这个id可以快速获取到itemview。<br>这个id不能return position；因为直接返回position有坑，加载更多的时候position和itemview的一一对应关系就不对了~自己去想！</p>
+<p>###问题三：快速滑动偶现Added View has RecyclerView as parent but view is not a real child.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">java.lang.IllegalStateException: Added View has RecyclerView as parent but view is not a real child. Unfiltered index:0</div><div class="line">                                                                             at android.support.v7.widget.RecyclerView$LayoutManager.addViewInt(RecyclerView.java:7398)</div><div class="line">                                                                             at android.support.v7.widget.RecyclerView$LayoutManager.addView(RecyclerView.java:7362)</div><div class="line">                                                                             at android.support.v7.widget.RecyclerView$LayoutManager.addView(RecyclerView.java:7350)</div><div class="line">                                                                             at android.support.v7.widget.LinearLayoutManager.layoutChunk(LinearLayoutManager.java:1459)</div><div class="line">                                                                             at android.support.v7.widget.LinearLayoutManager.fill(LinearLayoutManager.java:1408)</div><div class="line">                                                                             at android.support.v7.widget.LinearLayoutManager.scrollBy(LinearLayoutManager.java:1225)</div><div class="line">                                                                             at android.support.v7.widget.LinearLayoutManager.scrollVerticallyBy(LinearLayoutManager.java:1045)</div><div class="line">                                                                             at android.support.v7.widget.RecyclerView$ViewFlinger.run(RecyclerView.java:4584)</div><div class="line">                                                                             at android.view.Choreographer$CallbackRecord.run(Choreographer.java:858)</div><div class="line">                                                                             at android.view.Choreographer.doCallbacks(Choreographer.java:670)</div><div class="line">                                                                             at android.view.Choreographer.doFrame(Choreographer.java:603)</div><div class="line">                                                                             at android.view.Choreographer$FrameDisplayEventReceiver.run(Choreographer.java:844)</div><div class="line">                                                                             at android.os.Handler.handleCallback(Handler.java:739)</div><div class="line">                                                                             at android.os.Handler.dispatchMessage(Handler.java:95)</div><div class="line">                                                                             at android.os.Looper.loop(Looper.java:148)</div><div class="line">                                                                             at android.app.ActivityThread.main(ActivityThread.java:5461)</div><div class="line">                                                                             at java.lang.reflect.Method.invoke(Native Method)</div><div class="line">                                                                             at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:726)</div><div class="line">                                                                             at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:616)</div></pre></td></tr></table></figure>
+<p>复现该bug也有点困难，我也是不断快速的加载更多导致的。<br>网上这位同仁找到的原因是：recycleView同时进行 “下拉刷新” 和 “加载更多” 而产生冲突<br>recycleView  执行异步的”加载更多”操作后 , 当调用recycleView   的addviewInt方法填充数据时,   发现列表已经被”下拉刷新”删除了. 找不到常规的child.<br><a href="http://blog.csdn.net/aaawqqq/article/details/51930834" target="_blank" rel="external">http://blog.csdn.net/aaawqqq/article/details/51930834</a></p>
+<p>但是我仔细思考，从抛出异常的信息来看是因为Added View has RecyclerView as parent but view is not a real child.也就是该childview已经被recyclerview移除去了，因为看源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">int currentIndex = mChildHelper.indexOfChild(child);</div><div class="line">                if (index == -1) &#123;</div><div class="line">                    index = mChildHelper.getChildCount();</div><div class="line">                &#125;</div><div class="line">                if (currentIndex == -1) &#123;</div><div class="line">                    throw new IllegalStateException(&quot;Added View has RecyclerView as parent but&quot;</div><div class="line">                            + &quot; view is not a real child. Unfiltered index:&quot;</div><div class="line">                            + mRecyclerView.indexOfChild(child));</div><div class="line">                &#125;</div></pre></td></tr></table></figure>
+<p>是因为indexChild返回-1，不在parentView里了。<br>而我遇到的情况却不是上面那位同仁说的那样。</p>
+<p>我仅仅是快速的加载更多，然后也是偶现该崩溃。</p>
+<p>找到大概原因，但是就不知道我哪里写错了~<br>但是我发现notifyItemRangeChanged刷新存在item动画……感觉这个动画有点多余，动画肯定影响性能。</p>
+<p>所以就想办法把recyclerview的默认动画移除，尝试相同操作确实不会出现该崩溃了~</p>
+<p>移除默认动画代码：（网上copy）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">  * 打开默认局部刷新动画</div><div class="line">  */</div><div class="line"> public void openDefaultAnimator() &#123;</div><div class="line">     this.getItemAnimator().setAddDuration(120);</div><div class="line">     this.getItemAnimator().setChangeDuration(250);</div><div class="line">     this.getItemAnimator().setMoveDuration(250);</div><div class="line">     this.getItemAnimator().setRemoveDuration(120);</div><div class="line">     ((SimpleItemAnimator) this.getItemAnimator()).setSupportsChangeAnimations(true);</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> /**</div><div class="line">  * 关闭默认局部刷新动画</div><div class="line">  */</div><div class="line"> public void closeDefaultAnimator() &#123;</div><div class="line">     this.getItemAnimator().setAddDuration(0);</div><div class="line">     this.getItemAnimator().setChangeDuration(0);</div><div class="line">     this.getItemAnimator().setMoveDuration(0);</div><div class="line">     this.getItemAnimator().setRemoveDuration(0);</div><div class="line">     ((SimpleItemAnimator) this.getItemAnimator()).setSupportsChangeAnimations(false);</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p>###持续更新中……</p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/03/25/热修复实践/" data-toggle="tooltip" data-placement="top" title="热修复实践">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#android" title="android">android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; fancychendong&#39;s Blog 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://fancychendong.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

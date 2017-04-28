@@ -90,14 +90,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archives/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archives/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -199,6 +199,8 @@
 <p><strong><em>DexClassLoader</em></strong></p>
 <p>用来加载jar、apk、dex文件.加载jar、apk也是最终抽取里面的Dex文件进行加载.</p>
 <p>可以去下面这个网站上找源码：<br><a href="http://androidxref.com" target="_blank" rel="external">http://androidxref.com</a><br><img src="./1490447106837.png" alt="Alt text"></p>
+<p>补丁dex如何生成</p>
+<p>使用Android\sdk\build-tools\23.0.3\dx命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">./dx --dex --output=xxxx\classes2.dex xxxx\dex</div><div class="line">命令解释：</div><div class="line">	--output=xxxx\classes2.dex   指定输出路径</div><div class="line">	xxxx\dex    最后指定去打包哪个目录下面的class字节文件(注意要包括全路径的文件夹，也可以有多个class)</div></pre></td></tr></table></figure></p>
 <p>比较关键的地方在于如何<code>让补丁dex和apk的dex合并，并且保证补丁dex在apk的dex之前的问题</code></p>
 <p>这里合并使用了反射，</p>
 <p>首先，通过<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">getField(baseDexClassLoader,Class.forName(&quot;dalvik.system.BaseDexClassLoader&quot;),&quot;pathList&quot;)</div></pre></td></tr></table></figure></p>
@@ -214,6 +216,10 @@
                 
 
                 <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2017/04/27/Android——RecyclerView优化之旅/" data-toggle="tooltip" data-placement="top" title="Android——RecyclerView优化之旅">&larr; Previous Post</a>
+                        </li>
                     
                     
                         <li class="next">
