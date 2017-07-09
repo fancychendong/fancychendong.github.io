@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Android Architecture Component - fancy的博客 | fancy&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://fancychendong.github.io/2017/07/09/Android-Architecture-Component/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">fancychendong&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                    </div>
+                    <h1>Android Architecture Component</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by xiaodong Chen on
+                        2017-07-09
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="Android-Architecture-Component"><a href="#Android-Architecture-Component" class="headerlink" title="Android Architecture Component"></a>Android Architecture Component</h1><p>&lt;?xml version=”1.0” encoding=”UTF-8” standalone=”no”?&gt;<br>&lt;!DOCTYPE html PUBLIC “-//W3C//DTD XHTML 1.0 Transitional//EN” “<a href="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;" target="_blank" rel="external">http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</a></p>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="exporter-version" content="Evernote Mac 6.0.8 (451398)"><meta name="keywords" content="架构"><meta name="author" content="1527893749@qq.com"><meta name="created" content="2017-07-03 07:36:33 +0000"><meta name="source" content="desktop.win"><meta name="source-application" content="evernote.win32"><meta name="source-url" content="http://www.tuicool.com/articles/36Zfq2v"><meta name="updated" content="2017-07-09 10:21:09 +0000"><title>Android Architecture Blueprints</title></head><body><br><div>git 地址 ： <a href="https://github.com/googlesamples/android-architecture" target="_blank" rel="external">https://github.com/googlesamples/android-architecture</a></div><br><div><br></div><br><div><span style="color: rgb(51, 51, 51);"><span style="font-family: 'Helvetica Neue', Helvetica, Tahoma, Arial, STXihei, 'Microsoft YaHei', 微软雅黑, sans-serif;"><span style="font-size: 18px;"><strong>Android Architecture Components 安卓架构组件库</strong></span></span></span></div><br><div><strong><span style="font-size: 18px;"><span style="font-family: 'Helvetica Neue', Helvetica, Tahoma, Arial, STXihei, 'Microsoft YaHei', 微软雅黑, sans-serif;"><span style="color: rgb(51, 51, 51);"><br></span></span></span></strong></div><br><div><span style="font-size: 16px;"><font color="#333333" face="Helvetica Neue, Helvetica, Tahoma, Arial, STXihei, Microsoft YaHei, 微软雅黑, sans-serif">项目依赖结构 :</font></span></div><br><div style="background-color:#ffffff;color:#000000;font-family:'Consolas';font-size:10.5pt;">repositories {<br><br>    jcenter()<br><br>    maven { url <span style="color:#008000;font-weight:bold;">‘<a href="https://maven.google.com" target="_blank" rel="external">https://maven.google.com</a>‘ </span>}</div><br><div><span style="font-size: 10.5pt;"><span style="font-family: Consolas;">}</span></span></div><br><div><span style="font-size: 10.5pt;"><span style="font-family: Consolas;">dependencies {</span></span></div><br><div style="background-color:#ffffff;color:#000000;font-family:'Consolas';font-size:10.5pt;"><span style="color:#808080;font-style:italic;">//    For Lifecycles, LiveData, and ViewModel, add:<br></span><span style="color:#808080;font-style:italic;">   </span> compile <span style="color:#008000;font-weight:bold;">“android.arch.lifecycle:runtime:1.0.0-alpha3”<br></span><span style="color:#008000;font-weight:bold;">   </span> compile <span style="color:#008000;font-weight:bold;">“android.arch.lifecycle:extensions:1.0.0-alpha3”<br></span><span style="color:#008000;font-weight:bold;">   </span> annotationProcessor <span style="color:#008000;font-weight:bold;">“android.arch.lifecycle:compiler:1.0.0-alpha3”<br></span><span style="color:#808080;font-style:italic;">//    For Room, add:<br></span><span style="color:#808080;font-style:italic;">   </span> compile <span style="color:#008000;font-weight:bold;">“android.arch.persistence.room:runtime:1.0.0-alpha3”<br></span><span style="color:#008000;font-weight:bold;">   </span> annotationProcessor <span style="color:#008000;font-weight:bold;">“android.arch.persistence.room:compiler:1.0.0-alpha3”<br></span><span style="color:#808080;font-style:italic;">//    For testing Room migrations, add:<br></span><span style="color:#808080;font-style:italic;">   </span> testCompile <span style="color:#008000;font-weight:bold;">“android.arch.persistence.room:testing:1.0.0-alpha3”<br></span><span style="color:#808080;font-style:italic;">//    For Room RxJava support, add:<br></span><span style="color:#808080;font-style:italic;">   </span> compile <span style="color:#008000;font-weight:bold;">“android.arch.persistence.room:rxjava2:1.0.0-alpha3”<br></span>}<br></div><br><div><strong><span style="font-size: 18px;"><span style="font-family: 'Helvetica Neue', Helvetica, Tahoma, Arial, STXihei, 'Microsoft YaHei', 微软雅黑, sans-serif;"><span style="color: rgb(51, 51, 51);"><br></span></span></span></strong></div><br><div><strong><span style="font-size: 18px;"><span style="font-family: 'Helvetica Neue', Helvetica, Tahoma, Arial, STXihei, 'Microsoft YaHei', 微软雅黑, sans-serif;"><span style="color: rgb(51, 51, 51);"><br></span></span></span></strong></div><br><div><img src="./BBCDAB1F-0848-45E6-8FCD-980A584F60F2.png" alt="Alt text"></div><br><div>架构原则：</div><br><div>1、不要在应用程序组件中保存任何应用数据或状态，并且组件间也不应该相互依赖</div><br><div><span style="color: rgba(0, 0, 0, 0.68); font-family: Roboto, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">The most important thing you should focus on is the </span><strong><a href="https://en.wikipedia.org/wiki/Separation_of_concerns" target="_blank" rel="external">separation of concerns</a></strong><span style="color: rgba(0, 0, 0, 0.68); font-family: Roboto, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;"> in your app. It is a common mistake to write all your code in an </span><code>[Activity](https://developer.android.com/reference/android/app/Activity.html)</code><span style="color: rgba(0, 0, 0, 0.68); font-family: Roboto, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">or a </span><code>[Fragment](https://developer.android.com/reference/android/app/Fragment.html)</code><span style="color: rgba(0, 0, 0, 0.68); font-family: Roboto, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">. Any code that does not handle a UI or operating system interaction should not be in these classes. Keeping them as lean as possible will allow you to avoid many lifecycle related problems. Don’t forget that you don’t </span><em>own</em><span style="color: rgba(0, 0, 0, 0.68); font-family: Roboto, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;"> those classes, they are just glue classes that embody the contract between the OS and your app. The Android OS may destroy them at any time based on user interactions or other factors like low memory. It is best to minimize your dependency on them to provide a solid user experience.</span></div><br><div><strong><span style="font-size: 18px;"><span style="font-family: 'Helvetica Neue', Helvetica, Tahoma, Arial, STXihei, 'Microsoft YaHei', 微软雅黑, sans-serif;"><span style="color: rgb(51, 51, 51);"><br></span></span></span></strong></div><br><div><span style="font-size: 15px;"><span style="font-family: 'Helvetica Neue', Helvetica, Tahoma, Arial, STXihei, 'Microsoft YaHei', 微软雅黑, sans-serif;"><span style="color: rgb(51, 51, 51);">2、</span></span></span>通过 model 驱动应用 UI，并尽可能的持久化</div><br><div><span style="color: rgba(0, 0, 0, 0.68); font-family: Roboto, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">The second important principle is that you should </span><strong>drive your UI from a model</strong><span style="color: rgba(0, 0, 0, 0.68); font-family: Roboto, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">, preferably a persistent model. Persistence is ideal for two reasons: your users won’t lose data if OS destroys your app to free up resources and your app will continue to work even when a network connection is flaky or not connected. Models are components that are responsible for handling the data for the app. They are independent from the Views and app components in your app, hence they are isolated from the lifecycle issues of those components. Keeping UI code simple and free of app logic makes it easier to manage. Basing your app on model classes with well-defined responsibility of managing the data will make them testable and your app consistent.</span></div><br><div><span style="font-family: Roboto, sans-serif;"><span style="color: rgba(0, 0, 0, 0.682353);"><br></span></span></div><br><div><span style="font-family: Roboto, sans-serif;"><span style="color: rgba(0, 0, 0, 0.682353);"><br></span></span></div><br><div>一般可以把app业务功能开发分成三部分：activity/fragment(UI)、data(ViewModel)、layout.xml  </div><br><div>这里的ViewModel是什么？</div><br><div><span style="color: rgba(0, 0, 0, 0.68); font-family: Roboto, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">A </span><strong><a href="https://developer.android.com/topic/libraries/architecture/viewmodel.html" target="_blank" rel="external">ViewModel</a></strong><span style="color: rgba(0, 0, 0, 0.68); font-family: Roboto, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;"> provides the data for a specific UI component, such as a fragment or activity, and handles the communication with the business part of data handling, such as calling other components to load the data or forwarding user modifications. The ViewModel does not know about the View and is not affected by configuration changes such as recreating an activity due to rotation.简单来说就是给UI提供数据的，并且不能让ViewModel知道UI的存在，否则就会犯错。</span></div><br><div><span style="font-family: Roboto, sans-serif;"><span style="color: rgba(0, 0, 0, 0.682353);"><br></span></span></div><br><div><span style="font-family: Roboto, sans-serif;"><span style="color: rgba(0, 0, 0, 0.682353);">然后这里Architecture Component是怎么处理这个事情的呢？</span></span></div><br><div><br><pre style="font-size: 13px; color: rgb(0, 102, 0); font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Monaco, Courier, monospace; -webkit-font-smoothing: subpixel-antialiased; padding: 1em; overflow: auto; border: 1px solid rgb(221, 221, 221); background: rgb(247, 247, 247); letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial;"><br><code>&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;public&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;class&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 0, 102);&quot;&gt;UserProfileFragment&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;extends&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 0, 102);&quot;&gt;LifecycleFragment&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;{&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+    &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;private&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;static&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;final&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 0, 102);&quot;&gt;String&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; UID_KEY &lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;=&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(136, 0, 0);&quot;&gt;&quot;uid&quot;&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;;&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+    &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;private&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 0, 102);&quot;&gt;UserProfileViewModel&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; viewModel&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;;&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+
+    &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 102, 102);&quot;&gt;@Override&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+    &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;public&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;void&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; onActivityCreated&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 102, 102);&quot;&gt;@Nullable&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 0, 102);&quot;&gt;Bundle&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; savedInstanceState&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;)&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;{&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+        &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;super&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;onActivityCreated&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;savedInstanceState&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;);&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+        &lt;/span&gt;&lt;span style=&quot;color: rgb(102, 0, 102);&quot;&gt;String&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; userId &lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;=&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; getArguments&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;().&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;getString&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;UID_KEY&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;);&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+        viewModel &lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;=&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 0, 102);&quot;&gt;ViewModelProviders&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;of&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;this&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;).&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;get&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 0, 102);&quot;&gt;UserProfileViewModel&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;class&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;);&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+        viewModel&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;init&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;userId&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;);&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+    &lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;}&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+
+    &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 102, 102);&quot;&gt;@Override&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+    &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;public&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 0, 102);&quot;&gt;View&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; onCreateView&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 0, 102);&quot;&gt;LayoutInflater&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; inflater&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;,&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+                &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 102, 102);&quot;&gt;@Nullable&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 0, 102);&quot;&gt;ViewGroup&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; container&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;,&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(0, 102, 102);&quot;&gt;@Nullable&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 0, 102);&quot;&gt;Bundle&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; savedInstanceState&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;)&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;{&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+        &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;return&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; inflater&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;inflate&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;R&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;layout&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;user_profile&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;,&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; container&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;,&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;false&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;);&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+    &lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;}&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;}&lt;/span&gt;</code><br></pre></div><br><div><span style="font-family: Roboto, sans-serif;"><span style="color: rgba(0, 0, 0, 0.682353);"><strong>Note:</strong><span style="color: rgba(0, 0, 0, 0.68); font-family: Roboto, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial;"> The example above extends <a href="https://developer.android.com/reference/android/arch/lifecycle/LifecycleFragment.html" target="_blank" rel="external"><code>LifecycleFragment</code></a> instead of the <code>[Fragment](https://developer.android.com/reference/android/support/v4/app/Fragment.html)</code> class. After the lifecycles API in the Architecture Components becomes stable, the <code>[Fragment](https://developer.android.com/reference/android/support/v4/app/Fragment.html)</code> class in the Android Support Library will implement <a href="https://developer.android.com/reference/android/arch/lifecycle/LifecycleOwner.html" target="_blank" rel="external"><code>LifecycleOwner</code></a>.（当Architecture Components变得稳定了后，可能会合并到support库中去）</span></span></span></div><br><div><span style="font-family: Roboto, sans-serif;"><span style="color: rgba(0, 0, 0, 0.682353);"><br></span></span></div><br><div><br><pre style="font-size: 13px; color: rgb(0, 102, 0); font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Monaco, Courier, monospace; -webkit-font-smoothing: subpixel-antialiased; padding: 1em; overflow: auto; border: 1px solid rgb(221, 221, 221); background: rgb(247, 247, 247); letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial;"><br><code>&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;public&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;class&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 0, 102);&quot;&gt;UserProfileViewModel&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;extends&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 0, 102);&quot;&gt;ViewModel&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;{&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+    &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;private&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 0, 102);&quot;&gt;String&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; userId&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;;&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+    &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;private&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 0, 102);&quot;&gt;User&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; user&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;;&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+
+    &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;public&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;void&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; init&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 0, 102);&quot;&gt;String&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; userId&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;)&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;{&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+        &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;this&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;userId &lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;=&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; userId&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;;&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+    &lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;}&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+    &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;public&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 0, 102);&quot;&gt;User&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; getUser&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;()&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;{&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+        &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;return&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; user&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;;&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+    &lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;}&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;}&lt;/span&gt;</code><br></pre></div><br><div><strong><span style="font-family: Menlo;"><span style="color: rgb(0, 0, 128);">源码：</span></span></strong></div><br><div><span style="font-family: Menlo;"><span style="color:#000080;font-weight:bold;"><span style="font-size: 9pt;">public abstract class</span></span> <span style="font-size: 9pt;">ViewModel {</span></span></div><br><div><br><pre style="background-color:#ffffff;color:#000000;font-family:'Menlo';font-size:9.0pt;"><br>    <span style="color:#808080;font-style:italic;">/<strong><br></strong></span><span style="color:#808080;font-style:italic;">     <em> This method will be called when this ViewModel is no longer used and will be destroyed.<br></em></span><span style="color:#808080;font-style:italic;">      </span><span style="color:#808080;background-color:#e2ffe2;font-style:italic;">&lt;p&gt;</span><span style="color:#808080;font-style:italic;"><br></span><span style="color:#808080;font-style:italic;">     <em> It is useful when ViewModel observes some data and you need to clear this subscription to<br></em></span><span style="color:#808080;font-style:italic;">      prevent a leak of this ViewModel.<br></span><span style="color:#808080;font-style:italic;">     */<br></span><span style="color:#808080;font-style:italic;"><span style="color:#808000;">@SuppressWarnings</span>(<span style="color:#008000;font-weight:bold;">“WeakerAccess”</span>)<br>    <span style="color:#000080;font-weight:bold;">protected void </span>onCleared() {<br>    }<br></span></pre></div><br><div><span style="font-family: Menlo;"><span style="font-size: 9pt;">}</span></span></div><br><div><span style="font-family: Roboto, sans-serif;"><span style="color: rgba(0, 0, 0, 0.682353);">这个ViewModel是一个抽象类，定义了一个函数</span></span></div><br><div><span style="font-family: Roboto, sans-serif;"><span style="color: rgba(0, 0, 0, 0.682353);"><br></span></span></div><br><div><span style="font-family: Roboto, sans-serif;"><span style="color: rgba(0, 0, 0, 0.682353);">那怎么才能让ViewModel的改变可以通知回UI，触发UI的更新呢？欢迎LiveData出场……</span></span></div><br><div><span style="font-family: Roboto, sans-serif;"><span style="color: rgba(0, 0, 0, 0.682353);"><a href="https://developer.android.com/topic/libraries/architecture/livedata.html" target="_blank" rel="external">LiveData</a><strong><span style="color: rgba(0, 0, 0, 0.68); font-family: Roboto, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;"> is an observable data holder.是一个可被观察的数据持有者，也就是它持有了一个可被观察的数据。</span><br></strong></span></span></div><br><div><a href="https://developer.android.com/reference/android/arch/lifecycle/LiveData.html" target="_blank" rel="external"><code>LiveData</code></a><span style="color: rgba(0, 0, 0, 0.68); font-family: Roboto, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;"> is that it is lifecycle aware and will automatically clean up references when they are no longer needed.</span></div><br><div><span style="font-size: 14px;"><span style="font-family: Roboto, sans-serif;"><span style="background-color: rgb(255, 255, 255);"><span style="color: rgba(0, 0, 0, 0.682353);">LiveData会在activity/fragment生命周期结束时自动清除引用，防止内存泄露</span></span></span></span></div><br><div><br><pre style="font-size: 13px; margin: 0px 0px 1em; color: rgb(0, 102, 0); font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Monaco, Courier, monospace; -webkit-font-smoothing: subpixel-antialiased; padding: 1em; overflow: auto; border: 1px solid rgb(221, 221, 221); background: rgb(247, 247, 247); letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial;"><br><span style="color: rgb(0, 0, 136);">public</span><span style="color: rgb(0, 0, 0);"><span style="color: rgb(0, 0, 136);">class</span><span style="color: rgb(0, 0, 0);"><span style="color: rgb(102, 0, 102);">UserProfileViewModel</span><span style="color: rgb(0, 0, 0);"><span style="color: rgb(0, 0, 136);">extends</span><span style="color: rgb(0, 0, 0);"><span style="color: rgb(102, 0, 102);">ViewModel</span><span style="color: rgb(0, 0, 0);"><span style="color: rgb(102, 102, 0);">{</span><span style="color: rgb(0, 0, 0);"><br>    </span><span style="color: rgb(102, 102, 0);">…</span><span style="color: rgb(0, 0, 0);"><br>    </span><strike><span style="color: rgb(0, 0, 136);">private</span><span style="color: rgb(0, 0, 0);"><span style="color: rgb(102, 0, 102);">User</span><span style="color: rgb(0, 0, 0);"> user</span><span style="color: rgb(102, 102, 0);">;</span></span></strike><span style="color: rgb(0, 0, 0);"><br>    </span><span style="color: rgb(0, 0, 136);">private</span><span style="color: rgb(0, 0, 0);"><span style="color: rgb(102, 0, 102);">LiveData</span><span style="color: rgb(102, 102, 0);">&lt;</span><span style="color: rgb(102, 0, 102);">User</span><span style="color: rgb(102, 102, 0);">&gt;</span><span style="color: rgb(0, 0, 0);"> user</span><span style="color: rgb(102, 102, 0);">;</span><span style="color: rgb(0, 0, 0);"><br>    </span><span style="color: rgb(0, 0, 136);">public</span><span style="color: rgb(0, 0, 0);"><span style="color: rgb(102, 0, 102);">LiveData</span><span style="color: rgb(102, 102, 0);">&lt;</span><span style="color: rgb(102, 0, 102);">User</span><span style="color: rgb(102, 102, 0);">&gt;</span><span style="color: rgb(0, 0, 0);"> getUser</span><span style="color: rgb(102, 102, 0);">()</span><span style="color: rgb(0, 0, 0);"><span style="color: rgb(102, 102, 0);">{</span><span style="color: rgb(0, 0, 0);"><br>        </span><span style="color: rgb(0, 0, 136);">return</span><span style="color: rgb(0, 0, 0);"> user</span><span style="color: rgb(102, 102, 0);">;</span><span style="color: rgb(0, 0, 0);"><br>    </span><span style="color: rgb(102, 102, 0);">}</span><span style="color: rgb(0, 0, 0);"><br></span><span style="color: rgb(102, 102, 0);">}</span><br></span></span></span></span></span></span></span></span></pre><br><br>Now we modify <code>UserProfileFragment</code> to observe the data and update the UI.<br><br><pre style="font-size: 13px; margin: 0px 0px 1em; color: rgb(0, 102, 0); font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-family: Consolas, &quot;Liberation Mono&quot;, Menlo, Monaco, Courier, monospace; -webkit-font-smoothing: subpixel-antialiased; padding: 1em; overflow: auto; border: 1px solid rgb(221, 221, 221); background: rgb(247, 247, 247); letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-style: initial; text-decoration-color: initial;"><br><code>&lt;span style=&quot;color: rgb(0, 102, 102);&quot;&gt;@Override&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;public&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;void&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; onActivityCreated&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 102, 102);&quot;&gt;@Nullable&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 0, 102);&quot;&gt;Bundle&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; savedInstanceState&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;)&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;{&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+    &lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;super&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;onActivityCreated&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;savedInstanceState&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;);&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+    viewModel&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;getUser&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;().&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;observe&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 136);&quot;&gt;this&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;,&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt; user &lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot; /&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;{&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+      &lt;/span&gt;// update UI&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+    &lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;});&lt;/span&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;
+&lt;/span&gt;&lt;span style=&quot;color: rgb(102, 102, 0);&quot;&gt;}&lt;/span&gt;</code><br></pre></div><br><div style="margin: 0px 0px 12px; color: rgba(0, 0, 0, 0.682353); font-family: Roboto, sans-serif; font-size: 14px; font-style: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);"><br><div>Every time the user data is updated, the <a href="https://developer.android.com/reference/android/arch/lifecycle/Observer.html#onChanged(T" target="_blank" rel="external">onChanged</a>) callback will be invoked and the UI will be refreshed.</div><br><div><br></div><br><div>Are you OK??? 个人感觉这个Architecture Component说来说去就是通过使用观察者模式，抽出了一个LiveData和LifecycleObserver实现了UI和model层的分离，并且还不用关心UI的destroy一系列异常状态。（让我写我也可以写出类似这个模式框架，不过要设计如此规范合理的话就难了~~~）</div><br><div><br></div><br></div><br><div><span style="font-size: 14px;"><span style="font-family: Roboto, sans-serif;"><span style="background-color: rgb(255, 255, 255);"><span style="color: rgba(0, 0, 0, 0.682353);"><br></span></span></span></span></div><br><div><span style="font-size: 14px;"><span style="font-family: Roboto, sans-serif;"><span style="background-color: rgb(255, 255, 255);"><span style="color: rgba(0, 0, 0, 0.682353);"><br></span></span></span></span></div><br><div><span style="font-size: 14px;"><span style="font-family: Roboto, sans-serif;"><span style="background-color: rgb(255, 255, 255);"><span style="color: rgba(0, 0, 0, 0.682353);"><br></span></span></span></span></div><br><div><span style="font-size: 18px;"><span style="font-family: 'Helvetica Neue', Helvetica, Tahoma, Arial, STXihei, 'Microsoft YaHei', 微软雅黑, sans-serif;"><span style="color: rgb(51, 51, 51);"><br></span></span></span>**</div><br><div><br></div><br><div>Service Locator Pattern 服务定位设计模式</div><br><div><a href="https://www.tutorialspoint.com/design_pattern/service_locator_pattern.htm" target="_blank" rel="external">https://www.tutorialspoint.com/design_pattern/service_locator_pattern.htm</a></div><br><div>UML图：</div><br><div><img src="./B894425E-40AF-46FF-B87E-84FBBB647C6B.png" alt=""></div><br><div><br></div><br><div>Client :  ServiceLocatorPatternDemo.java</div><br><div>ServiceLocator :  服务定位器，获取服务的对接人</div><br><div>InitialContext : 初始化的上下文，用于lookup查找具体服务对象</div><br><div>Service : 服务接口定义类</div><br><div>Cache : 缓存具体服务对象，实现服务的重用机制</div><br><div><br></div><br><div>PS：查找具体服务对象，可以通过定义type枚举类型，也可以通过定义注解，然后通过Method.getAnnotation的方式获取。思路有点类似工厂模式(有没有人来杠我的，我这瞎说吗)</div><br><div><br></div><br><div><br></div><br><div><br></div><br><div><br></div><br><div><br></div><br><div><br></div><br><div><br></div><br><div><br></div><br><div><br></div><br><div><br></div><br><div>附录：</div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; font-size: x-large;">设计模式的分类：</span><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;"> </span><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">设计模式可以分为三大类，分别是创建型设计模式、行为型设计模式以及结构型设计模式。 </span></div><br></div><br><div><br></div><br><div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">创建型的设计模式： </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">单例模式(Singleton) </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">构建模式(Builder) </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">原型模式(Prototype) </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">抽象工厂模式(Abstract Factory) </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">工厂方法模式(Factory Method) </span></div><br><div><br></div><br><div><br></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">行为设计模式： </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">策略模式(Strategy) </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">状态模式(State) </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">责任链模式(Chain of Responsibility) </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">解释器模式(Interpreter) </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">命令模式(Command) </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">观察者模式(Observer) </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">备忘录模式(Memento) </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">迭代器模式(Iterator) </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">模板方法模式(Template Method) </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">访问者模式(Visitor) </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">中介者模式(Mediator) </span></div><br><div><br></div><br><div><br></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">结构型设计模式： </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">装饰者模式(Decorator) </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">代理模式(Proxy) </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">组合模式(Composite) </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">桥连接模式(Bridge) </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">适配器模式(Adapter) </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">蝇量模式(Flyweight) </span></div><br><div><br></div><br><div><span style="color: rgb(0, 0, 0); font-family: Helvetica, Tahoma, Arial, sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: normal; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; float: none;">外观模式(Facade) </span></div><br></div><br><div><br></div><br></body></html>
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/05/20/kotlin试用/" data-toggle="tooltip" data-placement="top" title="kotlin试用">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; fancychendong&#39;s Blog 2017 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://fancychendong.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
