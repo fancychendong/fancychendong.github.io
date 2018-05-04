@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/favicon.ico">
+
+    <title>
+        
+          Notification知识点分享 - fancy的博客 | fancy&#39;s Blog
+        
+    </title>
+
+    <link rel="canonical" href="http://fancychendong.github.io/2018/05/04/Notification知识点分享/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/hux-blog.min.css">
+
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">fancychendong&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archives/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    
+<!-- Image to hack wechat -->
+<!-- <img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        background-image: url('/img/home-bg.jpg')
+    }
+</style>
+<header class="intro-header" >
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                    </div>
+                    <h1>Notification知识点分享</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        Posted by xiaodong Chen on
+                        2018-05-04
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1 id="Notification知识点分享"><a href="#Notification知识点分享" class="headerlink" title="Notification知识点分享"></a>Notification知识点分享</h1><p>[TOC]</p>
+<h3 id="堆叠通知-setGroup"><a href="#堆叠通知-setGroup" class="headerlink" title="堆叠通知 setGroup"></a>堆叠通知 setGroup</h3><p>Android N开始支持通知归类功能<br></p>
+<p><code>StatusBarNotification</code>：每一个通知的状态类，包含notification原始的tag，id等信息，由notify(String, int, Notification)发出的通知，可以使用getTag()，getId()，getNotification()等拿到对应的信息<br><br><code>实现思路</code>：发送通知时，给我们的通知设置一个groupKey，并发送；因为发送的是一个普通的通知，所以我们还需要去检查是否有同样groupKey的通知，如果有，就再发送一个整理-归类的通知，让系统帮我们归类具有相同groupKey的通知成一个二级菜单列表。</p>
+<blockquote>
+<p><em>Talk is cheap.Show me the code</em></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">private static final String CHANNEL_NOTIFICATION_ID = &quot;channel_id&quot;;    //创建channelid</div><div class="line">private static final String NOTIFICATION_GROUP = &quot;my_notification_group&quot;;    //需要归类的通知key，setGroup参数，</div><div class="line">private static final int NOTIFICATION_GROUP_SUMMARY_ID = 1;    //notify通知的堆叠id</div><div class="line">private static int mNotificationId = NOTIFICATION_GROUP_SUMMARY_ID + 1;    //notify单条通知id</div><div class="line"></div><div class="line">//发送系统通知</div><div class="line">public void sendNotification() &#123;</div><div class="line">    final NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getChannelId())</div><div class="line">            .setSmallIcon(R.mipmap.ic_launcher)</div><div class="line">            .setContentTitle(&quot;我是通知标题&quot;)</div><div class="line">            .setContentText(&quot;我是通知内容&quot;)</div><div class="line">            .setAutoCancel(true)</div><div class="line">            .setDeleteIntent(mDeletePendingIntent)</div><div class="line">            .setGroup(NOTIFICATION_GROUP);</div><div class="line">    Notification notification = builder.build();</div><div class="line">    mNotificationManager.notify(getNotificationId(), notification);</div><div class="line">    updateSummaryNotification();</div><div class="line">&#125;</div><div class="line"></div><div class="line">private int getNotificationId() &#123;</div><div class="line">    int notificationId = mNotificationId++;</div><div class="line">    return notificationId;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//更新堆叠归类概要通知  summary概要</div><div class="line">private void updateSummaryNotification() &#123;</div><div class="line">    int numberOfNotifications = getNumberOfNotification();</div><div class="line">    if (numberOfNotifications &gt; 1) &#123;</div><div class="line">        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getChannelId())</div><div class="line">                .setSmallIcon(R.mipmap.ic_launcher)</div><div class="line">                .setStyle(new NotificationCompat.BigTextStyle().setSummaryText(&quot;通知堆叠信息&quot;))</div><div class="line">                .setGroup(NOTIFICATION_GROUP)</div><div class="line">                .setGroupSummary(true);</div><div class="line">        Notification notification = builder.build();</div><div class="line">        mNotificationManager.notify(NOTIFICATION_GROUP_SUMMARY_ID, notification);</div><div class="line">    &#125; else &#123;</div><div class="line">        mNotificationManager.cancel(NOTIFICATION_GROUP_SUMMARY_ID);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//android 8.0后需要创建channelid，仅针对targetSdk版本是8.0后需要，否则会crash</div><div class="line">private String getChannelId() &#123;</div><div class="line">    if (Build.VERSION.SDK_INT &lt; Build.VERSION_CODES.O) &#123;</div><div class="line">        return CHANNEL_NOTIFICATION_ID;</div><div class="line">    &#125;</div><div class="line">    NotificationChannel channel = new NotificationChannel(CHANNEL_NOTIFICATION_ID, &quot;test&quot;, NotificationManager.IMPORTANCE_DEFAULT);</div><div class="line">    channel.setDescription(&quot;test desc&quot;);</div><div class="line">    channel.setSound(null, null);</div><div class="line">    mNotificationManager.createNotificationChannel(channel);</div><div class="line">    return CHANNEL_NOTIFICATION_ID;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="https://app.yinxiang.com/shard/s49/res/09cb8258-1f16-453e-a859-a93e140f506b.png" alt=""></p>
+<hr>
+<h3 id="Start-an-Activity-from-a-Notification-通过通知打开activity"><a href="#Start-an-Activity-from-a-Notification-通过通知打开activity" class="headerlink" title="Start an Activity from a Notification 通过通知打开activity"></a>Start an Activity from a Notification 通过通知打开activity</h3><h4 id="创建有返回栈的Notification"><a href="#创建有返回栈的Notification" class="headerlink" title="创建有返回栈的Notification"></a>创建有返回栈的Notification</h4><p><code>TaskStackBuilder</code>：Android 3.0之后引入的一个很实用的手动合成返回栈的任务导航类</p>
+<p>使用TaskStackBuilder需要在清单文件中定义应用的 Activity 层次结构。<br></p>
+<ol>
+<li>添加对 Android 4.0.3 及更低版本的支持。为此，请通过添加 <meta-data> 元素作为 <activity>的子项来指定正在启动的 Activity 的父项。<br>对于此元素，请设置 <code>android:name=&quot;android.support.PARENT_ACTIVITY&quot;。</code> 设置 <code>android:value=&quot;&lt;parent_activity_name&gt;&quot;</code>，其中，<code>&lt;parent_activity_name&gt;</code> 是父 <code>&lt;activity&gt;</code> 元素的 <code>android:name</code> 值。请参阅下面的 XML 示例。</activity></meta-data></li>
+<li>同样添加对 Android 4.1 及更高版本的支持。为此，请将 <code>android:parentActivityName</code> 属性添加到正在启动的 Activity 的 <code>&lt;activity&gt;</code>元素中。</li>
+</ol>
+<p>最终的 XML 应如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;activity</div><div class="line">    android:name=&quot;.MainActivity&quot;</div><div class="line">    android:label=&quot;@string/app_name&quot; &gt;</div><div class="line">    &lt;intent-filter&gt;</div><div class="line">        &lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt;</div><div class="line">        &lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&gt;</div><div class="line">    &lt;/intent-filter&gt;</div><div class="line">&lt;/activity&gt;</div><div class="line">&lt;activity</div><div class="line">    android:name=&quot;.ResultActivity&quot;</div><div class="line">    android:parentActivityName=&quot;.MainActivity&quot;&gt;     //mintargetsdk&gt;4.1直接用该配置</div><div class="line">    &lt;meta-data</div><div class="line">        android:name=&quot;android.support.PARENT_ACTIVITY&quot;      //此配置为了兼容4.0</div><div class="line">        android:value=&quot;.MainActivity&quot;/&gt;</div><div class="line">&lt;/activity&gt;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p><em>Talk is cheap.Show me the code</em></p>
+</blockquote>
+<p>以下代码段演示了该流程：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">Intent resultIntent = new Intent(this, ResultActivity.class);</div><div class="line">TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);</div><div class="line">// Adds the back stack          PS：给ResultActivity添加它返回的任务栈，即TaskStackBuilder的parentStack，会创建任务栈</div><div class="line">stackBuilder.addParentStack(ResultActivity.class);</div><div class="line">// Adds the Intent to the top of the stack    PS:给任务栈添加下一个Intent，此处看出Google开发取名的深意</div><div class="line">stackBuilder.addNextIntent(resultIntent);</div><div class="line">// Gets a PendingIntent containing the entire back stack  一个api</div><div class="line">PendingIntent resultPendingIntent =</div><div class="line">        stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);</div><div class="line">...</div><div class="line">NotificationCompat.Builder builder = new NotificationCompat.Builder(this);</div><div class="line">builder.setContentIntent(resultPendingIntent);</div><div class="line">NotificationManager mNotificationManager =</div><div class="line">    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);</div><div class="line">mNotificationManager.notify(id, builder.build());</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>ps：<a href="#1">注意这里的taskStackBuilder.addParentStack方法里的参数，是不是有点迷</a></p>
+</blockquote>
+<p>如果是minSdkVersion&gt;4.0的话，你可以用TaskStackBuilder的另外一个api<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// Create an Intent for the activity you want to start</div><div class="line">Intent resultIntent = new Intent(this, ResultActivity.class);</div><div class="line">// Create the TaskStackBuilder and add the intent, which inflates the back stack</div><div class="line">TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);</div><div class="line">stackBuilder.addNextIntentWithParentStack(intent);</div><div class="line">// Get the PendingIntent containing the entire back stack</div><div class="line">PendingIntent resultPendingIntent =</div><div class="line">        stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p><code>addNextIntentWithParentStack</code><br><br>This is equivalent to calling <code>addParentStack</code> with the resolved ComponentName of nextIntent (if it can be resolved), followed by <code>addNextIntent</code> with nextIntent.</p>
+</blockquote>
+<p>其实要实现任务返回栈的功能还有另外一种处理方法，借鉴了主站上次app入口改造的经验，即使用<code>ContextCompat.startActivities(Context context,
+                Intent[] intents, Bundle options)</code><br></p>
+<blockquote>
+<p>Start a set of activities as a synthesized task stack 启动一系列activity作为一个合成的任务栈</p>
+</blockquote>
+<p>这样也可以实现返回到app首页的需求</p>
+<p>####创建不需要返回栈的Notification</p>
+<ol>
+<li><p>在你的manifest中给<code>&lt;activity&gt;</code>添加以下属性<br></p>
+<p> <code>android:taskAffinity=&quot;&quot;</code><br><br> <em>Combined with the FLAG_ACTIVITY_NEW_TASK flag that you’ll use in code, setting this attribute blank ensures that this activity doesn’t go into the app’s default task. Any existing tasks that have the app’s default affinity are not affected.</em><br><br> <b>结合FLAG_ACTIVITY_NEW_TASK创建一个跟app默认的任务栈不同的栈，即不在app默认栈里，app栈不受影响。</b><br></p>
+<p> <code>android:excludeFromRecents=&quot;true&quot;</code><br><br> <em>Excludes the new task from Recents, so that the user can’t accidentally navigate back to it.</em><br><br> <b>该属性是为了配置是否在android系统中的最近任务中是否可见，默认是false，即可通过点击安卓的home键旁边的查看最近任务按键可见</b></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;activity</div><div class="line">    android:name=&quot;.ResultActivity&quot;</div><div class="line">    android:launchMode=&quot;singleTask&quot;</div><div class="line">    android:taskAffinity=&quot;&quot;</div><div class="line">    android:excludeFromRecents=&quot;true&quot;&gt;</div><div class="line">&lt;/activity&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><br></p>
+<ol>
+<li>构建一个notification对象<br></li>
+</ol>
+<blockquote>
+<p>Set the Activity to start in a new, empty task by calling setFlags() with the flags FLAG_ACTIVITY_NEW_TASK and FLAG_ACTIVITY_CLEAR_TASK.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">Intent notifyIntent = new Intent(this, ResultActivity.class);</div><div class="line">// Set the Activity to start in a new, empty task</div><div class="line">notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK</div><div class="line">                    | Intent.FLAG_ACTIVITY_CLEAR_TASK);</div><div class="line">// Create the PendingIntent</div><div class="line">PendingIntent notifyPendingIntent = PendingIntent.getActivity(</div><div class="line">        this, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT</div><div class="line">);</div><div class="line">NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);</div><div class="line">builder.setContentIntent(notifyPendingIntent);</div><div class="line">...</div><div class="line">NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);</div><div class="line">notificationManager.notify(NOTIFICATION_ID, builder.build());</div></pre></td></tr></table></figure></p>
+</blockquote>
+<hr>
+<p>###自定义Notification</p>
+<p>使用<code>setStyle()</code> <code>RemoteViews</code> <code>setCustomContentView()</code> <code>setCustomBigContentView()</code> 可对通知栏进行自定义样式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// Get the layouts to use in the custom notification</div><div class="line">RemoteViews notificationLayout = new RemoteViews(getPackageName(), R.layout.notification_small);</div><div class="line">RemoteViews notificationLayoutExpanded = new RemoteViews(getPackageName(), R.layout.notification_large);</div><div class="line"></div><div class="line">// Apply the layouts to the notification</div><div class="line">Notification customNotification = new NotificationCompat.Builder(context, CHANNEL_ID)</div><div class="line">        .setSmallIcon(R.drawable.notification_icon)</div><div class="line">        .setStyle(new NotificationCompat.DecoratedCustomViewStyle())</div><div class="line">        .setCustomContentView(notificationLayout)</div><div class="line">        .setCustomBigContentView(notificationLayoutExpanded)</div><div class="line">        .build();</div></pre></td></tr></table></figure>
+<p>可通过设置自定义标题的style属性<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;TextView</div><div class="line">    android:layout_width=&quot;wrap_content&quot;</div><div class="line">    android:layout_height=&quot;match_parent&quot;</div><div class="line">    android:layout_weight=&quot;1&quot;</div><div class="line">    android:text=&quot;@string/notification_title&quot;</div><div class="line">    android:id=&quot;@+id/notification_title&quot;</div><div class="line">    style=&quot;@style/TextAppearance.Compat.Notification.Title&quot; /&gt;</div></pre></td></tr></table></figure></p>
+<p><strong>自定义通知栏可参考音乐中对通知栏的设置</strong> <code>BgmscNotificatioBuilderHelper</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public Notification buildNotification(Bitmap bmp) &#123;</div><div class="line">        this.notificationStyle = mService.getNotificationStyle();</div><div class="line">        if (notificationStyle.mode == 1)</div><div class="line">            return buildDefaultNotification(bmp);</div><div class="line">        else if (notificationStyle.mode == 0) &#123;</div><div class="line">            if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP)</div><div class="line">                return buildJBNotification(bmp);</div><div class="line">            else</div><div class="line">                return buildDefaultNotification(bmp);</div><div class="line">        &#125; else &#123;</div><div class="line">            if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.JELLY_BEAN)</div><div class="line">                return buildJBNotification(bmp);</div><div class="line">            else</div><div class="line">                return buildICSNotification(bmp);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div></pre></td><td class="code"><pre><div class="line">@SuppressLint(&quot;NewApi&quot;)</div><div class="line">private Notification buildJBNotification(Bitmap bmp) &#123;</div><div class="line">    ...</div><div class="line">    RemoteViews collapseRv = new RemoteViews(mService.getPackageName(), R.layout.notification_custom_collapse_layout);</div><div class="line">    RemoteViews expRv = new RemoteViews(mService.getPackageName(), R.layout.notification_custom_expanded_layout);</div><div class="line"></div><div class="line">    int mNotificationColor = notificationStyle.backgroundColor;</div><div class="line">    Bitmap themeColorBmp = BitmapUtil.createBitmapFromColor(5, 5, mNotificationColor);</div><div class="line">    collapseRv.setImageViewBitmap(R.id.background, themeColorBmp);</div><div class="line">    expRv.setImageViewBitmap(R.id.background, themeColorBmp);</div><div class="line"></div><div class="line">    //Text1 Text2 文本</div><div class="line">    expRv.setTextViewText(R.id.text1, desc.getTitle());</div><div class="line">    expRv.setTextViewText(R.id.text2, desc.getSubtitle());</div><div class="line"></div><div class="line">    collapseRv.setTextViewText(R.id.text1, desc.getTitle());</div><div class="line">    collapseRv.setTextViewText(R.id.text2, desc.getSubtitle());</div><div class="line"></div><div class="line">    //模式</div><div class="line">    if (isModeEnable()) &#123;</div><div class="line">        expRv.setViewVisibility(R.id.action1, View.VISIBLE);</div><div class="line">        expRv.setImageViewResource(R.id.action1, createModeIcon());</div><div class="line">        expRv.setOnClickPendingIntent(R.id.action1, mModeIntent);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //上一首</div><div class="line">    if ((getPlaybackState().getActions() &amp; PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS) != 0) &#123;</div><div class="line">        expRv.setViewVisibility(R.id.action2, View.VISIBLE);</div><div class="line">        expRv.setImageViewResource(R.id.action2, R.drawable.ic_notification_action_skip_previous);</div><div class="line">        expRv.setOnClickPendingIntent(R.id.action2, mPrevIntent);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //播放，暂停</div><div class="line">    int icon;</div><div class="line">    PendingIntent intent;</div><div class="line">    if (getPlaybackState().getState() == PlaybackStateCompat.STATE_PLAYING) &#123;</div><div class="line">        icon = R.drawable.ic_notification_action_pause;</div><div class="line">        intent = mPauseIntent;</div><div class="line">    &#125; else &#123;</div><div class="line">        icon = R.drawable.ic_notification_action_play;</div><div class="line">        intent = mPlayIntent;</div><div class="line">    &#125;</div><div class="line">    collapseRv.setViewVisibility(R.id.action2, View.VISIBLE);</div><div class="line">    collapseRv.setImageViewResource(R.id.action2, icon);</div><div class="line">    collapseRv.setOnClickPendingIntent(R.id.action2, intent);</div><div class="line"></div><div class="line">    expRv.setViewVisibility(R.id.action3, View.VISIBLE);</div><div class="line">    expRv.setImageViewResource(R.id.action3, icon);</div><div class="line">    expRv.setOnClickPendingIntent(R.id.action3, intent);</div><div class="line"></div><div class="line">    //下一首</div><div class="line">    if ((getPlaybackState().getActions() &amp; PlaybackStateCompat.ACTION_SKIP_TO_NEXT) != 0) &#123;</div><div class="line">        expRv.setViewVisibility(R.id.action4, View.VISIBLE);</div><div class="line">        expRv.setImageViewResource(R.id.action4, R.drawable.ic_notification_action_skip_next);</div><div class="line">        expRv.setOnClickPendingIntent(R.id.action4, mNextIntent);</div><div class="line"></div><div class="line">        collapseRv.setViewVisibility(R.id.action3, View.VISIBLE);</div><div class="line">        collapseRv.setImageViewResource(R.id.action3, R.drawable.ic_notification_action_skip_next);</div><div class="line">        collapseRv.setOnClickPendingIntent(R.id.action3, mNextIntent);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //Stop 关闭</div><div class="line">    expRv.setOnClickPendingIntent(R.id.stop, mStopIntent);</div><div class="line">    collapseRv.setOnClickPendingIntent(R.id.stop, mStopIntent);</div><div class="line"></div><div class="line">    NotificationCompat.Builder builder = new NotificationCompat.Builder(mService, getChannelId());</div><div class="line">    builder.setColor(mNotificationColor)</div><div class="line">            .setSmallIcon(R.drawable.ic_notification_background_music)</div><div class="line">            .setUsesChronometer(false)</div><div class="line">            .setWhen(0)</div><div class="line">            .setContentIntent(createContentIntent());</div><div class="line"></div><div class="line">    if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) &#123;</div><div class="line">        builder.setVisibility(Notification.VISIBILITY_PUBLIC);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    setNotificationPlaybackState(builder);</div><div class="line"></div><div class="line">   ...</div><div class="line"></div><div class="line">    builder.setContent(collapseRv);</div><div class="line">    if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) &#123;</div><div class="line">        builder.setVisibility(Notification.VISIBILITY_PUBLIC);</div><div class="line">    &#125;</div><div class="line">    Notification notification = builder.build();</div><div class="line">    notification.bigContentView = expRv;</div><div class="line"></div><div class="line">    return notification;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="https://app.yinxiang.com/shard/s49/res/f2f556c6-9c96-440f-8377-32b0cb13cd9b/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_15246443014450.png" alt="锁屏"><br><img src="https://app.yinxiang.com/shard/s49/res/01922f8f-5272-4374-b50b-b4b879d27fb1/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_15246443522634.png" alt="非锁屏"></p>
+<hr>
+<h3 id="setPublicVersion-锁屏状态下隐私保护"><a href="#setPublicVersion-锁屏状态下隐私保护" class="headerlink" title="setPublicVersion 锁屏状态下隐私保护"></a>setPublicVersion 锁屏状态下隐私保护<br></h3><blockquote>
+<p>An additional method on the builder – .setPublicVersion(notification) – allows you to provide a replacement notification to display on the lock screen when the visibility is set to private and you still want something to display on the lock screen.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">int requestCode = (int) SystemClock.uptimeMillis();</div><div class="line">        PendingIntent pendingIntent = PendingIntent.getActivity(context, requestCode, intent, PendingIntent.FLAG_CANCEL_CURRENT);</div><div class="line"></div><div class="line">        NotificationCompat.BigPictureStyle style = new NotificationCompat.BigPictureStyle();</div><div class="line">        style.bigPicture(BitmapFactory.decodeResource(context.getResources(), R.drawable.google));</div><div class="line">        style.setBigContentTitle(title);</div><div class="line">        style.setSummaryText(text);</div><div class="line">        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);</div><div class="line"></div><div class="line">        builder.setLargeIcon(largeIcon)</div><div class="line">                .setSmallIcon(R.drawable.cry)</div><div class="line">                .setTicker(context.getString(R.string.app_name))</div><div class="line">                .setWhen(System.currentTimeMillis())</div><div class="line">                .setContentTitle(title)</div><div class="line">                .setContentText(text)</div><div class="line">                .setStyle(style)</div><div class="line">                .setAutoCancel(isAutoCancel)</div><div class="line">                .setContentIntent(pendingIntent);</div><div class="line">        if (isSound) &#123;</div><div class="line">            builder.setSound(Uri.parse(&quot;android.resource://&quot; + context.getPackageName() + &quot;/&quot; + R.raw.message));</div><div class="line">        &#125; else &#123;</div><div class="line">            builder.setDefaults(Notification.DEFAULT_ALL);</div><div class="line">        &#125;</div><div class="line">        if (isShowLock) &#123;</div><div class="line">//            builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);</div><div class="line">            builder.setVisibility(NotificationCompat.VISIBILITY_PRIVATE);</div><div class="line"></div><div class="line">            Notification publishNotification = new NotificationCompat.Builder(context)</div><div class="line">                    .setSmallIcon(R.drawable.google)</div><div class="line">                    .setContentIntent(pendingIntent)</div><div class="line">                    .setContentTitle(&quot;锁屏替换的标题&quot;)</div><div class="line">                    .setContentText(&quot;锁屏替换的内容&quot;).build();</div><div class="line">            builder.setPublicVersion(publishNotification);</div><div class="line">        &#125;</div><div class="line">        builder.setPriority(isHeads ? NotificationCompat.PRIORITY_MAX : NotificationCompat.PRIORITY_DEFAULT);</div><div class="line"></div><div class="line">        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);</div><div class="line">        notificationManager.notify(isOnly ? ID_FOR_BIG_PICTURE : (int) System.currentTimeMillis(), builder.build());</div></pre></td></tr></table></figure>
+<p>测试机型：华为P9  android 7.0<br><br><img src="https://app.yinxiang.com/shard/s49/res/57d2daf5-2f42-473f-877b-3aa133b632a1/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_15248290499629.png" alt="设置"><br><img src="https://app.yinxiang.com/shard/s49/res/dd5f3c8a-6f18-4dec-ae89-6ec19e941ad4/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_15248292249300.png" alt=""><br><img src="https://app.yinxiang.com/shard/s49/res/44ea8a31-f6b7-43e3-88c2-66fe04e4ea37/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_15248293776338.png" alt=""></p>
+<p><em>此api生效的前提是，在手机设置中开启了锁屏隐藏通知内容选项。如果未开启并不会生效，仅仅设置为<br>VISIBILITY_PRIVATE属性，则系统会隐藏内容。相信google这样做的好处是防止陌生人偷窥推送信息。*</em></p>
+<hr>
+<h3 id="Heads-Up-Notifications-浮动通知"><a href="#Heads-Up-Notifications-浮动通知" class="headerlink" title="Heads-Up Notifications 浮动通知"></a>Heads-Up Notifications 浮动通知<br></h3><p>版本要求：Android 5.0之后，并且设置抬头浮动通知的前提需要在通知设置中开启<code>在屏幕顶部悬浮显示</code> 的选项</p>
+<p><img src="https://app.yinxiang.com/shard/s49/res/c2411344-db3b-4bcc-8105-846e359733ad.png" alt=""><br><img src="https://app.yinxiang.com/shard/s49/res/1ff54a65-e052-4e3a-b9f6-3672603e8b1a.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">Intent notificationIntent = new Intent(Intent.ACTION_VIEW);</div><div class="line">notificationIntent.setData(Uri.parse(&quot;http://www.wgn.com&quot;));</div><div class="line">PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);</div><div class="line"> </div><div class="line">Notification notification = new NotificationCompat.Builder(this)</div><div class="line">.setCategory(Notification.CATEGORY_PROMO)</div><div class="line">.setContentTitle(title)</div><div class="line">.setContentText(text)</div><div class="line">.setSmallIcon(icon)</div><div class="line">.setAutoCancel(true)</div><div class="line">.setVisibility(visibility)</div><div class="line">.addAction(android.R.drawable.ic_menu_view, &quot;View details&quot;, contentIntent)</div><div class="line">.setContentIntent(contentIntent)</div><div class="line">.setPriority(Notification.PRIORITY_HIGH)</div><div class="line">.setVibrate(new long[]&#123;1000, 1000, 1000, 1000, 1000&#125;).build();</div><div class="line">NotificationManager notificationManager =</div><div class="line">(NotificationManager) getSystemService(NOTIFICATION_SERVICE);</div><div class="line">notificationManager.notify(notification_id, notification);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>根据android通知栏design guidelines，如果想引起用户的足够重视，最好能加个action，告诉用户点击此action执行你想通知给用户的intent意图。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th><strong>优先级</strong></th>
+<th><strong>用户</strong> </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MAX</td>
+<td>重要而紧急的通知，通知用户这个事件是时间上紧迫的或者需要立即处理 </td>
+</tr>
+<tr>
+<td>HIGH</td>
+<td>高优先级用于重要的通信内容，例如短消息或者聊天，这些都是对用户来说比较有兴趣的。</td>
+</tr>
+<tr>
+<td>DEFAULT</td>
+<td>默认优先级用于没有特殊优先级分类的通知。</td>
+</tr>
+<tr>
+<td>LOW</td>
+<td>低优先级可以通知用户但又不是很紧急的事件。  </td>
+</tr>
+<tr>
+<td>MIN</td>
+<td>用于后台消息 (例如天气或者位置信息)。最低优先级通知将只在状态栏显示图标，只有用户下拉通知抽屉才能看到内容。</td>
+</tr>
+</tbody>
+</table>
+<p>来源：<a href="https://www.jianshu.com/p/57a3239d14d6" target="_blank" rel="external">Android中的通知Notification</a></p>
+<hr>
+<h3 id="setFullScreenIntent"><a href="#setFullScreenIntent" class="headerlink" title="setFullScreenIntent"></a>setFullScreenIntent</h3><blockquote style="margin: 0px 0px 10px; padding: 10px; border-width: 0px 0px 0px 2px; border-top-style: initial; border-right-style: initial; border-bottom-style: initial; border-left-style: solid; border-top-color: initial; border-right-color: initial; border-bottom-color: initial; border-left-color: rgb(255, 235, 142); border-image: initial; font-size: 15px; vertical-align: baseline; quotes: none; box-sizing: inherit; background-color: rgb(255, 248, 220); letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px;"><h1 style="margin: 0px 0px 1em; padding: 0px; border: 0px; font-size: 21px; vertical-align: baseline; box-sizing: inherit; word-wrap: break-word;"><span style="font-size: 21px; color: rgb(36, 39, 41); font-family: Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; font-style: normal; font-variant-caps: normal; font-variant-ligatures: normal; font-weight: bold; text-decoration-color: initial; text-decoration-style: initial;">public NotificationCompat.Builder setFullScreenIntent (PendingIntent intent, boolean highPriority)</span></h1><div style="margin: 0px 0px 1em; padding: 0px; border: 0px; font-size: 15px; vertical-align: baseline; box-sizing: inherit; clear: both;"><span style="font-size: 15px; color: rgb(36, 39, 41); font-family: Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; font-style: normal; font-variant-caps: normal; font-variant-ligatures: normal; font-weight: 400; text-decoration-color: initial; text-decoration-style: initial;">An intent to launch instead of posting the notification to the status bar. Only for use with extremely high-priority notifications demanding the user’s immediate attention, such as an incoming phone call or alarm clock that the user has explicitly set to a particular time. If this facility is used for something else, please give the user an option to turn it off and use a normal notification, as this can be extremely disruptive.</span></div><div style="margin: 0px 0px 1em; padding: 0px; border: 0px; font-size: 15px; vertical-align: baseline; box-sizing: inherit; clear: both;"><span style="font-size: 15px; color: rgb(36, 39, 41); font-family: Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; font-style: normal; font-variant-caps: normal; font-variant-ligatures: normal; font-weight: 400; text-decoration-color: initial; text-decoration-style: initial;">On some platforms, the system UI may choose to display a heads-up notification, instead of launching this intent, while the user is using the device.</span></div><div style="margin: 0px 0px 1em; padding: 0px; border: 0px; font-size: 15px; vertical-align: baseline; box-sizing: inherit; clear: both;"><span style="font-size: 15px; border: 0px; box-sizing: inherit; margin: 0px; padding: 0px; vertical-align: baseline; color: rgb(36, 39, 41); font-family: Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; font-style: normal; font-variant-caps: normal; font-variant-ligatures: normal; font-weight: bold; text-decoration-color: initial; text-decoration-style: initial;">Parameters</span></div><div style="margin: 0px 0px 1em; padding: 0px; border: 0px; font-size: 15px; vertical-align: baseline; box-sizing: inherit; clear: both;"><span style="font-size: 15px; border: 0px; box-sizing: inherit; margin: 0px; padding: 0px; vertical-align: baseline; color: rgb(36, 39, 41); font-family: Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; font-style: italic; font-variant-caps: normal; font-variant-ligatures: normal; font-weight: 400; text-decoration-color: initial; text-decoration-style: initial;">intent:</span><span style="font-size: 15px; color: rgb(36, 39, 41); font-family: Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; font-style: normal; font-variant-caps: normal; font-variant-ligatures: normal; font-weight: 400; text-decoration-color: initial; text-decoration-style: initial;"> The pending intent to launch.</span></div><div style="margin: 0px; padding: 0px; border: 0px; font-size: 15px; vertical-align: baseline; box-sizing: inherit; clear: both;"><span style="font-size: 15px; border: 0px; box-sizing: inherit; margin: 0px; padding: 0px; vertical-align: baseline; color: rgb(36, 39, 41); font-family: Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; font-style: italic; font-variant-caps: normal; font-variant-ligatures: normal; font-weight: 400; text-decoration-color: initial; text-decoration-style: initial;">highPriority:</span><span style="font-size: 15px; color: rgb(36, 39, 41); font-family: Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; font-style: normal; font-variant-caps: normal; font-variant-ligatures: normal; font-weight: 400; text-decoration-color: initial; text-decoration-style: initial;"> Passing true will cause this notification to be sent even if other notifications are suppressed.</span></div></blockquote>
+
+<p>A notification won’t automatically expand when a static notification is displayed on top (could be custom bar with wifi, bluetooth and sound control)</p>
+<p>响应紧急事件(比如来电)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Intent intent = new Intent(ACTION);</div><div class="line">intent.putExtra(&quot;op&quot;, op);</div><div class="line">PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, 0);</div><div class="line">builder.setFullScreenIntent(pi, true);</div></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="addPerson"><a href="#addPerson" class="headerlink" title="addPerson()"></a>addPerson()</h3><p>addPerson() 允许您向通知添加人员名单。您的应用可以使用此名单指示系统将指定人员发出的通知归成一组，或者将这些人员发出的通知视为更重要的通知。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">private Notification createNotification(Priority priority, Category category, Uri contactUri) &#123;</div><div class="line">    Notification.Builder notificationBuilder = new Notification.Builder(getActivity())</div><div class="line">            .setContentTitle(&quot;Notification with other metadata&quot;)</div><div class="line">            .setSmallIcon(R.drawable.ic_launcher_notification)</div><div class="line">            .setPriority(priority.value)</div><div class="line">            .setCategory(category.value)</div><div class="line">            .setContentText(String.format(&quot;Category %s, Priority %s&quot;, category.value,</div><div class="line">                    priority.name()));</div><div class="line">    if (contactUri != null) &#123;</div><div class="line">        notificationBuilder.addPerson(contactUri.toString());</div><div class="line">        Bitmap photoBitmap = loadBitmapFromContactUri(contactUri);</div><div class="line">        if (photoBitmap != null) &#123;</div><div class="line">            notificationBuilder.setLargeIcon(photoBitmap);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return notificationBuilder.build();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>addPerson接口的作用，根据文档意思是，可以通过设置手机通讯录里不同用户来设置通知的重要性。但遗憾的是，目前我还没能在手边现有的手机上验证这一功能，大家可以在设置通知里看看是否有根据联系人来自定义通知特性。</strong></p>
+<p><img src="https://app.yinxiang.com/shard/s49/res/f6e22324-bd13-4549-a2a8-14f94acff289/%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_15252502045414.png" alt=""></p>
+<hr>
+<p><span id="1"></span></p>
+<p><font color="#66666">taskStackBuilder.addParentStack方法的解释</font><br><br>这里注意一下，之前一直不明白TaskStackBuilder.addParentStack(ResultActivity.class) 这里的class为啥要跟PendingIntent里的Intent的class要一样的，官方的解释是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Add the activity parent chain as specified by the</div><div class="line"> * &#123;@link android.R.attr#parentActivityName parentActivityName&#125; attribute of the activity</div><div class="line"> * (or activity-alias) element in the application&apos;s manifest to the task stack builder.</div><div class="line"> *</div><div class="line"> * @param sourceActivityClass All parents of this activity will be added</div><div class="line"> * @return This TaskStackBuilder for method chaining</div><div class="line"> */</div><div class="line">public TaskStackBuilder addParentStack(Class&lt;?&gt; sourceActivityClass) &#123;</div><div class="line">    return addParentStack(new ComponentName(mSourceContext, sourceActivityClass));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">public TaskStackBuilder addParentStack(ComponentName sourceActivityName) &#123;</div><div class="line">    final int insertAt = mIntents.size();</div><div class="line">    PackageManager pm = mSourceContext.getPackageManager();</div><div class="line">    try &#123;</div><div class="line">        ActivityInfo info = pm.getActivityInfo(sourceActivityName, 0);</div><div class="line">        String parentActivity = info.parentActivityName;</div><div class="line">        while (parentActivity != null) &#123;</div><div class="line">            final ComponentName target = new ComponentName(info.packageName, parentActivity);</div><div class="line">            info = pm.getActivityInfo(target, 0);</div><div class="line">            parentActivity = info.parentActivityName;</div><div class="line">            final Intent parent = parentActivity == null &amp;&amp; insertAt == 0</div><div class="line">                    ? Intent.makeMainActivity(target)</div><div class="line">                    : new Intent().setComponent(target);</div><div class="line">            mIntents.add(insertAt, parent);</div><div class="line">        &#125;</div><div class="line">    &#125; catch (NameNotFoundException e) &#123;</div><div class="line">        Log.e(TAG, &quot;Bad ComponentName while traversing activity parent metadata&quot;);</div><div class="line">        throw new IllegalArgumentException(e);</div><div class="line">    &#125;</div><div class="line">    return this;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>查看源码发现是根据这个sourceActivityClass然后去读取manifest里面该activityClass的配置信息ActivityInfo，找到parentActivityName配置，然后TaskStackBuilder里面维护了一个ArrayList<intent>队列，往队列里插入parentIntent。<br>因此，要想使用TaskStackBuilder，就必须对Activity在manifest中配置parentActivityName</intent></p>
+<p></p>
+<p><img src="http://img.soogif.com/zS3s63LOqb1AcOGKjTM1dR29T0s316ra.gif_s400x0" alt="gif"></p>
+<p>各位客官，接下来知道怎么做了<br><br><img src="https://app.yinxiang.com/shard/s49/res/47b55531-27c3-414d-9310-52466b122e4d/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180504171019.jpg" alt="打赏"></p>
+
+
+                <hr>
+
+                
+
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2017/07/09/Android-Architecture-Component/" data-toggle="tooltip" data-placement="top" title="Android Architecture Component">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                
+
+                
+
+            </div>
+    <!-- Side Catalog Container -->
+        
+
+    <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Android" title="Android">Android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; fancychendong&#39;s Blog 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    Ported by <a href="http://blog.kaijun.rocks">Kaijun</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=kaijun&repo=hexo-theme-huxblog&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://fancychendong.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Side Catalog -->
+
+
+
+
+
+<!-- Image to hack wechat -->
+<img src="http://fancychendong.github.io/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
